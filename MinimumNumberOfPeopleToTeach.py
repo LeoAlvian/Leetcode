@@ -30,7 +30,10 @@ Test2 = {'inp': {'n': 3, 'languages' : [[2],[1,3],[1,2],[3]], 'friendships' : [[
 
 class Solution:
     def minimumTeachings(self, n, languages, friendships):
+        # set a people that cannot communicate, we use set so there will be no duplicate 
         cannot_com = set()
+
+        # find people from friendships that cannot communicate with one another, if there is then adding it to cannot_com variable 
         for firstP, secondP in friendships:
             can_com = False
             can_speak = set(languages[firstP - 1])
@@ -42,14 +45,18 @@ class Solution:
                 cannot_com.add(firstP - 1)
                 cannot_com.add(secondP - 1)
 
+        # if there is no people that cannot communicate which means we don't have to teach anyone 
         if not cannot_com:
             return 0
         
+        # count how many people speak specific languages 
+        # example count = [1,2,1] which means second languages are popular 
         count = [0] * n
         for person in cannot_com:
             for lang in languages[person]:
                 count[lang - 1] += 1
         
+        # Find the highest value of popular languages 
         max_count = 0
         for c in count:
             max_count = max(max_count, c)
