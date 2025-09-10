@@ -25,13 +25,15 @@ Explanation: Teach the third language to users 1 and 3, yielding two users to te
 """
 
 Test1 = {'inp': {'n': 2, 'languages' : [[1],[2],[1,2]], 'friendships' : [[1,2],[1,3],[2,3]]}, 'out': 1}
-Test2 = {'inp': {'n': 3, 'languages' : [[2],[1,3],[1,2],[3]], 'friendships' : [[1,4],[1,2],[3,4],[2,3]]}, 'out': 2}
+Test2 = {'inp': {'n': 3, 'languages' : [[2,3],[1,3],[1,2],[3]], 'friendships' : [[1,4],[1,2],[3,4],[2,3]]}, 'out': 1}
 
+languages_dict = {1: 'Indonesia', 2: 'Enlish', 3: 'Spanish'}
 
 class Solution:
     def minimumTeachings(self, n, languages, friendships):
         # set a people that cannot communicate, we use set so there will be no duplicate 
         cannot_com = set()
+        bahasa = [0] * n
 
         # find people from friendships that cannot communicate with one another, if there is then adding it to cannot_com variable 
         for firstP, secondP in friendships:
@@ -39,6 +41,7 @@ class Solution:
             can_speak = set(languages[firstP - 1])
             for lang in languages[secondP - 1]:
                 if lang in can_speak:
+                    bahasa[lang - 1] += 1
                     can_com = True
                     break
             if not can_com:
@@ -61,13 +64,19 @@ class Solution:
         for c in count:
             max_count = max(max_count, c)
         
-        return len(cannot_com) - max_count
+        return (len(cannot_com) - max_count, bahasa)
 
 
 
 
 s = Solution()
 res = s.minimumTeachings(Test1['inp']['n'],Test1['inp']['languages'],Test1['inp']['friendships'])
-print('Test1', res == Test1['out'])
+print('Test1', res[0] == Test1['out'])
+maxV = max(res[1])
+pop_lang = res[1].index(maxV)
+print('Popular Language:', languages_dict[pop_lang + 1])
 res = s.minimumTeachings(Test2['inp']['n'],Test2['inp']['languages'],Test2['inp']['friendships'])
-print('Test2', res == Test2['out'])
+print('Test2', res[0] == Test2['out'])
+maxV = max(res[1])
+pop_lang = res[1].index(maxV)
+print('Popular Language:', languages_dict[pop_lang + 1])
