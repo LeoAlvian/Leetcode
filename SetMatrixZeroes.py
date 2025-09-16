@@ -23,6 +23,8 @@ def setMatrixZeroes(matrix):
     rows, cols = len(matrix), len(matrix[0])
     zeroVal = False
 
+    # loop through matrix and set the first row and col to 0 if we find zero
+    # in the matrix
     for r in range(rows):
         for c in range(cols):
             if matrix[r][c] == 0:
@@ -32,15 +34,22 @@ def setMatrixZeroes(matrix):
                 else:
                     zeroVal = True
     
+
+    # loop through matrix and if the first row or col is 0 we set that 
+    # matrix to be zero
     for r in range(1, rows):
         for c in range(1, cols):
             if matrix[r][0] == 0 or matrix[0][c] == 0:
                 matrix[r][c] = 0
     
+
+    # if matrix[0][0] == 0 then we need to change the first row to be all zero
     if matrix[0][0] == 0:
         for r in range(rows):
             matrix[r][0] = 0
     
+
+    # if zeroVal = True change all first col to be zero
     if zeroVal:
         for c in range(cols):
             matrix[0][c] = 0
