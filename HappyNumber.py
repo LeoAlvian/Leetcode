@@ -44,14 +44,19 @@ output2 = False
 
 
 def happyNum(n):
+    # uset set to store visited number and to see if the number already calculated
     visited = set()
 
+    # loop until number are 1 or number in visited
     while n not in visited:
+        # add number to visited
         visited.add(n)
         print('visited', visited)
+        # calculate the sum of the squares number
         n = sumOfSquares(n)
         print('n',n)
 
+        # check if it's one, return true otherwise return false
         if n == 1:
             return True
     return False
@@ -59,7 +64,10 @@ def happyNum(n):
 def sumOfSquares(n):
     out = 0
 
+    # loop until n == 0
     while n:
+        # n mod 10 to get the decimal value and then n // 10 to get the remining
+        # add the result to output
         mod = n % 10
         out += mod ** 2
         n = n // 10
