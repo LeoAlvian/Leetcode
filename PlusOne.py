@@ -61,21 +61,27 @@ output = [1,0,0,0,0]
 
 
 def plusOne(digits):
+    # reverse the list so we can do from the end of the list
     digits = digits[::-1]
     carry = 1
 
     while carry:
+        # loop until the end of the list
         for i in range(len(digits)):
+            # check if current digit is 9
             if digits[i] == 9:
                 digits[i] = 0
+            # if not 9 we add one and reset carry also break of the loop immedietly
             else:
                 digits[i] += 1
                 carry = 0
                 break
+        # if we still have carry then we append them to the begining of the list
         if carry:
             digits.append(1)
             carry = 0
     
+    # reverse the list back before we return them
     return digits[::-1]
 
 
