@@ -30,32 +30,52 @@ Thus, the result should be [1,0].
 digits = [9,9,9,9]
 output = [1,0,0,0,0]
 
+# this methods are slower, we gonna make faster one
+
+# def plusOne(digits):
+#     # reverse the list so we can do from the end of the list
+#     digits = digits[::-1]
+#     carry, i = 1, 0
+
+#     # loop while we still have carry
+#     while carry:
+#         # check if i is not out of bound
+#         if i < len(digits):
+#             # check if digits is 9
+#             if digits[i] == 9:
+#                 digits[i] = 0
+#             # if not then we just add them and exit the loop
+#             else:
+#                 digits[i] += 1
+#                 carry = 0
+        
+#         # i out of bound and we still have carry so we add them to the front
+#         # of the list
+#         else:
+#             digits.append(1)
+#             carry = 0
+#         i += 1
+
+#     # reverse it back before we return them
+#     return digits[::-1]
+
 
 def plusOne(digits):
-    # reverse the list so we can do from the end of the list
     digits = digits[::-1]
-    carry, i = 1, 0
+    carry = 1
 
-    # loop while we still have carry
     while carry:
-        # check if i is not out of bound
-        if i < len(digits):
-            # check if digits is 9
+        for i in range(len(digits)):
             if digits[i] == 9:
                 digits[i] = 0
-            # if not then we just add them and exit the loop
             else:
                 digits[i] += 1
                 carry = 0
-        
-        # i out of bound and we still have carry so we add them to the front
-        # of the list
-        else:
+                break
+        if carry:
             digits.append(1)
             carry = 0
-        i += 1
-
-    # reverse it back before we return them
+    
     return digits[::-1]
 
 
