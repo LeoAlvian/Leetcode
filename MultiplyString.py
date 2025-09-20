@@ -32,8 +32,32 @@ num1 = "123"
 num2 = "456"
 output = "56088"
 
+
+# this is not allowed because we convert input directly also if num1 or num2 is a really big number this cannot work because of int 32 bits ro 64 bits
+# def multiplyStr(num1, num2):
+#     return str(int(num1) * int(num2))
+
 def multiplyStr(num1, num2):
-    return str(int(num1) * int(num2))
+    if num1 == '0' or num2 == '0':
+        return '0'
+    
+    num1, num2 = num1[::-1], num2[::-1]
+    res = [0] * (len(num1) + len(num2))
+
+    for i1 in range(len(num1)):
+        for i2 in range(len(num2)):
+            digit = int(num1[i1]) * int(num2[i2])
+            pos = i1 + i2
+            res[pos] += digit
+            res[pos + 1] += res[pos] // 10
+            res[pos] = res[pos] % 10
+    
+    res, zero = res[::-1], 0
+    while zero < len(res) and res[zero] == 0:
+        zero += 1
+    
+    res = map(str, res[zero:])
+    return ''.join(res)
 
 
 
