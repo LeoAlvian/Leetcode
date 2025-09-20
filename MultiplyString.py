@@ -41,9 +41,13 @@ def multiplyStr(num1, num2):
     if num1 == '0' or num2 == '0':
         return '0'
     
+    # reverse the num1 and num2 string
     num1, num2 = num1[::-1], num2[::-1]
     res = [0] * (len(num1) + len(num2))
 
+    # loop through num1 and num2 and multiply them and store them
+    # in the list also deal with the carry and add the number if 
+    # there's is a number on the array of ith
     for i1 in range(len(num1)):
         for i2 in range(len(num2)):
             digit = int(num1[i1]) * int(num2[i2])
@@ -52,11 +56,14 @@ def multiplyStr(num1, num2):
             res[pos + 1] += res[pos] // 10
             res[pos] = res[pos] % 10
     
+    # reverse the res and remove leading zero from the list
     res, zero = res[::-1], 0
     while zero < len(res) and res[zero] == 0:
         zero += 1
     
+    # convert all int in the list without leading zero to str using map
     res = map(str, res[zero:])
+    # convert from list of str to str using join
     return ''.join(res)
 
 
