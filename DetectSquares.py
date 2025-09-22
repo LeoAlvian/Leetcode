@@ -38,19 +38,26 @@ from collections import defaultdict
 
 class DetectSquares:
     def __init__(self):
+        # to store all point in list
         self.points = []
+        # store how many point with the same coordinate ex: [0][2] with x = 0 and y = 2
         self.pointsCount = defaultdict(lambda: defaultdict(int))
     
     def add(self, point):
+        # add all point to points and counts duplicates coordinate
         self.points.append(point)
         self.pointsCount[point[0]][point[1]] += 1
 
     def count(self, point):
         res = 0
         px, py = point
+        # loop through all points and see if we can form a square
         for x, y in self.points:
+            # checking if we can form a square, if x - px is != with y - py
+            # or x == px or y == py then the point is not square then we just skip the loop
             if abs(x - px) != abs(y - py) or x == px or y == py:
                 continue
+            # else we count by multiplying all points that is diagonal to the input
             res += self.pointsCount[x][py] * self.pointsCount[px][y]
         return res
 
