@@ -47,8 +47,14 @@ Follow up: If this function is called many times, how would you optimize it?
 def reverseBits(n):
     res = 0
 
+    # loop through all 32 times because the constrain are 32 bits 
     for i in range(32):
+        # Shift n, ith times and then logic AND it with 1, if the n[i] is 1, 
+        # bit gonna be 1 otherwise bit gonna stay 0
         bit = (n >> i) & 1
+        # Change the bit[31 - i] by shifting it to the right and then logic OR it 
+        # with 1 to change the bit[31 - i] if it 0 to 1 but if it's already 1
+        # we just leave it be
         res = res | (bit << (31 - i))
     
     return res
