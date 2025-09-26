@@ -36,10 +36,22 @@ Follow up: If this function is called many times, how would you optimize it?
 
 # Using bit manipulation by formating the input n to a binary 32 bit as a string
 # and then reverse it back to integer
+# This methods is faster but we didn't learn much about algorithm behind it
 
+# def reverseBits(n):
+#     bit = format(n, '032b')
+#     return int(bit[::-1], 2)
+
+
+# This one we trying to manipulate it and understand what's going on under the hud
 def reverseBits(n):
-    bit = format(n, '032b')
-    return int(bit[::-1], 2)
+    res = 0
+
+    for i in range(32):
+        bit = (n >> i) & 1
+        res = res | (bit << (31 - i))
+    
+    return res
 
 
 n = 2147483644
