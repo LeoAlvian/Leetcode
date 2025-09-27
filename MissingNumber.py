@@ -35,7 +35,11 @@ n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the
 missing number in the range since it does not appear in nums.
 """
 
-
+# This function only works if the number in the list nums doesn't have duplicate 
+# and the number in the list nums doesn't exceed n
+# Example 
+# If the nums = [9,6,13,2,3,5,7,0,1]
+# This not gonna work because there's 13 in there which is > n that is 9
 def missingNumber(nums):
     res = len(nums)
 
