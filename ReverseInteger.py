@@ -27,7 +27,7 @@ def reverInt(x):
     res = 0
     while x:
         digit = int(math.fmod(x, 10))
-        x = int(x // 10)
+        x = int(x / 10)
 
         if res > Max // 10 or (res == Max // 10 and digit >= Max % 10):
             return 0
@@ -38,10 +38,35 @@ def reverInt(x):
     
     return res
 
+# Or we can just handle the positive number and then make it negative on the end if it 
+# is negative and this algorithm are slighly faster
+
+def reverseInt(x):
+    Max = 2**31 - 1
+    flag = False
+    if x < 0:
+        flag = True
+    x = abs(x)
+    res = 0
+
+    while x:
+        digit = x % 10
+        x = x // 10
+        res = (res * 10) + digit
+    
+    if res > Max:
+        return 0
+    elif flag:
+        return -res
+    else:
+        return res
 
 
 
-x = 120
+
+x = -123
 output = 21
 ri = reverInt(x)
 print(ri)
+rsi = reverseInt(x)
+print('Using just positive', rsi)
