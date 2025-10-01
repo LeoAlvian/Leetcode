@@ -23,7 +23,19 @@ Explanation: The array ans is formed as follows:
 """
 
 
-def getConcatetated(nums):
+# Modify the original arr and adding second param x for how many times wew gonna 
+# concatenate the arr
+def getConcatenatedX(nums, x):
+    leng = len(nums)
+
+    for i in range(x - 1):
+        for n in range(leng):
+            nums.append(nums[n])
+    
+    return nums
+
+
+def getConcatenated(nums):
     ans = []
 
     for i in range(2):
@@ -33,8 +45,12 @@ def getConcatetated(nums):
     return ans
 
 
+x = 3
 nums = [1,3,2,1]
 output = [1,3,2,1,1,3,2,1]
-gc = getConcatetated(nums)
+gc = getConcatenated(nums)
 print(gc)
 print(gc == output)
+gcx = getConcatenatedX(nums, x)
+print(gcx)
+print(gcx == output)
