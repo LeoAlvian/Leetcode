@@ -26,10 +26,15 @@ def numWaterBottles(numBottles, numExchange):
     emptyB = numBottles
     res = 0
 
+    # Loop until full bottle are less than 0
     while fullB > 0:    
         res += fullB
+        # Calculate the integer division from empty bottle with numExchange and store it in 
+        # fullB
         fullB = emptyB // numExchange
+        # Calculate emptyB as a mod of emtpyB with numExchange to get the reminder
         emptyB = emptyB % numExchange
+        # Adding emptyB with FullB 
         emptyB = emptyB + fullB
     
     return res
