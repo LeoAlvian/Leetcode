@@ -19,7 +19,7 @@ Follow-up: Could you solve the problem in linear time and in O(1) space?
 """
 
 
-def majorityEl(nums):
+def majorityElHash(nums):
     hashMap = {}
     res, maxCount = 0, 0
 
@@ -31,7 +31,20 @@ def majorityEl(nums):
     return res
 
 
-nums = [2,2,1,1,1,2,2,1,1]
+def majorityEl(nums):
+    res, count = 0, 0
+
+    for n in nums:
+        if count == 0:
+            res = n
+        count += 1 if n == res else -1
+    
+    return res
+
+
+nums = [2,2,1,1,1,2,2]
 output = 2
+meh = majorityElHash(nums)
+print(meh)
 me = majorityEl(nums)
-print(me)
+print('Withouth Hash', me)
