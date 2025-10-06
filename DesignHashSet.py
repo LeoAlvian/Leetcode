@@ -78,6 +78,7 @@ val = [[1], [2], [1], [3], [2], [2], [2], [2]]
 
 res = []
 mhs = MyHashSet()
+# We call each methods one by one manually
 # mhs.add(1)
 # mhs.add(2)
 # res.append(mhs.contains(1))
@@ -87,6 +88,7 @@ mhs = MyHashSet()
 # mhs.remove(2)
 # res.append(mhs.contains(2))
 
+# This getattr method is enable us to call a method of a class using list of string of its method's name without calling it one by one like the example above
 for i in range(len(com)):
     out = getattr(mhs, com[i])(val[i][0])
     res.append(out)
