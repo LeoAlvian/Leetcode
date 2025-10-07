@@ -51,6 +51,7 @@ class MyHashMap:
         while cur.next:
             if cur.next.key == key:
                 cur.next.val = value
+                # Return it immediately so we not gonna add more to a different key
                 return
             cur = cur.next
         cur.next = LinkedList(key, value)
@@ -82,7 +83,11 @@ output = [None, None, 1, -1, None, 1, None, -1]
 res = []
 mhm = MyHashMap()
 for i in range(len(com)):
+    # Convert the list to a touple so we can destructure it because the input 
+    # arguments are varies
     arg = tuple(val[i])
+    # Using getattr do dynamically calling a method
+    # Destruture using *arg 
     res.append(getattr(mhm, com[i])(*arg))
 
 print(res)
