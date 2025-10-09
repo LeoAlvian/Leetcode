@@ -42,16 +42,23 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 def sortColors(nums):
     l, i, r = 0, 0, len(nums) - 1
 
+    # Swap helper function
     def swap(i, j):
         temp = nums[i]
         nums[i] = nums[j]
         nums[j] = temp
 
+    # Loop until i pointer pass or equal to r pointer
     while i <= r:
+        # If nums[i] == 0 we need to swap it to l position and then increment l 
+        # also increment the i becasue we know that on the left are already sorted
         if nums[i] == 0:
             swap(i, l)
             l += 1
             i += 1
+        # If nums[i] == 2 we need to swap it to r position and decrement r 
+        # but we do not increment i becasue if we swap nums[i] == 2 and nums[r] == 0 
+        # we gonna miss swapping it with left element
         elif nums[i] == 2:
             swap(i, r)
             r -= 1
