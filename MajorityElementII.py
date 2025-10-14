@@ -61,9 +61,46 @@ def majorityEl2Hash(nums):
 # and recount how many number the element appear, then we gonna append it to res
 # if the count > len(nums) // 3, then return res
 
+def majorityEl2BoyerMoore(nums):
+    maj1, maj2, count1, count2 = 0, 0, 0, 0
+    n = len(nums)
+
+    for num in nums:
+        if num == maj1:
+            count1 += 1
+        elif num == maj2:
+            count2 += 1
+        elif count1 == 0:
+            maj1 = num
+            count1 = 1
+        elif count2 == 0:
+            maj2 = num
+            count2 = 1
+        else:
+            count1 -= 1
+            count2 -= 1
+    
+    count1, count2 = 0, 0
+    for num in nums:
+        if num == maj1:
+            count1 += 1
+        elif num == maj2:
+            count2 += 1
+    
+    res = []
+    if count1 > n // 3:
+        res.append(maj1)
+    if count2 > n // 3:
+        res.append(maj2)
+    return res
+
 
 nums = [5,2,3,2,2,2,2,5,5,5]
 output = [2,5]
 me2h = majorityEl2Hash(nums)
 print(me2h)
+print(output)
+print('==================')
+me2bm = majorityEl2BoyerMoore(nums)
+print(me2bm)
 print(output)
