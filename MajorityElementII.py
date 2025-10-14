@@ -30,6 +30,8 @@ Follow up: Could you solve the problem in linear time and in O(1) space?
 
 from collections import defaultdict
 
+# This method using hash map and remove element if the lenght of it are exceeding 2
+# and decrease the counter as well
 def majorityEl2Hash(nums):
     count = defaultdict(int)
 
@@ -49,6 +51,15 @@ def majorityEl2Hash(nums):
         if nums.count(n) > len(nums) // 3:
             res.append(n)
     return res
+
+
+# Using Boyer Moore Algorithm to count the majority element with O(1) space complexity
+# this work by counting element that are similar and decrement it if it isn't 
+# and if the count are 0 we gonna replace that element with the new one
+# We gonna use two variable to hold majority number and two variable to hold 
+# the count, after we count the majority element we gonna reset both count to 0
+# and recount how many number the element appear, then we gonna append it to res
+# if the count > len(nums) // 3, then return res
 
 
 nums = [5,2,3,2,2,2,2,5,5,5]
