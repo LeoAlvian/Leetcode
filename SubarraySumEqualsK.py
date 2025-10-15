@@ -23,6 +23,48 @@ Constraints:
 -10,000,000 <= k <= 10,000,000
 """
 
+"""
+[2,-1,1,2]
+count=0
+res=0
+prefix = {0:1}
+
+How to solve
+
+[2,-1,1,2]
+ i
+count= i-k = 2-3 = -1, if -1 in prefix get the count and add it to res else put i to prefix with count 1
+res=0
+prefix = {0:1}
+         {2:1}
+
+[2,-1,1,2]
+    i
+count= i-k = -1-3 = -4, if -4 in prefix get the count and add it to res else put i to prefix with count 1
+res=0
+prefix = { 0:1}
+         { 2:1}
+         {-1:1}
+
+[2,-1,1,2]
+      i
+count= i-k = 1-3 = -2, if -2 in prefix get the count and add it to res else put i to prefix with count 1
+res=0
+prefix = { 0:1}
+         { 2:1}
+         {-1:1}
+         {-2:1}
+
+[2,-1,1,2]
+        i
+count= i-k = 2-3 = -1, if -1 in prefix get the count and add it to res else put i to prefix with count 1
+res=1+{-1:1} = 1 + 1 = 2
+prefix = { 0:1}
+         { 2:1}
+         {-1:1}
+         {-2:1}
+"""
+
 def subArrSumK(nums, k):
     res = 0
     count = 0
