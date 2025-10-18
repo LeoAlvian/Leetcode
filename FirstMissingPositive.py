@@ -33,6 +33,78 @@ Constraints:
 
 1 <= nums.length <= 105
 -231 <= nums[i] <= 231 - 1
+
+
+Solution 2 - 3 loops
+Conceptual Approach to Finding the First Missing Positive Integer
+When faced with the problem of finding the first missing positive integer in an unsorted array, it's crucial to adopt a strategy that efficiently uses both time and space. At first glance, this problem might seem to require sorting the array or using additional memory, but in reality, a more elegant solution exists that operates in linear time and constant space.
+
+Let`s walk through this approach using the input [3, 4, -1, 1].
+
+Core Idea
+The key insight for this problem is that we can use the original array itself to track the presence of positive integers in the range [1, len(nums)].
+By marking certain indices as negative, we can encode the presence of each number without using extra space.
+
+
+
+Step 1: 
+Clean the Array
+Since we only care about integers between 1 and len(nums),
+we first replace all irrelevant values (e.g., negatives, zeros, and numbers greater than len(nums)) in-place with a dummy value (e.g., n + 1), which cannot affect our logic.
+
+For example, starting with [3, 4, -1, 1]:
+
+-1 is not relevant.
+All values > 4 (i.e., len(nums)) are also irrelevant.
+We transform it to: [3, 4, 5, 1]
+(Note: The actual dummy value used is n + 1 = 5, which is out of bounds.)
+
+
+
+Step 2:
+Mark the Presence of Values
+Next, we iterate through the array again.
+For each number num in the array, if 1 <= abs(num) <= n, we use its value to mark the index abs(num) - 1 by making the number at that index negative (only if it’s not already negative).
+
+This marking shows that num exists in the array.
+
+Example:
+From [3, 4, 5, 1], we mark:
+
+3 → index 2 → mark as negative: [3, 4, -5, 1]
+4 → index 3 → mark as negative: [3, 4, -5, -1]
+-5 (was 5) → skip (out of range)
+-1 (was 1) → index 0 → mark as negative: [-3, 4, -5, -1]
+
+
+
+Step 3: 
+Find the First Missing Positive
+Finally, we scan the array from index 0 to n-1.
+The first index i where nums[i] is positive tells us that i + 1 is missing.
+
+In our example: [-3, 4, -5, -1]
+The value at index 1 is still positive → the first missing positive is 2.
+
+If all indices are negative, it means all numbers from 1 to n exist, so the answer is n + 1.
+
+Why This Works
+This method treats the input array as a kind of hash set:
+we use signs (positive/negative) to mark whether a number exists in the array.
+
+Time Complexity: O(n) — each operation (replace, mark, check) is linear
+Space Complexity: O(1) — we don't use any extra space beyond the input array
+Conclusion
+This algorithm efficiently finds the first missing positive integer in three steps:
+
+Clean irrelevant values in-place
+Mark presence using index negation
+Scan to find the first positive index
+By using the array itself as a tracking mechanism, we avoid extra space and achieve optimal performance.
+
+Complexity
+Time complexity: O(n)
+Space complexity: O(1)
 """
 
 def firstMissingPositive(nums):
