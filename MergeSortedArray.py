@@ -50,6 +50,9 @@ Follow up: Can you come up with an algorithm that runs in O(m + n) time?
 
 
 def mergeSortedArray(nums1, m, nums2, n):
+    # Using i as last index on nums1 and then replace whatever value in it with the 
+    # biggest of last value between nums1 and nums2 and then decrease m by 1 if nums1 
+    # bigger otherwise decrease n by 1
     i = m + n - 1
 
     while m > 0 and n > 0:
@@ -61,6 +64,8 @@ def mergeSortedArray(nums1, m, nums2, n):
             n -= 1
         i -= 1
     
+    # Edge case if the beginning value in nums2 are smaller than the beginning value 
+    # in nums1
     while n > 0:
         nums1[i] = nums2[n - 1]
         n -= 1
