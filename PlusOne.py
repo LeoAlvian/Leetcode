@@ -27,9 +27,6 @@ Thus, the result should be [1,0].
 """
 
 
-digits = [9,9,9,9]
-output = [1,0,0,0,0]
-
 # this methods are slower, we gonna make faster one
 
 # def plusOne(digits):
@@ -85,5 +82,8 @@ def plusOne(digits):
     return digits[::-1]
 
 
+
+digits = [9,9,9,9]
+output = [1,0,0,0,0]
 res = plusOne(digits)
 print(res)

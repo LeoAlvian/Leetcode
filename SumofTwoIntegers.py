@@ -129,6 +129,6 @@ def getSum(a, b):
 
 a = -2
 b = 3
-output = 5
+output = 1
 res = getSum(a, b)
 print('result', res)
