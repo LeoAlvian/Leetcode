@@ -38,31 +38,44 @@ Try to come up with as many solutions as you can. There are at least three diffe
 Could you do it in-place with O(1) extra space?
 """
 
+
+# Modify nums in place with O(1) space complexity and O(n) times complexity
 def rotateArr(nums, k):
 
-    def rotate(l, r):
+    # Helper functoin to reverse the list
+    def reverse(l, r):
         while l < r:
             nums[l], nums[r] = nums[r], nums[l]
             l, r = l + 1, r - 1
 
+    # Mod k in case k is bigger than len nums
     k = k % len(nums)
 
+    # Rotate all nums so 
+    # nums = [1,2,3,4,5,6,7] 
+    # nums = [7,6,5,4,3,2,1]
     l, r = 0, len(nums) - 1
-    rotate(l, r)
+    reverse(l, r)
 
+    # Rotate nums from the start to k - 1 because it is inclusive
+    # nums = [7,6,5,4,3,2,1]
+    # nums = [5,6,7,4,3,2,1]
     l, r = 0, k - 1
-    rotate(l, r)
+    reverse(l, r)
 
+    # Rotate nums from k to end of nums - 1
+    # nums = [5,6,7,4,3,2,1]
+    # nums = [5,6,7,1,2,3,4]
     l, r = k, len(nums) - 1
-    rotate(l, r)
+    reverse(l, r)
 
     return nums
 
 
 
-nums = [-1,-100,3,99]
-k = 2
-output = [3,99,-1,-100]
+nums = [1,2,3,4,5,6,7]
+k = 3
+output = [5,6,7,1,2,3,4]
 ra = rotateArr(nums, k)
 print(output)
 print(ra)
