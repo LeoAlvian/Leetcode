@@ -59,6 +59,48 @@ def boatSave(people:list, limit:int):
     people.sort()
     boat = 0
 
+    # Two pointer algorigthm
+    l, r = 0, len(people) - 1
+    while l <= r:
+        remain = limit - people[r]
+        r -= 1
+        boat += 1
+        if l <= r and remain >= people[l]:
+            l += 1
+    
+    return boat
+
+
+def boatSaveSort(people:list, limit:int):
+    m = max(people)
+    count = [0] * (m + 1)
+    boat = 0
+
+    # Manual sorting
+    # count how many people weight occur
+    # ex
+    # people = [1,3,2,3,2]
+    # count = [0,1,2,2] -> 1 appears 1 times, 2 appears 2  times, 3 appears 2 times
+    #            1,2,3
+    for p in people:
+        count[p] += 1
+    
+
+    
+    # put that many people weight occurance in a people list
+    # ex
+    # people = [1,3,2,3,2] from this arr to the sorted below
+    # people = [1,2,2,3,3]
+    idx, ic = 0, 1
+    while idx < len(people):
+        while count[ic] == 0:
+            ic += 1
+        people[idx] = ic
+        count[ic] -= 1
+        idx += 1
+
+    
+    # Two pointer algorigthm
     l, r = 0, len(people) - 1
     while l <= r:
         remain = limit - people[r]
@@ -75,4 +117,8 @@ limit = 3
 output = 4
 bs = boatSave(people, limit)
 print(bs)
+print(output)
+
+bss = boatSaveSort(people, limit)
+print(bss)
 print(output)
