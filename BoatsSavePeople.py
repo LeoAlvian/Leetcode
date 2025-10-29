@@ -37,6 +37,24 @@ Constraints:
 1 <= people[i] <= limit <= 30,000
 """
 
+
+# Sort the people list and use greedy approach to solve this problem 
+# ex 
+# people = [1,3,2,3,2], limit 3
+# people = [1,2,2,3,3] -> sorted
+# Using two pointer left and right 
+# 
+# people = [1,2,2,3,3]   -> remain = limit - people[r] = 3 - 3 = 0
+#           l       r       check if remind bigger or equal to people[l] if yes
+#                           we increment left and add 1 to boat, boat = 1
+# people = [1,2,2,3,3]   -> remain = 3 - 3 = 0
+#           l     r         boat = 2
+# people = [1,2,2,3,3]   -> remain = 3 - 2 = 1
+#           l   r           because remining is equal to people[l], increment left
+#                           boat = 3
+# people = [1,2,2,3,3]   -> remain = 3 - 3 = 0
+#             lr            boat = 4
+# because l and r are in the same position return boat
 def boatSave(people:list, limit:int):
     people.sort()
     boat = 0
