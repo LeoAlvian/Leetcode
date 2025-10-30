@@ -24,7 +24,21 @@ Constraints:
 s and t consist of lowercase English letters.
 """
 
-
+# We use hashMap and map how many occurance of each character in string s and
+# string t and then if all the count match that means we have a valid anagram
+# Ex
+# s = "racecar"
+# t = "carrace"
+#
+#        s                    t
+# _________________   _________________
+# | char  | count |   | char  | count |
+# |---------------|   |---------------|
+# |   r   |   2   |   |   r   |   2   |
+# |   a   |   2   |   |   a   |   2   |
+# |   c   |   2   |   |   c   |   2   |
+# |   e   |   1   |   |   e   |   1   |
+# |---------------|   |---------------|
 def validAnagram(s, t):
     if len(s) != len(t):
         return False
@@ -40,6 +54,12 @@ def validAnagram(s, t):
 
     return True
 
+def validAnagramSort(s, t):
+    if len(s) != len(t):
+        return False
+    
+    return sorted(s) == sorted(t)
+
 
 s = "racecar"
 t = "carrace"
@@ -47,3 +67,5 @@ output = True
 va = validAnagram(s, t)
 print(va)
 print(output)
+vas = validAnagramSort(s, t)
+print('sort', vas)
