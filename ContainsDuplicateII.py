@@ -63,9 +63,22 @@ def containsDuplicateII(nums, k):
     return False
 
 
+# Using hashmap is slightly faster but the core algorith are still the same
+def containDuplicateIIHashMap(nums, k):
+    hash = {}
+    
+    for i, n in enumerate(nums):
+        if n in hash and i - hash[n] <= k:
+            return True
+        hash[n] = i
+    return False
+
+
 nums = [1,0,1,1]
 k = 1
 output = True
 cd = containsDuplicateII(nums, k)
 print(cd)
 print(output)
+cdh = containDuplicateIIHashMap(nums, k)
+print(cdh)
