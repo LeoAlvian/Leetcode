@@ -34,7 +34,28 @@ Constraints:
 Follow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).
 """
 
-
+# Using sliding windows algorithm to solve this problem
+# Ex
+# target = 7
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 0 + 2 = 2 
+#         lr                  -> if total >= target we remove nums[l] and increment l
+#                             -> else increment r
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 2 + 3 = 5 
+#         l  r 
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 5 + 1 = 6
+#         l     r
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 6 + 2 = 8 
+#         l        r          -> now total >= target remove nums[l] from total and 
+#                             -> increment l so total = 8 - 2 = 6
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 6 + 4 = 10 
+#            l        r       -> now total >= target remove nums[l] from total and 
+#                             -> increment l so total = 10 - 3 = 7
+# nums = [2, 3, 1, 2, 4, 3]   -> add nums[r] to total -> total = 7 + 3 = 10 
+#               l        r    -> now total >= target remove nums[l] from total and 
+#                             -> increment l so total = 10 - 1 = 9
+# nums = [2, 3, 1, 2, 4, 3] 
+#                     l  r    -> now total >= target remove nums[l] from total and 
+#                             -> increment l so total = 9 - 2 = 7
 
 
 def minSizeSubSum(nums, target):
