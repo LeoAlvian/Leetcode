@@ -29,11 +29,25 @@ arr is sorted in ascending order.
 -104 <= arr[i], x <= 104
 """
 
+
+# Using sliding windows algorithm and binary search to find the closest to x
+# arr = [1,2,3,4,5], k = 4, x = 3
+# output = [1,2,3,4]
+# Ex
+# arr = [1, 2, 3, 4, 5]  -> calculate mid point mid = (l + r) // 2 = 0
+#        lm  r           -> calcualte if x - arr[m] > arr[m+k] - x = 3 - 1 > 5 - 3
+#                        -> if not then slide r to be mid
+# arr = [1, 2, 3, 4, 5]  -> mid = 0 + 2 // 2 = 1
+#        lr              -> calculate = 3 - 2 > 4 - 3
+# Exit loop cause l == r
+# return arr[l:l+k]
+
 def KClosestEl(arr, k, x):
     l, r = 0, len(arr) - k
 
     while l < r:
         mid = (l + r) // 2
+        print(l,mid, r, x - arr[mid], arr[mid+k] - x)
         if x - arr[mid] > arr[mid + k] - x:
             l = mid + 1
         else:
