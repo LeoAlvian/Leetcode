@@ -39,6 +39,46 @@ At most 104 calls will be made to next.
 """
 
 
+# Using stack data structure
+# We need to compare the price with every previous price that is lower or equal but
+# we don't really need to check all because we gonna use stack and store pair of price
+# and span of previous stock, if the are smaller or equal we add span and pop previous # price from stack keep doing it until the previous stock are larger and 
+# we add it to stack and then return span
+# Ex
+# [100, 80, 60, 70, 60, 75, 85]
+# [  1,  1,  1,  2,  1,  4,  6]
+# 
+#   i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1)]
+# [  1,  1,  1,  2,  1,  4,  6]
+#
+#        i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(80,1)]
+# [  1,  1,  1,  2,  1,  4,  6]
+#
+#            i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(80,1),(60,1)]
+# [  1,  1,  1,  2,  1,  4,  6]
+#
+#                i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(80,1),(70,2)]
+# [  1,  1,  1,  2,  1,  4,  6]  -> because 60 is <= 70, we add span and 80 > so we
+# push 70 with span of 2 to the stack
+#
+#                    i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(80,1),(70,2),(60,1)]
+# [  1,  1,  1,  2,  1,  4,  6]  
+#
+#                        i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(80,1),(75,4)]
+# [  1,  1,  1,  2,  1,  4,  6]  -> because 60,70 is <= 75, we keep adding span until
+# previous price is bigger which is 80, push 75 with span of 4 to the stack
+#
+#                            i
+# [100, 80, 60, 70, 60, 75, 85]  -> stack = [(100,1),(85,6)]
+# [  1,  1,  1,  2,  1,  4,  6]  -> because 75,80 is <= 85, we keep adding span until
+# previous price is bigger which is 100, push 85 with span of 6 to the stack
+
 class StockSpan:
 
     def __init__(self):
