@@ -101,8 +101,37 @@ def simplifyPath(path):
     
     return '/' + '/'.join(stack)
 
+
+# Using split is faster and more intuitive because we don't need to iterate through
+# all characters in path, we just need to go through all commands/words in path
+#
+# Ex
+#
+# path = "/.../a/../b/c/../d/./"    -> we use path.split('/')
+# commands = ['', '...', 'a', '..', 'b', 'c', '..', 'd', '.', '']
+# Now we just need to check if there is . or .. in there and perform operation 
+# accordingly and then join them at the end before we return it
+# return '/' + '/'.join(stack)
+def simplifyPathSplit(path):
+    commands = path.split('/')
+    stack = []
+
+    for c in commands:
+        if c == '' or c == '.':
+            continue
+        elif c == '..':
+            if stack:
+                stack.pop()
+        else:
+            stack.append(c)
+    
+    return '/' + '/'.join(stack)
+
 path = "/.../a/../b/c/../d/./"
 output = "/.../b/d"
 sp = simplifyPath(path)
+sps = simplifyPathSplit(path)
 print(sp)
 print(output)
+print('------------')
+print(sps)
