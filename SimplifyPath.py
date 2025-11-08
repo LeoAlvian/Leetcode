@@ -77,6 +77,13 @@ path is a valid absolute Unix path.
 """
 
 
+# We using Stack data structure
+# we iterate through all characters in path
+# for c in path, if c != / then add c to fileNames
+# if c == / which means we find a new path then we check if fileNames == .. 
+# if yes we check if stack is non empty if yes we pop from the stack
+# else if fileNames not empty and fileNames != . we add fileNames to stack
+# after we perfom that we empty fileNames
 def simplifyPath(path):
     stack = []
     fileNames = ''
