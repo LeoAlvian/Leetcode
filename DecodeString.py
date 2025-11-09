@@ -37,7 +37,24 @@ s is guaranteed to be a valid input.
 All the integers in s are in the range [1, 300].
 """
 
-
+# Using Stack data structure
+#
+# We gonna add every character that is not ']' to the stack, when we find ']'
+# we pop every character until we find '[' and add it to substr
+# then we pop every character that is int after '[' and add it to k
+# then we multiply k with substr and add it back to the stack until the end of the list
+#
+# Ex
+#
+# s = "3[a2[c]]"
+# stack = ['3', '[', 'a', '2', '[', 'c', ]   -> we find ']'
+# we keep popping from the stack until we find '[' and then we popping until int and 
+# multiply them 
+# substr = c, k = 2  -> 2 * c = cc
+# stack = ['3', '[', 'a', 'cc', ]   -> we find ']'
+# we keep popping from the stack until we find '[' and then we popping until int and 
+# multiply them 
+# substr = acc, k = 3  -> 3 * acc = accaccacc
 def decodeStr(s):
     stack = []
 
