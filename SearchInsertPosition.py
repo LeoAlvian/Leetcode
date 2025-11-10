@@ -35,7 +35,14 @@ nums contains distinct values sorted in ascending order.
 -104 <= target <= 104 
 """
 
-
+# We gonna use Binary search since it require us to have O(log n) time complexity
+#
+# nums = [1,3,5,6]  , target = 7  , output = 4
+#         l m   r     -> we gonna loop while l <= r then calculate middle part
+#                     -> since l = 0, r = 3, m = 0 + 3 // 2 
+#                     -> check if nums[mid] == target if yes return mid else
+#                     -> if nums[mid] < target then l = mid + 1 else r = mid - 1 
+#                     -> then return l
 def searchInsertPos(nums, target):
     l, r = 0, len(nums) - 1
 
