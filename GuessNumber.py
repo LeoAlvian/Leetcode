@@ -30,11 +30,17 @@ Example 3:
 Input: n = 2, pick = 1
 Output: 1
 """
-pick = 16
-def guess(n, tpick = pick):
-    if n == tpick:
+
+
+
+# Using Binary search to optimize time complexity to O(logn)
+# guess API that return 0 if the guess are correct, -1 if it's too high or 1 if it's 
+# too low
+def guess(n):
+    pick = 16
+    if n == pick:
         return 0
-    elif n > tpick:
+    elif n > pick:
         return -1
     else:
         return 1
