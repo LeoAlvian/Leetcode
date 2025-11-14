@@ -33,7 +33,30 @@ nums is guaranteed to be rotated at some pivot.
 """
 
 
+# Use nested Binary search algorithm
+
+# we gonna search using normal binary search with a catch, which is if the middle 
+# part is bigger which means we are on the left side of the arr but if middle 
+# is smaller we are in the right side, but also if middle are equal which means 
+# there is duplicate and we need to keep inrement l until it is not equal
+# When we are on the left side we need to check if nums[l] <= target < nums[mid] 
+# if yes we need to change r = mid - 1 else change l = mid + 1
+# But if we are on the right side of the arr and nums[mid] < target <= nums[r],
+# change l = mid + 1 else change r = mid - 1
+#
+# Ex
+# nums = [2,5,6,0,0,1,2], target = 0
+#
+# nums = [2,5,6,0,0,1,2]  -> nums[m] == 0
+#         l   m       r   -> nums[l] < nums[m]
+#                            if nums[l] <= target < nums[m]
+#                            2 <= 0 < 6, NO l = mid + 1       
+# nums = [2,5,6,0,0,1,2]  -> nums[m] == 0, yes then return True
+#               l m   r
+
 def searchRotatedSortedArray(nums, target):
+    # There is faster way but we used set and this is not recomended for interview
+    # return True if target in Set(nums) else False
     l, r = 0, len(nums) - 1
 
     while l <= r:
