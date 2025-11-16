@@ -32,12 +32,65 @@ class LinkedList():
 
 class Solution:
     def reverseLinkedList(self, head, l, r):
+        # Create dummy node that point at the head to make it easier to code
         dummyNode = LinkedList(0, head)
 
+        # Loop until we reach the left part of the node
+        #                l             r
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        # prefL  cur
+        #
+        #                l             r
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prefL  cur
         prevLeft, cur = dummyNode, head
         for i in range(l - 1):
             prevLeft, cur = cur, cur.next
         
+        # Then we reverse the r - l + 1 part of the linked list by using prev that is 
+        # none and point cur to prev and change prev to cur and cur to cur.next so the 
+        # pointer shifted by one and we gonna keep changing the direction of linked 
+        # list until we reached the end
+        #
+        #           we want to reverse this part
+        #               l              r
+        #        prev = [None]
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prevL  cur
+
+        #               l              r
+        #       [None]<-[2]    [3] -> [4] -> [5]
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prevL  prev   cur
+        #
+        #               l              r
+        #       [None]<-[2] <- [3]    [4] -> [5]
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prevL         prev   cur
+        #
+        #               l              r
+        #      [None] <-[2] <- [3] <- [4]    [5]
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prevL                prev   cur
+        #
+        # Now we done reversing until right position, we need to reconnect that to the 
+        # original linked list by pointing prevL.next.next which point at node [2].
+        # next to [5] which is cur right now and prevL.next to [4] which is prev rn 
+        #
+        #               l              r
+        #        [5] <- [2] <- [3] <- [4]    [5]
+        # node = [1] -> [2] -> [3] -> [4] -> [5]
+        # dummy->head
+        #        prevL -> [5]         prev   cur
+
+        # node = [1] -> [4] -> [3] -> [2] -> [5]
+        # The return the head which is dummy.next
         prev = None
         for i in range(r - l + 1):
             temp = cur.next
