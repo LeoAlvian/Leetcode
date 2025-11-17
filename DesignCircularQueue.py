@@ -46,6 +46,49 @@ Constraints:
 At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and isFull.
 """
 
+
+# We are using Singly LinkedList data structure to solve this problems, we can also 
+# use Doubly LinkedList we gonna use less if statement but more also adding prev to 
+# the LinkedList object
+#
+# Ex
+#
+# Initiation took O(n) time complexity
+# k = 3
+#     []    ->     []     ->      []
+# head/tail
+# 
+# enQueue(1)
+#    [1]    ->     []      ->      []    -> return True because we can add to the list
+# head/tail
+#
+# enQueue(2)
+#    [1]    ->     [2]     ->      []    -> return True because we can add to the list
+#    head          tail
+#
+# enQueue(3)
+#    [1]    ->     [2]     ->      [3]   -> return True because we can add to the list
+#    head                          tail
+#
+# enQueue(4)
+#    [1]    ->     [2]     ->      [3]   -> return False, we can't add to the list
+#    head                          tail
+#
+# Rear()/tail   -> return 3 because tail.val is 3
+#
+# isFull()      -> return True because the list is full
+#
+# deQueue()     -> return True because we can delete from list
+#    []    ->     [2]     ->      [3]   -> return False, we can't add to the list
+#                 head            tail
+#
+# enQueue(4)
+#    [4]    ->     [2]     ->      [3]   -> return True, we can add to the list
+#    tail          head        
+# 
+# Rear()/tail    -> return 4 because tail.val is 4
+#      
+
 class LinkedList:
     def __init__(self, val):
         self.val = val
