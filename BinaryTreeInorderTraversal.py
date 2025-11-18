@@ -36,7 +36,9 @@ class Node:
         self.right = right
 
 class Solution:
-    def inorderTraversal(self,root):
+    # This using recursive function which is trivial, but we are requested if
+    # we can do it iteratively 
+    def inorderTraversal(self, root):
         res = []
 
         def inorder(node):
@@ -48,6 +50,24 @@ class Solution:
             inorder(node.right)
         
         inorder(root)
+        return res
+    
+    # Iterative solution
+    # Using stack to store the node that we currently in
+
+    def inorderTravIterative(self, root):
+        res = []
+        stack = []
+        cur = root
+
+        while cur or stack:
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+            cur = stack.pop()
+            res.append(cur.val)
+            cur = cur.right
+        
         return res
 
 
@@ -67,5 +87,7 @@ root.right.right = Node(7)
 
 s = Solution()
 res = s.inorderTraversal(root)
-print(res)
-print(output)
+res2 = s.inorderTravIterative(root)
+print('Using recursive:', res)
+print('Using iterative:', res2)
+print('Output:', output)
