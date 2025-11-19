@@ -33,6 +33,69 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 """
 
 
+# We using iterative solution because recursive is trivial         
+# list = [1,2,3,4,5,6,7]
+#
+#           Tree
+#           [1] 
+#         /     \
+#       [2]     [3]
+#      /   \   /   \
+#    [4]  [5] [6]  [7]
+#
+# Preorder
+# 
+#           Tree
+#      ->   [1]           res = [1]
+#         /     \         stack = [[3]]
+#       [2]     [3]
+#      /   \   /   \
+#    [4]  [5] [6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2]
+#         /     \         stack = [[3],[5]]
+#    -> [2]     [3]
+#      /   \   /   \
+#    [4]  [5] [6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2,4]
+#         /     \         stack = [[3],[5],[N]]
+#       [2]     [3]
+#      /   \   /   \
+# -> [4]  [5] [6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2,4,5]
+#         /     \         stack = [[3],[N]]
+#       [2]     [3]
+#      /   \   /   \
+#    [4]->[5] [6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2,4,5,3]
+#         /     \         stack = [[7]]
+#       [2]  -> [3]
+#      /   \   /   \
+#    [4]  [5] [6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2,4,5,3,6]
+#         /     \         stack = [[7],[N]]
+#       [2]      [3]
+#      /   \    /   \
+#    [4]  [5]->[6]  [7]
+#
+#           Tree
+#           [1]           res = [1,2,4,5,3,6,7]
+#         /     \         stack = []
+#       [2]      [3]
+#      /   \    /   \
+#    [4]  [5] [6] ->[7]
+
+
+
 class Node:
     def __init__(self, val):
         self.val = val
