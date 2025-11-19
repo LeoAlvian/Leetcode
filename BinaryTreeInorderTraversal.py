@@ -77,13 +77,14 @@ class Solution:
 list = [1,2,3,4,5,6,7]
 output = [4,2,5,1,6,3,7]
 
+list = [1,2,3,None,4,5,None]
+output = [2,4,1,5,3]
+
 root = Node(1)
 root.left = Node(2)
-root.left.left = Node(4)
-root.left.right = Node(5)
 root.right = Node(3)
-root.right.left = Node(6)
-root.right.right = Node(7)
+root.left.right = Node(4)
+root.right.left = Node(5)
 
 s = Solution()
 res = s.inorderTraversal(root)
