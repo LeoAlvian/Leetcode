@@ -50,6 +50,36 @@ root is a valid binary search tree.
 Follow up: Could you solve it with time complexity O(height of tree)?
 """
 
+
+# root = [5,3,6,2,4,null,7], key = 3
+# Output: [5,4,6,2,null,null,7]
+#
+#            [5]
+#          /     \
+#       [3]     [6]
+#       /   \       \
+#     [2]   [4]     [7]
+#
+#            [5]
+#          /     \
+#        [4]     [6]
+#       /           \
+#     [2]           [7]
+# 
+# We check if root is None
+# if key < root.val: using recursive to deleteBST to the left 
+# elif key > root.val: using recursive to deleteBST to the right
+# else: 
+# if root.left is None: return root.right
+# elif root.right is None: return root.left
+# assign cur = root.right
+# traverse through the left side until reach the end of the tree
+# while cur.left: cur = cur.left
+# assign root.val = cur.val
+# call recursive function to delete the cur node that we move to the root
+# root.right = deleteBST(root.right, root.val)
+# return root
+
 class Node:
     def __init__(self, val):
         self.val = val
