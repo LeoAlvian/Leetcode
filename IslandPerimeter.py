@@ -62,6 +62,24 @@ def islandParimeterDFS(grid):
     
     return 0
 
+# Using Math and iterative solution which is 5x faster than dfs algorithm
+def islandParimeterMath(grid):
+    ROWS, COLS = len(grid), len(grid[0])
+    parim = 0
+
+    for r in range(ROWS):
+        for c in range(COLS):
+            if grid[r][c] == 1:
+                parim += 4
+                #check if top is land, if yes then subtract 2
+                if r > 0 and grid[r - 1][c] == 1:
+                    parim -= 2
+                #check if left is land, if yes then subtract 2
+                if c > 0 and grid[r][c - 1] == 1:
+                    parim -= 2
+    
+    return parim
+
 
 grid = [
     [0,1,0,0],
@@ -71,6 +89,7 @@ grid = [
 output = 16
 
 res = islandParimeterDFS(grid)
+res2 = islandParimeterMath(grid)
 print(res)
-
+print(res2)
 print(output)
