@@ -40,6 +40,23 @@ At most 2 * 104 calls will be made to push and pop.
 It is guaranteed that there will be at least one element in the stack before calling pop.
 """
 
+
+# We gonna use three variable to keep track of max count, count of each number and 
+# stacks of list of each number in relation to it's count
+#
+# Ex
+#
+# [5, 7, 5, 7, 4, 5]
+# maxC = 3 because 5 appear 3 times
+# count = {5:3, 7:2, 4:1}  -> how many times the number appears
+# stacks = { cnt | Group
+#             1:  [5,7,4]
+#             2:  [5,7]     -> we need to add in sequence so when we pop it we gonna 
+#             3:  [5]          pop it from the top
+#          }
+# If we pop all element it's gonna be like this
+# output = [5, 7, 5, 4, 7, 5]
+
 class FreqStack:
     def __init__(self):
         self.cnt = {}
