@@ -57,7 +57,7 @@ It is guaranteed that there will be at least one element in the stack before cal
 # If we pop all element it's gonna be like this
 # output = [5, 7, 5, 4, 7, 5]
 
-class FreqStack:
+class freqStack:
     def __init__(self):
         self.cnt = {}
         self.maxC = 0
@@ -79,11 +79,10 @@ class FreqStack:
             self.maxC -= 1
         return res
 
-
 ops = ["push", "push", "push", "push", "push", "push", "pop", "pop", "pop", "pop"]
 args = [[5], [7], [5], [7], [4], [5], [], [], [], []]
 output = [None, None, None, None, None, None, 5, 7, 5, 4]
-fs = FreqStack()
+fs = freqStack()
 res = []
 for i in range(len(ops)):
     res.append(getattr(fs, ops[i])(*args[i]))
