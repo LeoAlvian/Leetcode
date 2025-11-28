@@ -53,10 +53,8 @@ def splitArrLargestSum(nums, k):
 
     while l < r:
         mid = l + ((r - l) // 2)
-        print(mid)
         if canSplit(mid):
             res = mid
-            print(res)
             r = mid - 1
         else:
             l = mid + 1
