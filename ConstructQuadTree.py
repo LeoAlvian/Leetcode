@@ -100,6 +100,21 @@ class Solution:
 
         return dfs(len(grid), 0, 0)
     
+    def printTree(self,root):
+        res = []
+        def dfs(root):
+            if not root:
+                return
+
+            topleft = dfs(root.topLeft)
+            topright = dfs(root.topRight)
+            bottomleft = dfs(root.bottomLeft)
+            bottomright = dfs(root.bottomRight)
+
+            res.append([root.val, root.isLeaf])
+            
+            return [root.val, root.isLeaf]
+        return (dfs(root), res)
 
 grid = [
     [1,1,1,1,0,0,0,0],
@@ -115,4 +130,6 @@ output = [[0,1],[1,1],[0,1],[1,1],[1,0],None,None,None,None,[1,0],[1,0],[1,1],[1
 s = Solution()
 root = s.ConstructQuadTree(grid)
 print(root)
+_, res = s.printTree(root)
+print(res)
 print(output)

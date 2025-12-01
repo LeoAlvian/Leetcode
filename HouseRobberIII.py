@@ -36,6 +36,23 @@ The number of nodes in the tree is in the range [1, 104].
 0 <= Node.val <= 104
 """
 
+
+
+# list = [3,4,5,1,3,None,1]
+# output = 9
+#             [3]
+#           /     \
+#         [4]     [5]    -> we want to take this node which is 4 + 5 = 9
+#        /   \       \
+#      [1]   [3]     [1]
+#
+# go throuh dfs and use a slot of list that keep track of the max if we calculate with 
+# root or without root, if we calculate with root we need to skip its direct children
+# to go around this we gonna use [withRoot, withoutRoot] pair
+# with root we gonna use dfs with root which is root.val + left[1] + right[1]
+# without root we can take the max of [withRoot, withoutRoot] from its children
+# edge case is if root is None then we gonna return [0, 0]
+
 class Node:
     def __init__(self, val):
         self.val = val
