@@ -103,7 +103,7 @@ class Node:
         self.right = None
 
 class Solution:
-    def preorderTraversal(self, root):
+    def preorderTraversalIterative(self, root):
         res = []
         stack = []
         cur = root
@@ -117,9 +117,27 @@ class Solution:
                 cur = stack.pop()
         
         return res
+    
+    def preorderTraversal(self, root):
+        res = []
+        
+        def preorder(node):
+            if not node:
+                return
+
+            res.append(node.val)
+            preorder(node.left)
+            preorder(node.right)
+
+        preorder(root)
+        return res
 
 
-
+#            [1]
+#         /       \
+#       [2]       [3]
+#     /     \   /     \
+#   [4]    [5] [6]    [7]
 list = [1,2,3,4,5,6,7]
 output = [1,2,4,5,3,6,7]
 
@@ -132,6 +150,6 @@ root.right.left = Node(6)
 root.right.right = Node(7)
 
 s = Solution()
-res = s.preorderTraversal(root)
+res = s.preorderTraversalIterative(root)
 print(res)
 print(output)
