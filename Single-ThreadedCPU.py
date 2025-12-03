@@ -55,6 +55,27 @@ tasks.length == n
 1 <= enqueueTimei, processingTimei <= 109
 """
 
+# tasks = [[1,2],[1,1],[2,4],[3,2],[4,1]]
+# output = [1, 0, 2, 3, 4]
+# tasks[i] = [enqueueTimei, processingTimei] 
+#
+# We gonna use minHeap to solve this problem
+# First we gonna add the third value to the tasks, which is its own index because 
+# we need to sort the tasks but we need to original index so the new tasks would look
+# like this
+# tasks = [[1,2,0],[1,1,1],[2,4,2],[3,2,3],[4,1,4]]
+# Then we gonna loop through sorted tasks and put it in minHeap if the time to process
+# match the enqueueTime, after we process the tasks we append index to the result and 
+# return it
+#
+# Ex: tasks = [[1,2,0],[1,1,1],[2,4,2],[3,2,3],[4,1,4]]
+#
+# minHeap [[1, 2, 0]]                       -> time = 1, res = []
+# minHeap [[1, 1, 1], [1, 2, 0]]            -> time = 1 + 1 = 2, res = [1]
+# minHeap [[1, 2, 0], [2, 4, 2]]            -> time = 2 + 2 = 4, res = [1, 0]
+# minHeap [[2, 4, 2], [3, 2, 3]]            -> time = 4 + 4 = 8, res = [1, 0, 2]
+# minHeap [[2, 4, 2], [3, 2, 3], [4, 1, 4]] -> time = 8 + 2 = 10, res = [1, 0, 2, 3, 4]
+
 import heapq
 
 
@@ -83,7 +104,7 @@ def singleThreadedCPU(tasks):
         
 
 tasks = [[1,2],[1,1],[2,4],[3,2],[4,1]]
-output = [1, 0, 4, 3, 2]
+output = [1, 0, 2, 3, 4]
 stc = singleThreadedCPU(tasks)
 print(stc)
 print(output)
