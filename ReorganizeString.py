@@ -34,6 +34,53 @@ Constraints:
 s is made up of lowercase English characters.
 """
 
+
+# We gonna use maxHeap(in python only minHeap but we can get around it by making the 
+# value negative) to solve this problem
+# First we gonna count how many char appear using Counter method and then put that 
+# into a maxHeap, the pop value from maxHeap and add char to result, after that we 
+# gonna put that value on hold because we don't want to add the same element twice in 
+# a row, after we add another value then we gonna change hold to the new one
+#
+# Ex:
+#
+# s = "abbccdd"
+# Counter({'b': 2, 'c': 2, 'd': 2, 'a': 1})
+# maxHeap = [[-2, 'b'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-2, 'c'],      [-2, 'b']
+#            [-2, 'd'],      res = 'b', cnt = -1, onHold = [-1, 'b']
+#            [-1, 'a']]
+#
+# maxHeap = [[-2, 'c'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-2, 'd'],      [-2, 'c']
+#            [-1, 'a'],      res = 'bc', cnt = -1, push onHold, onHold = [-1, 'c']
+#            [-1, 'b']]
+#
+# maxHeap = [[-2, 'd'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-1, 'a'],      [-2, 'd']
+#            [-1, 'b'],      res = 'bcd', cnt = -1, push onHold, onHold = [-1, 'd']
+#            [-1, 'c']]
+#
+# maxHeap = [[-1, 'a'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-1, 'b'],      [-1, 'a']
+#            [-1, 'c'],      res = 'bcda', cnt = -1, push onHold, onHold = None
+#            [-1, 'd']]
+#
+# maxHeap = [[-1, 'b'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-1, 'c'],      [-1, 'b']
+#            [-1, 'd'],      res = 'bcdab', cnt = -1, push onHold, onHold = None
+#          
+# maxHeap = [[-1, 'c'],   -> pop this one and add to res and onHold if cnt != 0
+#            [-1, 'd']]      [-1, 'c']
+#                            res = 'bcdabc', cnt = -1, push onHold, onHold = None
+#       
+# maxHeap = [[-1, 'd']]   -> pop this one and add to res and onHold if cnt != 0
+#                            [-1, 'd']
+#                            res = 'bcdabcd', cnt = -1, push onHold, onHold = None
+# 
+# Now maxHeap are [] so we return res if onHold is None else retrun empty string
+
+
 from collections import Counter
 import heapq
 
