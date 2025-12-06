@@ -39,6 +39,10 @@ trips[i].length == 3
 
 import heapq
 
+# Using minHeap in python is gonna be O(nlogn) time complexity but if the input are 
+# low in this case from 0 to 1000, then we can use a brute force method which gonna 
+# give us O(n) time complexity
+
 def carPooling(trips, cap):
     trips.sort( key = lambda t : t[1] )
     minHeap = [] # Store [end, numPas]
@@ -57,10 +61,29 @@ def carPooling(trips, cap):
     
     return True
 
+# Brute force method 
+def carPoolingBruteForce(trips, cap):
+    passChange = [0] * 1001
 
-trips = [[2,1,5],[3,3,7]]
-capacity = 4
-output = False
+    for trip in trips:
+        numPass, start, end = trip
+        passChange[start] += numPass
+        passChange[end] -= numPass
+    
+    curCap = 0
+    for i in range(1001):
+        curCap += passChange[i]
+        if curCap > cap:
+            return False
+    
+    return True
+
+
+trips = trips = [[2,1,5],[3,3,7]]
+capacity = 5
+output = True
 cp = carPooling(trips, capacity)
-print(cp)
-print(output)
+cpbf = carPoolingBruteForce(trips, capacity)
+print('Min Heap :', cp)
+print('Brute Force :', cpbf)
+print('Expected Output :', output)
