@@ -49,6 +49,31 @@ n == capital.length
 """
 
 # Using Heap / Priority Queue
+#
+# we gonna use max heap called maxProfit to sort the profit from the biggest to 
+# smallest, and then have arr of capital, profit called minCapital to keep track of 
+# capital that we can affort using our own capital w
+# Loop k times and check all capital in minCapital if minCapital <= w, if it is then 
+# we take the corespond profit and add it to w and keep going until we reach k times
+#
+# Ex: k = 2, w = 0, profits = [1,2,3], capital = [0,1,1]
+# 
+# k = 1
+# minCapital = [[0,1], [1,2], [1,3]]  -> [capital, profits]
+# maxProfit = []                      -> loop k times and check while minCapital[0][0] 
+#                                     -><= w, push it to maxProfit
+# minCapital[0][0] <= w = [0,1]       -> push it to maxProfit
+# maxProfit = [1]                     -> took max profit to calculate w
+# pop(1) -> 1 + w = 1 + 0 = 1
+#
+# k = 2
+# minCapital = [[0,1], [1,2], [1,3]]  -> [capital, profits]
+# maxProfit = []                      -> loop k times and check while minCapital[0][0] 
+#                                     -><= w, push it to maxProfit
+# minCapital[0][0] <= w = [1,2],[1,3] -> push it to maxProfit
+# maxProfit = [3,2]                   -> took max profit to calculate w
+# pop(3) -> 3 + w = 3 + 1 = 4
+
 
 import heapq
 
