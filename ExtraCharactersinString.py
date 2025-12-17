@@ -34,6 +34,7 @@ dictionary[i] and s consists of only lowercase English letters
 dictionary contains distinct words
 """
 
+from collections import defaultdict
 
 # We gonna solve this using two methods, Prefix Trie and list manipulation
 # First using Prefix Trie
@@ -76,6 +77,25 @@ class Solution:
             return res
 
         return dfs(0)
+    
+
+# Using default dictionary and list manipulation
+
+def extraCharStrDict(s, dictionary):
+    word_dict = defaultdict(list)
+    for word in dictionary:
+        word_dict[word[0]].append(word)
+    
+    res = [0] * (len(s) + 1)
+
+    for i in range(len(s) - 1, -1, -1):
+        res[i] = res[i + 1] + 1
+        if s[i] in word_dict:
+            for word in word_dict[s[i]]:
+                if s[i:i+len(word)] == word:
+                    res[i] = min(res[i], res[i + len(word)])
+    
+    return res[0]
 
 s = "sayhelloworld"
 dictionary = ["hello","world"]
@@ -83,5 +103,7 @@ output = 3
 
 so = Solution()
 res = so.extraCharStr(s, dictionary)
-print(res)
+res2 = extraCharStrDict(s, dictionary)
+print('Trie:',res)
+print('Dict:', res2)
 print(output)
