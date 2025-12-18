@@ -59,6 +59,21 @@ ui != vi
 """
 
 
+# prerequisites = [[1,0],[2,1],[3,2]]
+# queries = [[0,1],[3,1]]               -> [u,v]
+#
+# Making a node
+#
+#       
+#
+# prerequisite node = [3] -> [2] -> [1] -> [0]
+# You need to take 3 before you can take 2, and you need to take 2 before taking 1 and 
+# so on and then we gonna loop through query if query in prerequisite map
+# preMap = {0: {0, 1, 2, 3}, 1: {1, 2, 3}, 2: {2, 3}, 3: {3}}
+# we gonna have res = []
+# loop through every queries and check if u is prerequisite of v
+# and add res.append(u in preMap[v])
+
 from collections import defaultdict
 
 def courseScheduleIV(numCourses, prerequisites, queries):
@@ -72,7 +87,7 @@ def courseScheduleIV(numCourses, prerequisites, queries):
             for pre in adj[crs]:
                 preMap[crs] |= dfs(pre)
             preMap[crs].add(crs)
-        
+        print(preMap)
         return preMap[crs]
     
     preMap = {}
