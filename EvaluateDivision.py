@@ -58,6 +58,38 @@ Ai, Bi, Cj, Dj consist of lower case English letters and digits.
 """
 
 # Use Graph (BFS) to solve this problem
+#
+# equations = [["a","b"],["b","c"],["bc","cd"], ["b", "bc"]]
+# values    = [   1.5   ,   2.5   ,    5.0    ,     0.2] 
+# queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"], ["cd", "a"]]
+#
+# From equations, values we told that a/b = 1.5, b/c = 2.5, bc/cd = 5
+# We gonna use graph and map all the equations to the graph and result as a weight
+#
+#      1.5      2.5
+# [a]  ->  [b]  ->  [c]
+#              \ 0.2      5.0
+#                ->  [bc]  ->  [cd]
+#
+# We need to make the reverse weight of the graph by dividing 1 / weight
+# a -> b = 1.5  /  a <- b = 1 / 1.5
+#
+#     0.67      0.4
+# [a]  <-  [b]  <-  [c]
+#              \ 5.0       0.2
+#                <-  [bc]  <-  [cd]
+#
+# We can do that my mapping all adjecency node with each other
+# adj = {
+# 'a': [('b', 1.5)], 
+# 'b': [('a', 0.67), ('c', 2.5), ('bc', 0.2)], 
+# 'c': [('b', 0.4)], 'bc': [('cd', 5.0), ('b', 5.0)], 
+# 'cd': [('bc', 0.2)]
+# }
+#
+# Them loop through the query and use BFS to traverse through all the node and add 
+# all the weight while we traverse through it
+
 
 from collections import defaultdict, deque
 
@@ -82,7 +114,7 @@ def evalDivision(equat, val, quer):
                 return w
             for nei, weight in adj[n]:
                 if nei not in visit:
-                    q.append([nei, w * weight])
+                    q.append([nei, round(w * weight, 2)])
                     visit.add(nei)
         
         return -1
@@ -91,10 +123,10 @@ def evalDivision(equat, val, quer):
 
 
 
-equations = [["a","b"],["b","c"],["bc","cd"]]
-values = [1.5,2.5,5.0]
-queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"]]
-output = [3.75000,0.40000,5.00000,0.20000]
+equations = [["a","b"],["b","c"],["bc","cd"], ["b", "bc"]]
+values    = [   1.5   ,   2.5   ,    5.0    ,     0.2] 
+queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"], ["cd", "a"]]
+output = [3.75000,0.40000,5.00000,0.20000, 0.67]
 ed = evalDivision(equations, values, queries)
 print(ed)
 print(output)
