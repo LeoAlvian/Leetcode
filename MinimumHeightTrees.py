@@ -42,6 +42,23 @@ All the pairs (ai, bi) are distinct.
 The given input is guaranteed to be a tree and there will be no repeated edges.
 """
 
+
+# We need to find the minimum height of a given tree and return its root
+# We Use topological ordering and BFS
+#
+# Ex :
+# n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
+#
+#            [3]                     or                  [4]
+#     /    /     \     \                              /       \ 
+#   [0]  [1]     [2]   [4]                          [5]       [3]
+#                         \                               /    |    \
+#                         [5]                           [0]   [1]   [2]
+#
+# Both of graph above are valid because both have the same minimum height so the 
+# output is gonna be
+# output = [3, 4]
+
 from collections import defaultdict, deque
 
 def minHeightTrees(n, edges):
