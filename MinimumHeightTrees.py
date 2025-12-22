@@ -69,6 +69,9 @@ def minHeightTrees(n, edges):
     for n1, n2 in edges:
         adj[n1].append(n2)
         adj[n2].append(n1)
+
+    # adj = {1: [0, 2, 3], 0: [1], 2: [1], 3: [1]})
+    # Map every neighbor of each node
     
     edge_cnt = {}
     leaves = deque()
@@ -77,6 +80,12 @@ def minHeightTrees(n, edges):
         edge_cnt[src] = len(neighbor)
         if len(neighbor) == 1:
             leaves.append(src)
+    
+    
+    # edge_cnt = {1: 3, 0: 1, 2: 1, 3: 1}
+    # count how many edge that connected to the src
+    # leaves = deque([0, 2, 3])
+    # add all node that has a edge_cnt of 1 to the leaves
     
     while leaves:
         if n <= 2:
