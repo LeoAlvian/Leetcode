@@ -47,8 +47,34 @@ columns == heights[i].length
 1 <= heights[i][j] <= 106
 """
 
-import heapq
 
+# Using BFS to calculate all the differences in heights
+#
+#                1   0 
+# heights = [  [1, 2, 2],
+#             2[       ] 0
+#              [3, 8, 2],
+#             2[       ] 3
+#              [5, 3, 5]]
+#                2   2
+#
+# heights = [[1,2,2],          [[[1], 2,  2],
+#            [3,8,2],    ->     [[3], 8,  2],
+#            [5,3,5]]           [[5],[3],[5]]]
+#
+#
+# The route of [1,3,5,3,5] has a maximum absolute difference of 2 in consecutive 
+# cells.
+# The route of [1,2,2,2,5], where the maximum absolute difference is 3.
+# So we gonna choose path with min overall height which is 2 and return it
+#
+# We solving this by creating a minHeap with [diffenceHeight, row, col] so the min 
+# diff gonna be sorted and we keep choosing the minimum heights route then mark the 
+# one we already visited then we just need to keep looping to right, left, top, and 
+# bottom directions of the grid and return when we reach the bottom-right corner
+
+
+import heapq
 
 def pathMinEffort(h):
     rows, cols = len(h), len(h[0])
