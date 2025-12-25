@@ -45,6 +45,36 @@ All the elements of nums are unique.
 """
 
 
+# Using Dynamic Programming with top-down approach
+# nums = [1,2,3]
+# target = 4
+# output = 7
+#
+# we initialaize dp = { 0 : 1 }
+# loop from 1 to target
+# loop through all nums
+# compute and add all values in dp[i - num] to dp[i]
+#
+# nums = [1,2,3]
+# i 1
+# {0: 1, 1: 1}    -> dp[i] += dp[i - nums[0]] -> dp[1 - 1] = dp[0] = 1 -> dp[1] = 1
+# {0: 1, 1: 1}    -> dp[1] -> dp[1 - 2] = dp[-1] is not exist so dp[1] still 1
+# {0: 1, 1: 1}    -> dp[1] -> dp[1 - 3] = dp[-2] is not exist so dp[1] still 1
+# i 2
+# {0: 1, 1: 1, 2: 1} -> dp[2] -> dp[2 - 1] = dp[1] = 1 -> dp[2] = 1
+# {0: 1, 1: 1, 2: 2} -> dp[2] -> dp[2 - 2] = dp[0] = 1 -> dp[2] = 1 + 1 = 2
+# {0: 1, 1: 1, 2: 2} -> dp[2] -> dp[2 - 3] = dp[-1] is not exist so dp[2] still 2
+# i 3
+# {0: 1, 1: 1, 2: 2, 3: 2} -> dp[3] -> dp[3 - 1] = dp[2] = 2 -> dp[3] = 2
+# {0: 1, 1: 1, 2: 2, 3: 3} -> dp[3] -> dp[3 - 2] = dp[1] = 1 -> dp[3] = 2 + 1 = 3
+# {0: 1, 1: 1, 2: 2, 3: 4} -> dp[3] -> dp[3 - 3] = dp[0] = 1 -> dp[3] = 3 + 1 = 4
+# i 4
+# {0: 1, 1: 1, 2: 2, 3: 4, 4: 4} -> dp[4] -> dp[4 - 1] = dp[3] -> 4 -> dp[4] = 4
+# {0: 1, 1: 1, 2: 2, 3: 4, 4: 6} -> dp[4] -> dp[4 - 2] = dp[2] = 2 -> dp[4] = 4 + 2 = 6
+# {0: 1, 1: 1, 2: 2, 3: 4, 4: 7} -> dp[4] -> dp[4 - 3] = dp[1] = 1 -> dp[4] = 6 + 1 = 7
+#
+# Then we return dp[target] = dp[4] = 7
+
 def combSumIV(nums, t):
     dp = { 0 : 1 }
 
