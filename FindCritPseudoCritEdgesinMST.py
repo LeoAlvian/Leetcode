@@ -45,7 +45,11 @@ edges[i].length == 3
 All pairs (ai, bi) are distinct.
 """
 
+from collections import defaultdict
+import heapq
 
+
+# Kruskal Algorithm need UnionFind algorithm with time complexity O(e2)
 class UnionFind:
     def __init__(self, n):
         self.par = [i for i in range(n)]
@@ -108,10 +112,54 @@ def findCritPseudoCritEdgesMSTKruskal(n, edges):
     return [critical, pseoudo]
 
 
+# Dijkstra's algirithm with time complexity O(e2)
+def findCriticalAndPseudoCriticalEdges(n, edges):
+    for i, edge in enumerate(edges):
+        edge.append(i)
+
+    adj = defaultdict(list)
+    for u, v, w, idx in edges:
+        adj[u].append((v, w, idx))
+        adj[v].append((u, w, idx))
+
+    def minimax(src, dst, exclude_idx):
+        dist = [float('inf')] * n
+        dist[src] = 0
+        pq = [(0, src)]
+
+        while pq:
+            max_w, u = heapq.heappop(pq)
+            if u == dst:
+                return max_w
+
+            for v, weight, edge_idx in adj[u]:
+                if edge_idx == exclude_idx:
+                    continue
+                new_w = max(max_w, weight)
+                if new_w < dist[v]:
+                    dist[v] = new_w
+                    heapq.heappush(pq, (new_w, v))
+
+        return float('inf')
+
+    critical, pseudo = [], []
+    for i, (u, v, w, idx) in enumerate(edges):
+        if w < minimax(u, v, idx):
+            critical.append(idx)
+        elif w == minimax(u, v, -1):
+            pseudo.append(idx)
+
+    return [critical, pseudo]
+
+
 n = 5
 edges = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
+edges2 = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
+edges3 = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
 output = [[0,1],[2,3,4,5]]
 
 fcp = findCritPseudoCritEdgesMSTKruskal(n, edges)
-print(fcp)
+dj = findCriticalAndPseudoCriticalEdges(n, edges2)
+print('Kruskal',fcp)
+print('Dijkstra', dj)
 print(output)
