@@ -49,7 +49,7 @@ from collections import defaultdict
 import heapq
 
 
-# Kruskal Algorithm need UnionFind algorithm with time complexity O(e2)
+# Kruskal Algorithm need UnionFind algorithm with time complexity O(E2)
 class UnionFind:
     def __init__(self, n):
         self.par = [i for i in range(n)]
@@ -112,7 +112,7 @@ def findCritPseudoCritEdgesMSTKruskal(n, edges):
     return [critical, pseoudo]
 
 
-# Dijkstra's algirithm with time complexity O(e2)
+# Dijkstra's algirithm with time complexity O(E2) which is the fastest
 def findCriticalAndPseudoCriticalEdges(n, edges):
     for i, edge in enumerate(edges):
         edge.append(i)
@@ -152,6 +152,45 @@ def findCriticalAndPseudoCriticalEdges(n, edges):
     return [critical, pseudo]
 
 
+# Kruskal's Algorithm + DFS with time complexity O(E2 logV)
+def findCriticalAndPseudoCriticalEdgesDFS(n, edges):
+    mst = [[] for _ in range(n)]
+    mstEdge = []
+
+    edge_list = [(w, u, v, i) for i, (u, v, w) in enumerate(edges)]
+    edge_list.sort()
+
+    uf = UnionFind(n)
+    for w, u, v, i in edge_list:
+        if uf.union(u, v):
+            mst[u].append((v, i))
+            mst[v].append((u, i))
+            mstEdge.append(i)
+
+    def dfs(node):
+        for next, ind in mst[node]:
+            if path and ind == path[-1]:
+                continue
+            path.append(ind)
+            if next == dst or dfs(next):
+                return True
+            path.pop()
+        return False
+
+    pseudo, mstEdge = set(), set(mstEdge)
+    for ind in range(len(edges)):
+        if ind in mstEdge:
+            continue
+        path, dst = [], edges[ind][1]
+        dfs(edges[ind][0])
+        for i in path:
+            if edges[i][2] == edges[ind][2]:
+                pseudo.add(i)
+                pseudo.add(ind)
+
+    return [list(mstEdge - pseudo), list(pseudo)]
+
+
 n = 5
 edges = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
 edges2 = [[0,1,1],[1,2,1],[2,3,2],[0,3,2],[0,4,3],[3,4,3],[1,4,6]]
@@ -160,6 +199,8 @@ output = [[0,1],[2,3,4,5]]
 
 fcp = findCritPseudoCritEdgesMSTKruskal(n, edges)
 dj = findCriticalAndPseudoCriticalEdges(n, edges2)
-print('Kruskal',fcp)
-print('Dijkstra', dj)
-print(output)
+fcpdfs = findCriticalAndPseudoCriticalEdgesDFS(n, edges3)
+print('Kruskal:',fcp)
+print('Dijkstra:', dj)
+print('Kruskal + DFS:', fcpdfs)
+print('Output:', output)
