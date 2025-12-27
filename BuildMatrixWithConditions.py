@@ -61,18 +61,28 @@ from collections import deque
 
 # Solving it using topological ordering (Kahn's Algorithm) with time complexity O(k2 + n + m)
 def builMatrix(k, rowCon, colCon):
-    def kahn(edges):   # return list of topological order [2, 1, 3]
-        indegree = [0] * (k + 1)
-        adj = [[] for i in range(k + 1)]
+    def kahn(edges):   # return list of topological order, row [1, 3, 2], col [3, 2, 1]
+        # rowCondition = [[2,1],[1,3]]
+        # colConditions = [[3,1],[2,3]] 
+
+        indegree = [0] * (k + 1)  
+        adj = [[] for i in range(k + 1)]   
         for n1, n2 in edges:
             adj[n1].append(n2)
             indegree[n2] += 1
+        # indegree row [0, 0, 2, 0]
+        # indegree col [0, 1, 1, 0]
+
+        # adj row [[], [2], [], [2]]
+        # adj col [[], [], [1], [2]]
         
         order = []
         q = deque()
         for i in range(1, k + 1):
             if not indegree[i]:
                 q.append(i)
+        # deque row deque([1, 3])
+        # deque col deque([3])
         
         while q:
             node = q.popleft()
@@ -82,6 +92,8 @@ def builMatrix(k, rowCon, colCon):
                 if not indegree[nei]:
                     q.append(nei)
         
+        # order row [1, 3, 2]
+        # order col [3, 2, 1]
         return order
 
 
@@ -92,6 +104,8 @@ def builMatrix(k, rowCon, colCon):
 
     map_row = {val: i for i, val in enumerate(row_order)}
     map_col = {val: i for i, val in enumerate(col_order)}
+    # map_row {1: 0, 3: 1, 2: 2}
+    # map_col {3: 0, 2: 1, 1: 2}
     res = [[0] * k for i in range(k)]
     for num in range(1, k + 1):
         r, c = map_row[num], map_col[num]
