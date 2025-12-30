@@ -44,6 +44,117 @@ obstacleGrid[i][j] is 0 or 1.
 """
 
 
+# We solve this using Dynamic Programming and using list of size col to store the value,
+# First we set the destination (Bottom-Left) to be 1 and calculate the path from there by 
+# adding the cell below and to the right of it
+#
+# grid = [
+#         [0, 0, 0],
+#         [0, 0, 0],
+#         [0, 1, 0]
+#        ]
+#
+# iteration 1
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+# 
+#       2 [0, 1, 0]    -> x at grid[2][2]
+#        ]       x
+#
+# dp =    [0, 0, 1]    -> set dp[c] -> dp[2] = 1
+#
+# iteration 2 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+# 
+#       2 [0, 1, 0]    -> x at grid[2][1]
+#        ]    x
+#
+# dp =    [0, 0, 1]    -> because there is obstacle so we set dp[1] = 0
+# 
+# iteration 3 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+# 
+#       2 [0, 1, 0]    -> x at grid[2][0] 
+#        ] x
+#
+# dp =    [0, 0, 1]    -> set dp[0] = dp[0] + dp[0 + 1] = 0 + 0 = 0
+# 
+# iteration 4 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+#                x
+#       2 [0, 1, 0]    -> x at grid[1][2] 
+#        ] 
+#
+# dp =    [0, 0, 1]    -> because dp[2 + 1](out of range) so we didn't do anything 
+# 
+# iteration 5 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+#             x
+#       2 [0, 1, 0]    -> x at grid[1][1] 
+#        ] 
+#
+# dp =    [0, 1, 1]    -> set dp[1] = dp[1] + dp[1 + 1] = 0 + 1 = 1 
+# 
+# iteration 6 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#       
+#       1 [0, 0, 0],   -> x is the pointer
+#          x
+#       2 [0, 1, 0]    -> x at grid[1][0] 
+#        ] 
+#
+# dp =    [1, 1, 1]    -> set dp[0] = dp[0] + dp[0 + 1] = 0 + 1 = 1 
+# 
+# iteration 7 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#                x
+#       1 [0, 0, 0],   -> x is the pointer
+#          
+#       2 [0, 1, 0]    -> x at grid[0][2] 
+#        ] 
+#
+# dp =    [1, 1, 1]    -> set dp[2] = dp[2] + dp[2 + 1] = 1 + 0 = 1 (out of range)
+# 
+# iteration 8 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#             x
+#       1 [0, 0, 0],   -> x is the pointer
+#          
+#       2 [0, 1, 0]    -> x at grid[0][1] 
+#        ] 
+#
+# dp =    [1, 2, 1]    -> set dp[1] = dp[1] + dp[1 + 1] = 1 + 1 = 2
+# 
+# iteration 9 
+# grid = [ 0  1  2
+#       0 [0, 0, 0],
+#          x
+#       1 [0, 0, 0],   -> x is the pointer
+#          
+#       2 [0, 1, 0]    -> x at grid[0][0] 
+#        ] 
+#
+# dp =    [3, 2, 1]    -> set dp[0] = dp[0] + dp[1 + 1] = 1 + 2 = 3
+# 
+# exit loop, then we return dp[0] = 3
+
 def uniquePathII(grid):
     rows, cols = len(grid), len(grid[0])
     dp = [0] * cols 
