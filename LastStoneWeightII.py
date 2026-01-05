@@ -44,7 +44,10 @@ Constraints:
 1 <= stones[i] <= 100
 """
 
+import time
 
+
+# Recursive using DFS
 def lastStoneWeightII(stones):
     stoneSum = sum(stones)
     target = stoneSum // 2
@@ -62,8 +65,37 @@ def lastStoneWeightII(stones):
     return dfs(0, 0)
 
 
+# Using Array for the dynamic programming
+def lastStnWeightII(stones):
+    stoneSum = sum(stones)
+    target = stoneSum // 2
+    dp = [False] * (target+1)
+    dp[0] = True
+    # print('dp',dp)
+
+    for stone in stones:
+        for i in range(target - stone, -1, -1):
+            if dp[i]:
+                dp[i + stone] = True
+    # print('dp loop',dp)
+    
+    for i in range(target, -1, -1):
+        if dp[i]:
+            # print(f'stoneSum : {stoneSum} - (2 * i) : {(2*i)} = {stoneSum - (2 * i)}')
+            return stoneSum - (2 * i)
+        
+
+
 stones = [31,26,33,21,40]
 output = 5
+t0 = time.time()
 lsw = lastStoneWeightII(stones)
-print(lsw)
+t1 = time.time()
+t2 = time.time()
+ls = lastStnWeightII(stones)
+t3 = time.time()
+print('Recursive', lsw)
+print('DP', ls)
 print(output)
+print(t1 - t0)
+print(t2 - t3)
