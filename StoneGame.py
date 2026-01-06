@@ -69,8 +69,19 @@ def StoneGame(piles):
     return alice_stone > sum(piles) - alice_stone
 
 
+def StoneGameConstant(piles):
+    n = len(piles)
+
+    if n % 2 == 0:
+        return True
+    else:
+        return False
+
+
 piles = [3,7,2,3]
 output = True
 sg = StoneGame(piles)
+sgc = StoneGameConstant(piles)
 print(sg)
+print(sgc)
 print(output)
