@@ -46,6 +46,10 @@ Constraints:
 1 <= piles[i] <= 104
 """
 
+from itertools import accumulate
+from functools import cache, lru_cache
+
+
 # Using DFS and Dynamic programming
 def StoneGameII(p):
     dp = {}
@@ -72,8 +76,26 @@ def StoneGameII(p):
 
     return dfs(True, 0, 1)
 
+
+# Using build-in function and itertools to make calculation faster
+def StoneGameIIFaster(p):
+    acc = [*accumulate(reversed(p))][::-1]
+
+    @cache
+    def dp(i, m):
+        if i + m * 2 >= len(p):
+            return acc[i]
+        
+        return max(acc[i] - dp(i + x, max(x, m)) for x in range(1, m * 2 + 1))
+    
+    return dp(0, 1)
+
+
+
 piles = [1,2,3,4,5,100]
 output = 104
 sg2 = StoneGameII(piles)
-print(sg2)
+print('DFS and DP:',sg2)
+sgf = StoneGameIIFaster(piles)
+print('Faster:', sgf)
 print(output)
