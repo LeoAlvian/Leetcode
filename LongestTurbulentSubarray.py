@@ -50,6 +50,41 @@ Constraints:
 
 
 # Using sliding windows to solve this problem
+# arr = [9,4,2,10,7,8,8,1,9]
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = 1, prev = '' 
+#        l   r
+# check if arr[r - 1] and arr[r] is alternating or having indifferences
+# if arr[r - 1] < arr[r] and prev is not '<' or arr[r - 1] > arr[r] and prev is not '>'
+# we update res = max(res, r - l + 1), r += 1, and prev
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = 1, prev = '' 
+#        l       r                           -> because arr[r-1] > arr[r] and prev = '>'  
+#                                               we update l to be r - 1 and r stays
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(2, 2 - 1 + 1) => 2, prev = '>' 
+#            l   r
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(2, 3 - 1 + 1) => 3, prev = '<' 
+#            l       r
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(3, 4 - 1 + 1) => 4, prev = '>' 
+#            l            r
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(4, 5 - 1 + 1) => 5, prev = '<' 
+#            l                r
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(4, 5 - 1 + 1) => 5, prev = '<' 
+#            l                    r          -> because arr[r-1] == arr[r] we update l to 
+#                                               be r and r = r + 1
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(5, 7 - 6 + 1) => 5, prev = '<' 
+#                                 l   r  
+#
+# arr = [9 > 4 > 2 < 10 > 7 < 8 = 8 > 1 < 9] -> res = max(5, 8 - 6 + 1) => 5, prev = '<' 
+#                                 l       r  
+# 
+# We finish the loop and we return res = 5
+
 def longestTurbulentSubarray(arr):
     l, r = 0, 1
     res, prev = 1, ''
