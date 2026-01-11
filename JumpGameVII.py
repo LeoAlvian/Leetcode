@@ -44,13 +44,23 @@ from collections import deque
 
 def jumpGameVII(s, minJump, maxJump):
     n = len(s) - 1
+
+    # Check if the last string is 1 if it is which means we cannot reach the end so we 
+    # return False immediately
     if s[-1] == '1':
         return False
+    
+    # Check if n % minJump == 0 means if we can jump to the end with minJump if we cannot 
+    # we return False
+    # if True we check if all element in minJump distant is 0
     elif minJump == maxJump:
-        return n * minJump == 0 and all(c == '0' for c in s[minJump:n:minJump])
+        return n % minJump == 0 and all(c == '0' for c in s[minJump:n:minJump])
+    
+    # Check if 1 * maxJump string in s, if it is then return False
     elif minJump == 1:
         return '1' * maxJump not in s
     
+    # if all the check above is not valid we use BFS Algorithm
     q, farthest = deque([0]), 0
 
     while q:
