@@ -40,6 +40,11 @@ Example 3:
 Input: nums = [4,3,12,8]
 Output: true
 Explanation: There are 6 possible pairs of indices to traverse between: (0, 1), (0, 2), (0, 3), (1, 2), (1, 3), and (2, 3). A valid sequence of traversals exists for each pair, so we return true.
+
+
+Example 4:
+nums = [58,57,13,45,65,28,38,55]
+output = True
  
 
 Constraints:
@@ -135,15 +140,15 @@ def gcdMath(nums):
                 nums[j] *= nums[i]              # <-- if an i,k traversal exists   
                 break                           #     (for some index k), then now 
                                                 #     a j,k traversal exists
-            else: 
-                return False                  # <-- no match means no traversal 
+        else: 
+            return False                        # <-- no match means no traversal 
 
     return True 
 
 
 
 
-nums = [4,3,12,8]
+nums = [58,57,13,45,65,28,38,55]
 output = True
 
 gcd = gcdTraversal(nums)
