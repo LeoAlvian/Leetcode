@@ -109,11 +109,46 @@ def gcdTraversal(nums):
             return False
     return True
 
+
+import math
 # Using math.gcd with 20 ms on leetcode
+def gcdMath(nums):
+    if len(nums) == 1:                          # <-- some edge cases
+        return True
+    if 1 in nums: 
+        return False
+
+    nums = sorted(set(nums), reverse = True)    # <-- sort (big to little) and  
+    
+    # This ':=' called walrus operator which sing n to len(nums) and evaluate it at the 
+    # same time to n == 1 so 
+    # if (n:=len(nums))==1: is the same as two expression below 
+    # n = len(nums)
+    # if n == 1:
+    if (n := len(nums)) == 1 :                  #     deal with another edge case
+        return True          
+
+    for i in range(n - 1):                      # <-- nums[i] >= nums[j]
+        for j in range(i + 1, n):
+        
+            if math.gcd(nums[i], nums[j]) - 1:  # <-- i,j traversal exists; 
+                nums[j] *= nums[i]              # <-- if an i,k traversal exists   
+                break                           #     (for some index k), then now 
+                                                #     a j,k traversal exists
+            else: 
+                return False                  # <-- no match means no traversal 
+
+    return True 
+
+
+
+
 nums = [4,3,12,8]
 output = True
 
 gcd = gcdTraversal(nums)
+gcdm =gcdMath(nums)
 
-print(gcd)
+print('GCD Traversal',gcd)
+print('GCD Math',gcdm)
 print(output)
