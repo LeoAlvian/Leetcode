@@ -46,8 +46,9 @@ Constraints:
 str1 and str2 consist of English uppercase letters.
 """
 
+# Using math and iteration with O(min(m, n) * (m + n)) time complexity
 
-def GDPStr(s1, s2):
+def GCDStr(s1, s2):
     len1, len2 = len(s1), len(s2)
 
     def divisor(l):
@@ -62,14 +63,26 @@ def GDPStr(s1, s2):
     
     return ''
 
+import math
+# Using math.gcd to find greatest common denominator if we have one and then return that 
+# sub string but first we must check if str1 + str2 == str2 + str1, if it is then we can 
+# make a sub string from GCD
 
+def gcdOfStrings(str1, str2):
+    if str1 + str2 != str2 + str1:
+        return ''
+    
+    g = math.gcd(len(str1), len(str2))
+    return str1[:g]
 
 
 str1 = "ABABAB"
 str2 = "ABAB"
 output = "AB"
 
-gdps = GDPStr(str1, str2)
+gcds = GCDStr(str1, str2)
+gcdo = gcdOfStrings(str1, str2)
 
-print(gdps)
+print('Iteration', gcds)
+print('Math', gcdo)
 print(output)
