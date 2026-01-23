@@ -56,15 +56,72 @@ def stoneGameIII(sv):
     dp = [0] * 4
 
     for i in range(n - 1, -1, -1):
+        # First iteration
+        # i = 3
         total = 0
         dp[i % 4] = float('-inf')
-        for j in range(min(i + 3,n)):
+        # dp[i%4] = [0, 0, 0, -inf]
+        for j in range(min(i + 3, n)):
             total += sv[j]
+            # j = 3, stoneVal = -9
             dp[i % 4] = max(dp[i % 4], total + dp[(j + 1) % 4])
+            # total - dp[(j + 1) % 4] = -9 - 0
+            # max(-inf , -9) = -9
+        # dp[i%4] = [0, 0, 0, -9]
     
     if dp[0] == 0:
         return 'Tie'
     return 'Alice' if dp[0] > 0 else 'Bob'
+
+
+# All the iteration play out like this
+# First iteration
+# i 3
+# dp[i%4] [0, 0, 0, -inf]
+# j 3 stoneVal -9
+# total - dp[(j + 1) % 4] = -9 - 0
+# max -inf , -9  = -9
+# dp[i%4] after [0, 0, 0, -9]
+#
+# Second Iteration
+# i 2
+# dp[i%4] [0, 0, -inf, -9]
+# j 2 stoneVal 3
+# total - dp[(j + 1) % 4] = 3 - -9
+# max -inf , 12  = 12
+# j 3 stoneVal -9
+# total - dp[(j + 1) % 4] = -6 - 0
+# max 12 , -6  = 12
+# dp[i%4] after [0, 0, 12, -9]
+#
+# Third Iteration
+# i 1
+# dp[i%4] [0, -inf, 12, -9]
+# j 1 stoneVal 2
+# total - dp[(j + 1) % 4] = 2 - 12
+# max -inf , -10  = -10
+# j 2 stoneVal 3
+# total - dp[(j + 1) % 4] = 5 - -9
+# max -10 , 14  = 14
+# j 3 stoneVal -9
+# total - dp[(j + 1) % 4] = -4 - 0
+# max 14 , -4  = 14
+# dp[i%4] after [0, 14, 12, -9]
+#
+# Forth Iteration
+# i 0
+# dp[i%4] [-inf, 14, 12, -9]
+# j 0 stoneVal 1
+# total - dp[(j + 1) % 4] = 1 - 14
+# max -inf , -13  = -13
+# j 1 stoneVal 2
+# total - dp[(j + 1) % 4] = 3 - 12
+# max -13 , -9  = -9
+# j 2 stoneVal 3
+# total - dp[(j + 1) % 4] = 6 - -9
+# max -9 , 15  = 15
+# dp[i%4] after [15, 14, 12, -9]
+# return Tie if dp[0] == 0, Alice if dp[0] > 0 else Bob
 
 
 
