@@ -61,7 +61,7 @@ def stoneGameIII(sv):
         total = 0
         dp[i % 4] = float('-inf')
         # dp[i%4] = [0, 0, 0, -inf]
-        for j in range(min(i + 3, n)):
+        for j in range(i, min(i + 3, n)):
             total += sv[j]
             # j = 3, stoneVal = -9
             dp[i % 4] = max(dp[i % 4], total + dp[(j + 1) % 4])
