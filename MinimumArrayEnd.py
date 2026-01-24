@@ -41,8 +41,17 @@ def minArrEnd(n, x):
     i_n = 1
 
     while i_n <= n:
+        # print(f'i_x = {i_x}, x = {x}, & = {i_x & x}')
+        # i_x = 1, x = 7, & = 1
+        # i_x = 2, x = 7, & = 2
+        # i_x = 4, x = 7, & = 4
+        # i_x = 8, x = 7, & = 0
         if i_x & x == 0:
+            # print(f'i_n = {i_n}, n - 1 = {n - 1}, & = {i_n & n - 1}')
+            # i_n = 1, n - 1 = 1, & = 1
             if i_n & n - 1:
+                # print(f'res = {res}, i_x = {i_x}, | = {res | i_x}')
+                # res = 7, i_x = 8, | = 15
                 res = res | i_x
             i_n <<= 1
         i_x <<= 1
