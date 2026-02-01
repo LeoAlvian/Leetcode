@@ -70,11 +70,34 @@ def twoSumII(nums, target):
     return []
 
 
+from collections import defaultdict
+# Using defaultdict(int) and map the (target - cur number) to an index, check if 
+# cur number in map if it is then we return the index
+# target = 9, cur number = 2, index = 0
+# 9 - 2 = 7
+# mapSum = {7: 0}
+# target = 9, cur number = 7, index = 1
+# 9 - 2 = 7
+# mapSum = {7: 0}
+def twoSumIIHashMap(nums, target):
+    mapSum = defaultdict(int)
+
+    for i, n in enumerate(nums):
+        if n in mapSum:
+            return [mapSum[n] + 1, i + 1]
+        else:
+            mapSum[target - n] = i
+    
+    return []
+
+
 numbers = [2,7,11,15]
 target = 9
 output = [1,2]
 
 ts = twoSumII(numbers, target)
+tsh = twoSumIIHashMap(numbers, target)
 
-print(ts)
+print('Two pointers', ts)
+print('Hash Map', tsh)
 print(output)
