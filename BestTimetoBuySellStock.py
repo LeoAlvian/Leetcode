@@ -35,7 +35,7 @@ Constraints:
 0 <= prices[i] <= 104
 """
 
-
+# Two pointer technique
 def bestTimeBuySellStock(prices):
     l, r = 0, 1
     maxProfit = 0
@@ -50,10 +50,27 @@ def bestTimeBuySellStock(prices):
     
     return maxProfit
 
+
+# Using maxProfit and minPrice
+def bestTimeBuySellStockII(prices):
+    minPrice = prices[0]
+    maxProfit = 0
+
+    for price in prices:
+        if price < minPrice:
+            minPrice = price
+        profit = price - minPrice
+        if profit > maxProfit:
+            maxProfit = profit
+    
+    return maxProfit
+
 prices = [7,1,5,3,6,4]
 output = 5
 
 bt = bestTimeBuySellStock(prices)
+bt2 = bestTimeBuySellStockII(prices)
 
 print(bt)
+print(bt2)
 print(output)
