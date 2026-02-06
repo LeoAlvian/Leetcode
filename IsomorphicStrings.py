@@ -50,6 +50,8 @@ s and t consist of any valid ascii character.
 # Using two map to map string s to string t and string t to string s
 # if we find a character that is map to the same character in other string then
 # we return false immedietely
+# Time coplexity of O(n) and space complexity of O(m), where n is the length of the 
+# input string and m is the number of unique characters in the strings.
 def isomorphicStrings(s, t):
     mapST, mapTS = {}, {}
 
@@ -62,12 +64,27 @@ def isomorphicStrings(s, t):
     return True
 
 
+# Using defaultdict with slightly faster on leetcode
+from collections import defaultdict
+
+def isomorphicStringsII(s, t):
+    dict1 = dict2 = defaultdict(list)
+
+    for i in range(len(s)):
+        dict1[s[i]].append(i)
+        dict2[t[i]].append(i)
+    
+    return sorted(dict1.values()) == sorted(dict2.values())
+
+
 
 s = "paper"
 t = "title"
 output = True
 
 iss = isomorphicStrings(s, t)
+iss2 = isomorphicStringsII(s, t)
 
 print(iss)
+print(iss2)
 print(output)
