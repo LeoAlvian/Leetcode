@@ -68,7 +68,8 @@ def isomorphicStrings(s, t):
 from collections import defaultdict
 
 def isomorphicStringsII(s, t):
-    dict1 = dict2 = defaultdict(list)
+    dict1 = defaultdict(list)
+    dict2 = defaultdict(list)
 
     for i in range(len(s)):
         dict1[s[i]].append(i)
