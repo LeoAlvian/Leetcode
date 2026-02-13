@@ -78,11 +78,29 @@ def kthDistinctStr(arr, k):
 
 
 
+# Second function is using Counter method which is faster on leetcode even though we 
+# still technically the time complexity if O(n)
+
+from collections import Counter
+
+def kthDistinctStrII(arr, k):
+    count = Counter(arr)
+
+    for s in arr:
+        if count[s] == 1:
+            k -= 1
+            if k == 0:
+                return s
+    
+    return ''
+
 arr = ["d","b","c","b","c","a"]
 k = 2
 output = "a"
 
 kd = kthDistinctStr(arr, k)
+kd2 = kthDistinctStrII(arr, k)
 
 print(kd)
+print(kd2)
 print(output)
