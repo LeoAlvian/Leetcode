@@ -47,18 +47,30 @@ def canConstruct(ransomNote, magazine):
     ranCount = Counter(ransomNote)
     magCount = Counter(magazine)
 
-    for c in ranCount:
-        if ranCount[c] > magCount[c]:
+    for char, cnt in ranCount.items():
+        if char not in magCount:
+            return False
+        elif magCount[char] < cnt:
+            return False
+    return True
+
+
+# Using set and count method for string in python
+def canConstructII(ransomNote, magazine):
+    for c in set(ransomNote):
+        if magazine.count(c) < ransomNote.count(c):
             return False
     return True
 
 
 
 ransomNote = "aab"
-magazine = "aaab"
+magazine = "aabb"
 output = True
 
 cc = canConstruct(ransomNote, magazine)
+cc2 = canConstructII(ransomNote, magazine)
 
 print(cc)
+print(cc2)
 print(output)
