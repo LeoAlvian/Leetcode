@@ -46,6 +46,21 @@ def firstUniqChar(s):
 
     for c in s:
         count[c] += 1
+    # defaultdict(<class 'int'>,{'l': 2, 'o': 2, 'v': 1, 'e': 4, 't': 1, 'c': 1, 'd': 1})
+    
+    for i, c in enumerate(s):
+        if count[c] == 1:
+            return i
+    
+    return -1
+
+
+# Using Counter to count how many char appear in s, and this is faster on leetcode
+from collections import Counter
+
+def firstUniqCharII(s):
+    count = Counter(s)
+    # Counter({'e': 4, 'l': 2, 'o': 2, 'v': 1, 't': 1, 'c': 1, 'd': 1})
     
     for i, c in enumerate(s):
         if count[c] == 1:
@@ -58,4 +73,5 @@ s = "loveleetcode"
 output = 2 
 
 print(firstUniqChar(s))
+print(firstUniqCharII(s))
 print(output)
