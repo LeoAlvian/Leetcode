@@ -72,6 +72,12 @@ def strStr(haystack, needle):
             return i - n
     
     return -1
+
+
+
+# Using built-in function find with faster time in leetcode
+def strStrII(haystack, needle):
+    return haystack.find(needle)
     
 
 haystack = "neevcodeneetcode"
@@ -79,4 +85,5 @@ needle = "neet"
 output = 8
 
 print(strStr(haystack, needle))
+print(strStrII(haystack, needle))
 print(output)
