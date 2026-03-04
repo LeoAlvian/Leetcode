@@ -61,8 +61,31 @@ def numSpecial(mat):
     
     return res
 
+
+
+def numSpecialII(mat):
+    special = 0
+
+    for row in mat:
+        # first iteration
+        # row = [1, 0, 0]
+        # then check if sum of row is 1
+        if sum(row) == 1:
+            # get column index of value 1 in a row, in this example column index is 0
+            # col_idx_one = 0
+            col_idx_one = row.index(1)
+            # checking in a column of col_idx_one if it's equal to 1, if it is then 
+            # increment special by 1
+            special += sum(row[col_idx_one] for row in mat) == 1
+    
+    return special
+
+
+
+
 mat = [[1,0,0],[0,1,0],[0,0,1]]
 output = 3
 
 print(numSpecial(mat))
+print(numSpecialII(mat))
 print(output)
