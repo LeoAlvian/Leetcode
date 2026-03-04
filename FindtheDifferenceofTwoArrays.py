@@ -56,9 +56,23 @@ def findDifference(nums1, nums2):
     return [list(res1), list(res2)]
 
 
+
+# Shorter version with the same time complexity
+
+def findDifferenceII(n1, n2):
+    setN1, setN2 = set(n1), set(n2)
+    res = []
+
+    res.append(list(setN1 - setN2))
+    res.append(list(setN2 - setN1))
+
+    return res
+
+
 nums1 = [1,2,3]
 nums2 = [2,4,6]
 output = [[1,3],[4,6]]
 
 print(findDifference(nums1, nums2))
+print(findDifferenceII(nums1, nums2))
 print(output)
