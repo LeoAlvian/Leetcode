@@ -63,9 +63,34 @@ def findDifferentBinaryString(nums):
 
 
 
-nums = ["111","011","000"]
+# Cantor's Diagonal Argument
+# Cantor's diagonal argument provides an elegant O(n) solution
+# Create an empty result string.
+# For each index i from 0 to n-1:
+# Look at character nums[i][i] (the diagonal).
+# Append the opposite character: if it is '0', append '1'; if '1', append '0'.
+# Return the result string.
+
+def findDifferentBinaryStringII(nums):
+    res = []
+
+    for i in range(len(nums)):
+        if nums[i][i] == '0':
+            res.append('1')
+        else:
+            res.append('0')
+    
+    return ''.join(res)
+
+
+nums = ["111","000","001"]
 output = "101"
 
 
+# The differences is the backtrack algorithm not gonna raise index out of range when we 
+# add new binary combination, ex: nums = ["111","000","001", "010"], it just gonna add 
+# more length to the output
 print(findDifferentBinaryString(nums))
+# but the algorithm below will raise an index out of range error
+print(findDifferentBinaryStringII(nums))
 print(output)
