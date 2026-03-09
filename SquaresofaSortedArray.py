@@ -36,7 +36,10 @@ Follow up: Squaring each element and sorting the new array is very trivial, coul
 
 # using sort algorithm with time complexity of O(n logn)
 
-# def sortedSquaresSort(nums):
+def sortedSquaresSort(nums):
+    square = [n**2 for n in nums]
+    sorted_square = sorted(square)
+    return sorted_square
 
 
 # Using two pointer and idx to put value in a correct order so we don't have to reverse 
@@ -94,7 +97,6 @@ Follow up: Squaring each element and sorting the new array is very trivial, coul
 def sortedSquares(nums):
     n = len(nums)
     res = [0] * n
-    print(res)
     l, r = 0, n - 1
     idx = n - 1
 
@@ -106,7 +108,6 @@ def sortedSquares(nums):
             res[idx] = nums[r] * nums[r]
             r -= 1
         idx -= 1
-    print(res)
     return res
 
 
@@ -115,4 +116,5 @@ output = [4,9,9,49,121]
 
 
 print(sortedSquares(nums))
+print(sortedSquaresSort(nums))
 print(output)
