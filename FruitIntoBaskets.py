@@ -71,8 +71,25 @@ def totalFruit(fruits):
     return res
 
 
+# Using a proper sliding windows with faster time
+
+def totalFruitII(fruits):
+    l, res = 0, 1
+
+    for r in range(len(fruits)):
+        fruit_window = fruits[l: r + 1]
+        while len(set(fruit_window)) > 2:
+            l += 1
+            fruit_window = fruits[l: r + 1]
+
+        res = max(res, len(fruit_window))
+    
+    return res
+
+
 fruits = [1,2,3,2,2]
 output = 4
 
 print(totalFruit(fruits))
+print(totalFruitII(fruits))
 print(output)
