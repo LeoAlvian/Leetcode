@@ -47,7 +47,7 @@ class ListNode:
 
 class Solution:
     def removeElements(self, head, val):
-        dummy = head
+        dummy = ListNode(next = head)
         prev, cur = dummy, head
 
         while cur:
@@ -64,9 +64,9 @@ ll = [1,2,6,3,4,5,6]
 val = 6
 output = [1,2,3,4,5]
 
-head = ListNode()
+head = ListNode(ll[0])
 cur = head
-for i in range(len(ll)):
+for i in range(1, len(ll)):
     cur.next = ListNode(ll[i])
     cur = cur.next
 
