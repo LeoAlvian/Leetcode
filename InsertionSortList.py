@@ -39,6 +39,49 @@ The number of nodes in the list is in the range [1, 5000].
 """
 
 
+# head = [4,2,1,3]
+# output = [1,2,3,4]
+#
+# Adding dummy node in front of the linked list
+#  [0] -> [4] -> [2] -> [1] -> [3]
+# Dummy  prev    cur
+# Check if cur.val >= prev.val, if yes move prev, cur to next
+# Else add another pointer tmp to dummy and check if cur.val >= tmp.next.val, if yes keep
+# updating tmp pointer to next
+# swap prev, cur, and tmp pointer
+#
+#  [0] -> [4] -> [2] -> [1] -> [3]   // cur.val >= prev.val -> 2 is not bigger than 4
+# Dummy  prev    cur                 // prev.next = cur.next
+#  tmp                               // cur.next = tmp.next
+#                                    // tmp.next = cur
+#                                    // cur.next = prev.next
+
+#  [0] -> [2] -> [4] -> [1] -> [3]   // cur.val >= prev.val -> 1 is not bigger than 4
+# Dummy         prev    cur          // prev.next = cur.next
+#  tmp                               // cur.next = tmp.next
+#                                    // tmp.next = cur
+#                                    // cur.next = prev.next
+#
+#  [0] -> [1] -> [2] -> [4] -> [3]   // cur.val >= prev.val -> 3 is not bigger than 4
+# Dummy                prev    cur   // cur.val >= tmp.next.val, keep update tmp 
+#  tmp                               
+#
+#  [0] -> [1] -> [2] -> [4] -> [3]   // cur.val >= prev.val -> 3 is not bigger than 4
+# Dummy                prev    cur   // cur.val >= tmp.next.val, keep update tmp 
+#         tmp                        
+#
+#  [0] -> [1] -> [2] -> [4] -> [3]   // cur.val >= prev.val -> 3 is not bigger than 4
+# Dummy                prev    cur   // cur.val >= tmp.next.val, keep update tmp 
+#                tmp                 // prev.next = cur.next 
+#                                    // cur.next = tmp.next 
+#                                    // tmp.next = cur 
+#                                    // cur.next = prev.next
+#
+#  [0] -> [1] -> [2] -> [3] -> [4] -> None   // cur.val >= prev.val -> 3 is not bigger than 4
+# Dummy                        prev    cur   // cur.val >= tmp.next.val, keep update tmp 
+#                tmp                         // prev.next = cur.next 
+#
+# Return dummy.next
 
 class ListNode:
     def __init__(self, val = 0, next = None):
