@@ -82,13 +82,12 @@ class Solution:
         node1.val, node2.val = node2.val, node1.val
     
 
-    # Using Morris traversal, Not using stack so time: O(n) but space: O(1)
+    # Using Morris traversal, Not using stack so time: O(n) and space: O(1)
     def recoverTreeII(self, root):
-        stack = []
         node1 = node2 = prev = None
         curr = root
 
-        while stack or curr:
+        while curr:
             if not curr.left:
                 if prev and prev.val > curr.val:
                     node2 = curr
