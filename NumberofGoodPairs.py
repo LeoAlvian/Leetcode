@@ -54,10 +54,27 @@ def numIdenticalPairs(nums):
     return res
 
 
+# Solve it algorithmicly 
+def numIdenticalPairsII(nums):
+    res = 0
+    count = {}
+
+    for n in nums:
+        if n in count:
+            res += count[n]
+            count[n] += 1
+        else:
+            count[n] = 1
+    
+    return res
+
+
 nums = [1,2,3,1,1,3]
 output = 4
 
 res = numIdenticalPairs(nums)
+res2 = numIdenticalPairsII(nums)
 
 print(res)
+print(res2)
 print(output)
