@@ -43,6 +43,7 @@ words[i] consists of lowercase English letters.
 
 from collections import defaultdict
 # Count manually using Hash Map with slightly longer time on leetcode
+# Also count manually take O(n * m)
 def makeEqual(words):
     char_cnt = defaultdict(int)
 
@@ -57,10 +58,26 @@ def makeEqual(words):
     return True
 
 
+
+# Faster on leetcode because str.count method are optimize with C language with near linear 
+# speed
+def makeEqualFaster(words):
+    s = ''.join(words)
+    char = list(set(s))
+
+    for i in range(len(char)):
+        if s.count(char[i]) % len(words):
+            return False
+    
+    return True
+
+
 words = ["abc","aabc","bcccc"]
 output = True
 
 res = makeEqual(words)
+res2 = makeEqualFaster(words)
 
 print(res)
+print(res2)
 print(output)
