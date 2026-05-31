@@ -53,6 +53,19 @@ def longestPalindrome(s):
     return res
 
 
+# Using Hash Set
+def longestPalindromeSet(s):
+    seen = set()
+    res = 0
+
+    for c in s:
+        if c in seen:
+            seen.remove(c)
+            res += 2
+        else:
+            seen.add(c)
+
+    return res + 1 if seen else res
 
 
 
@@ -60,6 +73,8 @@ s = "abccccdd"
 output = 7
 
 res = longestPalindrome(s)
+res2 = longestPalindromeSet(s)
 
 print(res)
+print(res2)
 print(output)
