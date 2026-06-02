@@ -49,11 +49,28 @@ def findErrorNums(nums):
         if num > 0 and i + 1 != res[0]:
             res[1] = i + 1
             return res
+        
+
+from collections import Counter
+# Using Hash Map, mapping each number to the count using Counter
+def findErrorNumsHashMap(nums):
+    res = [0, 0]
+    count = Counter(nums)
+
+    for i in range(1, len(nums) + 1):
+        if count[i] == 0:
+            res[1] = i
+        if count[i] == 2:
+            res[0] = i
+
+    return res
 
 nums = [1,2,2,4]
 output = [2,3]
 
-res = findErrorNums(nums)
+res = findErrorNumsHashMap(nums)
+res2 = findErrorNums(nums)
 
 print(res)
+print(res2)
 print(output)
