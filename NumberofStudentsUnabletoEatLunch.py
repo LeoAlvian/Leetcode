@@ -52,6 +52,10 @@ students[i] is 0 or 1.
 """
 
 
+
+# Using Hash Map to count every 1's and 0's sandwiches
+# {1 : 2, 0 : 2}
+
 from collections import Counter
 
 def countStudents(students, sandwiches):
@@ -68,11 +72,40 @@ def countStudents(students, sandwiches):
     return res
 
 
+
+# Implement what is saying in the description which removing students from the first queue
+# and adding them to the end if they didn't like the sandwiches
+
+from collections import deque
+
+def countStudentsII(students, sandwiches):
+    dq = deque(students)
+    s = 0
+    rotations = 0
+
+    while dq and s < len(sandwiches):
+        if dq[0] == sandwiches[s]:
+            dq.popleft()
+            s += 1
+            rotations = 0
+        else:
+            dq.append(dq.popleft())
+            rotations += 1
+
+            if rotations == len(dq):
+                break
+    
+    return len(dq)
+
+
+
 students = [1,1,0,0]
 sandwiches = [0,1,0,1]
 output = 0 
 
 res = countStudents(students, sandwiches)
+res2 = countStudentsII(students, sandwiches)
 
 print(res)
+print(res2)
 print(output)
