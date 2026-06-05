@@ -47,6 +47,17 @@ Constraints:
 
 
 
+# Using sort with time: O(n logn) and space: O(n)
+
+def buyChocoII(prices, money):
+    prices.sort()
+
+    leftover = money - prices[0] - prices[1]
+
+    return leftover if leftover >= 0 else money
+
+
+
 def buyChoco(prices, money):
     min1 = min2 = float('inf')
 
@@ -66,6 +77,8 @@ money = 5
 output = 2
 
 res = buyChoco(prices, money)
+res2 = buyChocoII(prices, money)
 
 print(res)
+print(res2)
 print(output)
