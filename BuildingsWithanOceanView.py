@@ -52,10 +52,32 @@ def findBuildings(h):
     return res[::-1]
 
 
+# We can make it slightly clever and we didn't need the maxH because the building that we
+# append to res is always gonna the max height for that specific index
+# Ex:
+# heights = [4, 2, 3, 1]
+# we loop in reverse, so heights[3] = 1 is the tallest so far
+# then heights[2] = 3 is taller than heights[3] = 1 so 3 is tallest so far
+# then heights[1] = 2 is shorter than heights[2] = 3 so 3 is still the tallest
+# then heights[0] = 3 is taller than heights[2] = 3 so 4 is the tallest 
+
+def findBuildingsII(h):
+    res = [len(h) - 1]  # we populate res to be the last index of heights because it will always the tallest so far and has ocean view
+
+    for i in range(len(h) - 2, -1, -1):
+        if h[i] > h[res[-1]]:    # checking the cur heights with the last heigths index in res
+            res.append(i)
+    
+    return res[::-1]
+
+
+
 heights = [9,8,7,7,6,5,4,3]
 output = [0,1,3,4,5,6,7]
 
 res = findBuildings(heights)
+res2 = findBuildingsII(heights)
 
 print(res)
+print(res2)
 print(output)
