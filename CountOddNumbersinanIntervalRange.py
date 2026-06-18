@@ -40,7 +40,7 @@ Constraints:
 """
 
 
-
+# Using Interval Count
 def countOdds(low, high):
     inter = high - low + 1
     count = inter // 2
@@ -50,11 +50,18 @@ def countOdds(low, high):
 
     return count
 
+
+# Using Math
+def countOddsII(low, high):
+    return (high + 1) // 2 - (low // 2)
+
 low = 3
 high = 21
 output = 10
 
 res = countOdds(low, high)
+res2 = countOddsII(low, high)
 
 print(res)
+print(res2)
 print(output)
