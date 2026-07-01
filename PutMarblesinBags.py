@@ -72,12 +72,22 @@ def putMarbles(weights, k):
         splits.append(weights[i] + weights[i + 1])
     
     splits.sort()
+    # splits is a sum or weights[i] + weights[i + 1]
+    # weights = [1, 4, 2, 5, 2]
+    # splits =    [5, 6, 7, 7]
 
     max_score = sum(splits[len(weights) - k:])
     min_score = sum(splits[:k - 1])
 
     return max_score - min_score
 
+
+
+# Using Greedy with list comprehention
+def putMarblesII(weights, k):
+    n = len(weights)
+    scores = sorted([weights[i] + weights[i + 1] for i in range(n - 1)])
+    return sum(scores[n - k:]) - sum(scores[:k - 1])
 
 
 
@@ -87,6 +97,8 @@ k = 3
 output = 3 
 
 res = putMarbles(weights, k)
+res2 = putMarblesII(weights, k)
 
 print(res)
+print(res2)
 print(output)
