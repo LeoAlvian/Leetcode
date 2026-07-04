@@ -71,10 +71,33 @@ def rearrangeArray(nums):
     return res
 
 
+
+# Solving it by grouping the numbers into positive and negative array and then construct  
+# the new array from it
+def rearrangeArrayII(nums):
+    pos, neg = [], []
+    res = [0] * len(nums)
+
+    for n in nums:
+        if n > 0:
+            pos.append(n)
+        else:
+            neg.append(n)
+    
+    res[0::2] = pos
+    res[1::2] = neg
+
+    return res
+
+
+
+
 nums = [3,1,-2,-5,2,-4]
 output = [3,-2,1,-5,2,-4]
 
 res = rearrangeArray(nums)
+res2 = rearrangeArrayII(nums)
 
 print(res)
+print(res2)
 print(output)
