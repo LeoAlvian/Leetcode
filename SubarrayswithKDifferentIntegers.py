@@ -53,6 +53,7 @@ Constraints:
 
 from collections import defaultdict
 
+# Three pointer sliding window technique with time: O(n) and space: O(n)
 def subarraysWithKDistinct(nums, k):
     count = defaultdict(int)
     l_far, l_near = 0, 0
