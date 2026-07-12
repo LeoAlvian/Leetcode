@@ -82,6 +82,32 @@ class BrowserHistory:
         return self.cur.val
     
 
+    
+# Using Array manipulation with time: O(1) and space: O(n)
+class BrowserHistoryII:
+
+    def __init__(self, homepage):
+        self.i = 0
+        self.len = 1
+        self.history = [homepage]
+
+    def visit(self, url):
+        if len(self.history) < self.i + 2:
+            self.history.append(url)
+        else:
+            self.history[self.i + 1] = url
+        self.i += 1
+        self.len = self.i + 1
+    
+    def back(self, steps):
+        self.i = max(self.i - steps, 0)
+        return self.history[self.i]
+    
+    def forward(self, steps):
+        self.i = min(self.i + steps, self.len - 1)
+        return self.history[self.i]
+    
+
 
 
 ops = ["visit","visit","visit","back","back","forward","visit","forward","back","back"]
@@ -89,10 +115,14 @@ args = [["google.com"],["facebook.com"],["youtube.com"],[1],[1],[1],["linkedin.c
 output = [None,None,None,"facebook.com","google.com","facebook.com",None,"linkedin.com","google.com","leetcode.com"]
 
 res = []
+res2 = []
 bh = BrowserHistory('leetcode.com')
+bh2 = BrowserHistoryII('leetcode.com')
 
 for i in range(len(ops)):
     res.append(getattr(bh, ops[i])(*args[i]))
+    res2.append(getattr(bh2, ops[i])(*args[i]))
 
 print(res)
+print(res2)
 print(output)
