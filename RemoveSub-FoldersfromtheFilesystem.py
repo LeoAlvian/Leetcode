@@ -88,6 +88,23 @@ class Solution:
             if not trie.prefix_search(f):
                 res.append(f)
         return res
+    
+
+
+# Solving it using sort and check if every previous folder is a prefix of the next
+class SolutionII:
+
+    # folders = ["/a","/a/b","/c/d","/c/d/e","/c/f"]
+    def removeSubfolders(self, folders):
+        folders.sort()
+        # folders = ['/a', '/a/b', '/c/d', '/c/d/e', '/c/f']
+        res = [folders[0]]
+        # res = ['/a']
+        for f in folders[1:]:
+            prefix = res[-1]
+            if not f.startswith(prefix + '/'):
+                res.append(f)
+        return res
 
 
 
@@ -95,8 +112,11 @@ folders = ["/a","/a/b","/c/d","/c/d/e","/c/f"]
 output = ["/a","/c/d","/c/f"]
 
 s = Solution()
+s2 = SolutionII()
 
 res = s.removeSubfolders(folders)
+res2 = s2.removeSubfolders(folders)
 
 print(res)
+print(res2)
 print(output)
