@@ -76,12 +76,38 @@ def findMaxForm(strs, m, n):
     return dfs(0, m, n)
 
 
+
+# Using Dynamic Programming + Memoization to make it faster
+
+def findMaxFormII(strs, m, n):
+    dp = {}
+    
+    def dfs(i, m, n):
+        if i == len(strs):
+            return 0
+        if (i, m, n) in dp:
+            return dp[(i, m, n)]
+        
+        # Not Include the current strs
+        dp[(i, m, n)] = dfs(i + 1, m, n)
+        # Calculate 0's and 1's in the strs[i]
+        mCnt, nCnt = strs[i].count('0'), strs[i].count('1')
+        if m >= mCnt and n >= nCnt:
+            # Include the current strs
+            dp[(i, m, n)] = max(dp[(i, m, n)], 1 + dfs(i + 1, m - mCnt, n - nCnt))
+        return dp[(i, m, n)]
+
+    return dfs(0, m, n)
+
+
 strs = ["10","0001","111001","1","0"]
 m = 5
 n = 3
 output = 4
 
 res = findMaxForm(strs, m, n)
+res2 = findMaxFormII(strs, m, n)
 
 print(res)
+print(res2)
 print(output)
