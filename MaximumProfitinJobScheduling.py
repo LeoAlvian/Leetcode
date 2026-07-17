@@ -105,12 +105,52 @@ def jobScheduling(startTime, endTime, profit):
 
     return dfs(0)
 
+
+# If you want to find what job we take we need to modify this function a bit
+
+def jobSchedulingII(startTime, endTime, profit):
+    intervals = sorted(zip(startTime, endTime, profit))
+    # intervals = [(1, 3, 20), (2, 5, 20), (3, 10, 100), (4, 6, 70), (6, 9, 60)]
+    cache = {}
+    # We need to add an array of jobs to the cache and return of the recursive function
+
+    def dfs(i):
+        if i == len(intervals):
+            return 0, []
+        if i in cache:
+            return cache[i]
+        
+        # Don't include the job
+        skip_profit, skip_job = dfs(i + 1)
+
+        # Include the job
+        j = bisect.bisect(intervals, (intervals[i][1], -1, -1))
+        take_profit, take_jobs = dfs(j)
+
+        cur_profit = intervals[i][2] + take_profit
+        cur_jobs = [intervals[i]] + take_jobs
+
+        if cur_profit > skip_profit:
+            cache[i] = (cur_profit, cur_jobs)
+        else:
+            cache[i] = (skip_profit, skip_job)
+        return cache[i]
+
+    return dfs(0)
+
+
 startTime = [1,2,3,4,6]
 endTime = [3,5,10,6,9]
 profit = [20,20,100,70,60]
 output = 150
 
 res = jobScheduling(startTime, endTime, profit)
+res2 = jobSchedulingII(startTime, endTime, profit)
 
 print(res)
+print(res2)
 print(output)
+prof, jobs = res2
+for job in jobs:
+    print('Job Hours :', job[:2], 'profit : ', job[2])
+print('Total Profit :', prof)
