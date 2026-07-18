@@ -38,6 +38,41 @@ str1 and str2 consist of lowercase English letters.
 """
 
 
+# str1 = "abac"
+# str2 = "cab"
+
+# We Gonna make 2D array 
+# Populate the last one with str2 and add empty string at the end, the loop in reverse order to populate the top row, because we want to save space we just gonna use two array for the code, we gonna call it prev and cur
+
+#  i/j    c        a        b
+#   a
+#   b
+#   a
+#   c    cab       cab      cb       c       cur = ['cab', 'cab', 'cb', 'c']        
+#        cab       ab       b                prev = ['cab', 'ab', 'b', '']
+
+#  i/j   c         a        b
+#   a
+#   b
+#   a    acab      acb      acb      ac      cur = ['acab', 'acb', 'acb', 'ac]
+#   c    cab       cab      cb       c       prev = ['cab', 'cab', 'cb', 'c']        
+#        cab       ab       b                   
+
+#  i/j   c         a        b
+#   a
+#   b    bacab     bacb     bac      bac     cur = ['bacab', 'bacb', 'bac', 'bac']
+#   a    acab      acb      acb      ac      prev = ['acab', 'acb', 'acb', 'ac]
+#   c    cab       cab      cb       c               
+#        cab       ab       b            
+
+#  i/j   c         a        b
+#   a    cabac     abac     abac     abac    cur = ['cabac', 'abac', 'abac', 'abac']
+#   b    bacab     bacb     bac      bac     prev = ['bacab', 'bacb', 'bac', 'bac']
+#   a    acab      acb      acb      ac      
+#   c    cab       cab      cb       c               
+#        cab       ab       b       
+
+# Then we return cur[0] as the shortest subsequence
 
 def shortestCommonSupersequence(str1, str2):
     n, m = len(str1), len(str2)
