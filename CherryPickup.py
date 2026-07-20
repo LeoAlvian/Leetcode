@@ -1,0 +1,98 @@
+"""
+741. Cherry Pickup
+
+Solved
+Hard
+Topics
+premium lock icon
+Companies
+
+You are given an n x n grid representing a field of cherries, each cell is one of three possible integers.
+
+0 means the cell is empty, so you can pass through,
+1 means the cell contains a cherry that you can pick up and pass through, or
+-1 means the cell contains a thorn that blocks your way.
+Return the maximum number of cherries you can collect by following the rules below:
+
+Starting at the position (0, 0) and reaching (n - 1, n - 1) by moving right or down through valid path cells (cells with value 0 or 1).
+After reaching (n - 1, n - 1), returning to (0, 0) by moving left or up through valid path cells.
+When passing through a path cell containing a cherry, you pick it up, and the cell becomes an empty cell 0.
+If there is no valid path between (0, 0) and (n - 1, n - 1), then no cherries can be collected.
+ 
+
+
+Example 1:
+
+    [0, 1, -1]
+    [1, 0, -1]
+    [1, 1,  1]
+
+Input: grid = [[0,1,-1],[1,0,-1],[1,1,1]]
+Output: 5
+Explanation: The player started at (0, 0) and went down, down, right right to reach (2, 2).
+4 cherries were picked up during this single trip, and the matrix becomes [[0,1,-1],[0,0,-1],[0,0,0]].
+Then, the player went left, up, up, left to return home, picking up one more cherry.
+The total number of cherries picked up is 5, and this is the maximum possible.
+
+
+
+
+Example 2:
+
+Input: grid = [[1,1,-1],[1,-1,1],[-1,1,1]]
+Output: 0
+ 
+
+Constraints:
+
+n == grid.length
+n == grid[i].length
+1 <= n <= 50
+grid[i][j] is -1, 0, or 1.
+grid[0][0] != -1
+grid[n - 1][n - 1] != -1
+"""
+
+def cherryPickup(grid):
+    n = len(grid)
+    print(grid)
+    prev = [[float('-inf')] * n for i in range(n)]
+    prev[0][0] = grid[0][0]
+
+    print(prev)
+
+    for k in range(1, 2 * n - 1):
+        dp = [[float('-inf')] * n for i in range(n)]
+        for r1 in range(max(0, k - (n - 1)), min(n, k + 1)):
+            c1 = k - r1
+            if c1 >= n or grid[r1][c1] == -1:
+                continue
+            for r2 in range(max(0, k - (n - 1)), min(n, k + 1)):
+                c2 = k - r2
+                if c2 >= n or grid[r2][c2] == -1:
+                    continue
+                val = prev[r1][r2]
+                if r1 > 0:
+                    val = max(val, prev[r1 - 1][r2])
+                if r2 > 0:
+                    val = max(val, prev[r1][r2 - 1])
+                if r1 > 0 and r2 > 0:
+                    val = max(val, prev[r1 - 1][r2 - 1])
+                if val < 0:
+                    continue
+                val += grid[r1][c1]
+                if r1 != r2:
+                    val += grid[r2][c2]
+                dp[r1][r2] = val
+        prev = dp
+    
+    return max(0, prev[n - 1][n - 1])
+
+
+grid = [[0,1,-1],[1,0,-1],[1,1,1]]
+output = 5
+
+res = cherryPickup(grid)
+
+print(res)
+print(output)
