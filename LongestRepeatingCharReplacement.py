@@ -44,6 +44,8 @@ s consists of only uppercase English letters.
 # then while range of windows which we can get it from (r - l + 1) - max count > k,
 # we decrease the window
 
+# Time: O(m * n) and space: O(m)
+
 # Ex: 
 # s = "AABABBA", k = 1
 # res = max(res, r - l + 1)
@@ -86,9 +88,29 @@ def characterReplacement(s, k):
 
     for r in range(len(s)):
         count[s[r]] = 1 + count.get(s[r], 0)
-        print(count)
 
         while (r - l + 1) - max(count.values()) > k:
+            count[s[l]] -= 1
+            l += 1
+        
+        res = max(res, r - l + 1)
+    
+    return res
+
+
+
+# Optimize with time: O(n) and space: O(m)
+
+def characterReplacementII(s, k):
+    count = {}
+    res, l = 0, 0
+    maxf = 0
+
+    for r in range(len(s)):
+        count[s[r]] = 1 + count.get(s[r], 0)
+        maxf = max(maxf, count[s[r]])
+
+        while (r - l + 1) - maxf > k:
             count[s[l]] -= 1
             l += 1
         
@@ -102,6 +124,8 @@ k = 1
 output = 4
 
 res = characterReplacement(s, k)
+res2 = characterReplacementII(s, k)
 
 print(res)
+print(res2)
 print(output)
