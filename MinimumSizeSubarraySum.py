@@ -58,6 +58,8 @@ Follow up: If you have figured out the O(n) solution, try coding another solutio
 #                             -> increment l so total = 9 - 2 = 7
 
 
+# Using Sliding Windows With time: O(n) and space: O(1)
+
 def minSizeSubSum(nums, target):
     l, total = 0, 0
     res = float('inf')
@@ -72,9 +74,37 @@ def minSizeSubSum(nums, target):
     return 0 if res == float('inf') else res
 
 
+# Using Prefix sum + Binary Search with time: O(n logn) and space: O(n)
+
+def minSizeSubSumII(nums, target):
+    n = len(nums)
+    prefixSum = [0] * (n + 1)
+    for i in range(n):
+        prefixSum[i + 1] = prefixSum[i] + nums[i]
+
+    res = n + 1
+    for i in range(n):
+        l, r = i, n
+        while l < r:
+            mid = (l + r) // 2
+            curSum = prefixSum[mid + 1] - prefixSum[i]
+            if curSum >= target:
+                r = mid
+            else:
+                l = mid + 1
+        if l != n:
+            res = min(res, l - i + 1)
+
+    return res % (n + 1)
+
+
 target = 7
 nums = [2,3,1,2,4,3]
 output = 2
+
 mss = minSizeSubSum(nums, target)
+mss2 = minSizeSubSumII(nums, target)
+
 print(mss)
+print(mss2)
 print(output)
