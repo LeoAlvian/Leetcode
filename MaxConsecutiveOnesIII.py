@@ -69,7 +69,7 @@ def longestOnesII(nums, k):
                 zero_count -= 1
             l += 1
 
-    return res
+    return len(nums) - l
 
 nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1]
 k = 3
