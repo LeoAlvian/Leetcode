@@ -53,11 +53,31 @@ def longestOnes(nums, k):
 
     return res
 
+
+
+# Slightly better time on leetcode with one pointer instead of two
+
+def longestOnesII(nums, k):
+    zero_count = 0
+    l = 0
+
+    for num in nums:
+        if num == 0:
+            zero_count += 1
+        if zero_count > k:
+            if nums[l] == 0:
+                zero_count -= 1
+            l += 1
+
+    return res
+
 nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1]
 k = 3
 output = 10
 
 res = longestOnes(nums, k)
+res2 = longestOnesII(nums, k)
 
 print(res)
+print(res2)
 print(output)
