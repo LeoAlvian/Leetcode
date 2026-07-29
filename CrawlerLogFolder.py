@@ -84,10 +84,29 @@ def minOperations(logs):
 
 
 
+# Using Iteration to safe some space,time: O(n) and space: O(1)
+
+def minOperationsII(logs):
+    res = 0
+
+    for log in logs:
+        if log == './':
+            continue
+        elif log == '../':
+            res = max(0, res - 1)
+        else:
+            res += 1
+
+    return res
+
+
+
 logs = ["d1/","d2/","./","d3/","../","d31/"]
 output = 3
 
 res = minOperations(logs)
+res2 = minOperationsII(logs)
 
 print(res)
+print(res2)
 print(output)
