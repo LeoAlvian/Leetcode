@@ -69,6 +69,9 @@ For operations "C" and "D", there will always be at least one previous score on 
 """
 
 
+
+# Use stack I
+
 def baseballGame(ops):
     stack = []
 
@@ -85,8 +88,35 @@ def baseballGame(ops):
     return sum(stack)
 
 
+
+# Use stack II without sum function
+
+def baseballGameII(ops):
+    stack = []
+    res = 0
+
+    for op in ops:
+        if op == '+':
+            res += stack[-1] + stack[-2] 
+            stack.append(stack[-1] + stack[-2])
+        elif op == 'D':
+            res += stack[-1] * 2
+            stack.append(stack[-1] * 2)
+        elif op == 'C':
+            res -= stack.pop()
+        else:
+            res += int(op)
+            stack.append(int(op))
+    
+    return res
+
+
 ops = ["5","-2","4","C","D","9","+","+"]
 output = 27
+
 bg = baseballGame(ops)
+bg2 = baseballGameII(ops)
+
 print(bg)
+print(bg2)
 print(output)
