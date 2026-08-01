@@ -56,6 +56,7 @@ Constraints:
 s consists of parentheses only '()[]{}'.
 """
 
+# Using stack with time: O(n) and space: O(n)
 
 def isValid(s):
     stack = []
@@ -77,10 +78,37 @@ def isValid(s):
     return True if not stack else False
 
 
+
+def isValidII(s):
+    OPENING_BRACKETS = ['(', '[', '{']
+    CLOSING_BRACKETS = [')', ']', '}']
+    stack = []
+
+    for ch in s:
+        if ch in CLOSING_BRACKETS:
+            if len(stack) == 0:
+                return False
+            top_char = stack[len(stack) - 1]
+            if (
+                (top_char == '(' and ch == ')') or
+                (top_char == '[' and ch == ']') or
+                (top_char == '{' and ch == '}')
+            ):
+                stack.pop()
+            else:
+                stack.append(ch)
+        else:
+            stack.append(ch)
+
+    return len(stack) == 0
+
+
 s = "()[]{}"
 output = True
 
 iv = isValid(s)
+iv2 = isValidII(s)
 
 print(iv)
+print(iv2)
 print(output)
