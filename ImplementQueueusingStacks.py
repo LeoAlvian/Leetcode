@@ -68,12 +68,42 @@ class myQueue:
     def empty(self):
         return max(len(self.s1), len(self.s2)) == 0
 
+
+
+# Slightly faster on leetcode
+
+class myQueueII:
+
+    def __init__(self):
+        self.s1 = []
+        self.s2 = []
+    
+    def push(self, x):
+        self.s1.append(x)
+    
+    def pop(self):
+        self.peek()
+        return self.s2.pop()
+
+    def peek(self):
+        if not self.s2:
+            while self.s1:
+                self.s2.append(self.s1.pop())
+        return self.s2[-1]
+
+    def empty(self):
+        return not self.s1 and not self.s2
+
 ops = ["push", "push", "peek", "pop", "empty"]
 args = [[1], [2], [], [], []]
 output = [None, None, 1, 1, False]
 mq = myQueue()
+mq2 = myQueueII()
 res = []
+res2 = []
 for i in range(len(ops)):
     res.append(getattr(mq, ops[i])(*args[i]))
+    res2.append(getattr(mq2, ops[i])(*args[i]))
 print(res)
+print(res2)
 print(output)
