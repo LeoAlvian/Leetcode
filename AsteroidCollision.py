@@ -89,8 +89,30 @@ def AsteroidCollision(asteroids):
     return stack
 
 
+
+def AsteroidCollisionII(asteroids):
+    stack = []
+    for ast in asteroids:
+        while stack and ast < 0 < stack[-1]:
+            if stack[-1] < -ast:
+                stack.pop()
+                continue
+            elif stack[-1] == -ast:
+                stack.pop()
+            break
+        else:
+            # Executes only if the while loop completes without hitting 'break'
+            stack.append(ast)
+            
+    return stack
+
+
 asteroids = [3,5,-6,2,-1,4]
 output = [-6,2,4]
+
 ac = AsteroidCollision(asteroids)
+ac2 = AsteroidCollisionII(asteroids)
+
 print(ac)
+print(ac2)
 print(output)
