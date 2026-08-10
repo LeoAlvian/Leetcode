@@ -79,6 +79,10 @@ At most 104 calls will be made to next.
 # [  1,  1,  1,  2,  1,  4,  6]  -> because 75,80 is <= 85, we keep adding span until
 # previous price is bigger which is 100, push 85 with span of 6 to the stack
 
+
+
+# Monotonic Decreasing Stack with time: O(n) and space: O(n)
+
 class StockSpan:
 
     def __init__(self):
@@ -92,6 +96,24 @@ class StockSpan:
         
         self.stack.append((price, span))
         return span
+
+
+
+# Brute force solution with time: O(n2) and space: O(n)
+
+class StockSpanner:
+
+    def __init__(self):
+        self.arr = []
+
+    def next(self, price: int) -> int:
+        self.arr.append(price)
+        i = len(self.arr) - 2
+        while i >= 0 and self.arr[i] <= price:
+            i -= 1
+        return len(self.arr) - i - 1
+
+    
 
 
 ops = ["next", "next", "next", "next", "next", "next", "next"]
