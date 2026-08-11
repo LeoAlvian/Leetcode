@@ -80,12 +80,38 @@ def carFleet(target, position, speed):
 
     return len(stack)
 
+
+def carFleetII(target, position, speed):
+    # Get indices sorted by position in ascending order
+    # sorted_indices = sorted(range(len(position)), key=lambda i: position[i])
+    # Get a pair of position and speed with list comprehention
+    pair = [[p, s] for p, s in zip(position, speed)]
+    
+    # Initialize fleet count and previous car's time to target
+    fleet_count = 0
+    previous_time = 0
+    
+    # Process cars from closest to target (rightmost) to furthest
+    for p, s in sorted(pair)[::-1]:
+        # Calculate time for current car to reach target
+        time_to_target = (target - p) / s
+        
+        # If current car takes longer than previous car, it forms a new fleet
+        # (Cannot catch up to the car ahead)
+        if time_to_target > previous_time:
+            fleet_count += 1
+            previous_time = time_to_target
+    
+    return fleet_count
+
 target = 12
 position = [10,8,0,5,3]
 speed = [2,4,1,1,3]
 output = 3
 
 cf = carFleet(target, position, speed)
+cf2 = carFleetII(target, position, speed)
 
 print(cf)
+print(cf2)
 print(output)
