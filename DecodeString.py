@@ -55,6 +55,9 @@ All the integers in s are in the range [1, 300].
 # we keep popping from the stack until we find '[' and then we popping until int and 
 # multiply them 
 # substr = acc, k = 3  -> 3 * acc = accaccacc
+
+# Using One stack with time: O(n + N2) and space: O(n + N)
+
 def decodeStr(s):
     stack = []
 
@@ -76,9 +79,42 @@ def decodeStr(s):
     return ''.join(stack)
 
 
+
+
+# Using Two stack with time: O(n + N) and space: O(n + N)
+
+def decodeStrII(s):
+    str_stack = []
+    count_stack = []
+    substr = ''
+    k = 0
+
+    for c in s:
+        if c.isdigit():
+            k = k * 10 + int(c)
+        elif c == '[':
+            str_stack.append(substr)
+            count_stack.append(k)
+            substr = ''
+            k = 0
+        elif c == ']':
+            temp = substr
+            substr = str_stack.pop()
+            count = count_stack.pop()
+            substr += temp * count
+        else:
+            substr += c
+
+    return substr
+
+
 s = "3[a2[c]]"
 output = "accaccacc"
+
 ds = decodeStr(s)
+ds2 = decodeStrII(s)
+
 print(ds)
+print(ds2)
 print(output)
 print(ds == output)
