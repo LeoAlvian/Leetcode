@@ -58,9 +58,29 @@ def searchInsertPos(nums, target):
     
     return l
 
+
+
+# Binary search lower bound
+
+def searchInsertPosII(nums, target):
+    l, r = 0, len(nums)
+
+    while l < r:
+        m = l + ((r - l) // 2)
+        if nums[m] >= target:
+            r = m
+        elif nums[m] < target:
+            l = m + 1
+
+    return l
+
 nums = [1,3,5,6]
 target = 7
 output = 4
+
 sip = searchInsertPos(nums, target)
+sip2 = searchInsertPosII(nums, target)
+
 print(sip)
+print(sip2)
 print(output)
