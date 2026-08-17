@@ -36,8 +36,8 @@ Output: 1
 # Using Binary search to optimize time complexity to O(logn)
 # guess API that return 0 if the guess are correct, -1 if it's too high or 1 if it's 
 # too low
-def guess(n):
-    pick = 16
+def guess(n, pick):
+    # pick = 16
     if n == pick:
         return 0
     elif n > pick:
@@ -46,12 +46,12 @@ def guess(n):
         return 1
 
 
-def guessNum(n):
+def guessNum(n, pick):
     l, r = 1, n
 
     while l <= r:
         mid = (l + r) // 2
-        res = guess(mid)
+        res = guess(mid, pick)
         if res == 0:
             return mid
         elif res < 0:
@@ -59,8 +59,11 @@ def guessNum(n):
         else:
             l = mid + 1
 
-n = 20
-output = 16
-gn = guessNum(n)
+n = 10
+pick = 6
+output = 6
+
+gn = guessNum(n, pick)
+
 print(gn)
 print(output)
