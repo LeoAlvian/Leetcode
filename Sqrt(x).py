@@ -25,6 +25,9 @@ Constraints:
 0 <= x <= 231 - 1
 """
 
+
+# Binary search with time: O(logn) and space: O(1)
+
 def sqrtx(x):
     l, r = 0, x
     res = 0
@@ -43,8 +46,23 @@ def sqrtx(x):
     return res
 
 
+# Using Recursion with time: O(logn) and space: O(logn)
+
+def mySqrtII(x):
+    if x < 2:
+        return x
+
+    l = mySqrtII(x >> 2) << 1
+    r = l + 1
+    return l if r ** 2 > x else r
+
+
 x = 8
 output = 2
+
 s = sqrtx(x)
+s2 = mySqrtII(x)
+
 print(s)
+print(s2)
 print(output)
