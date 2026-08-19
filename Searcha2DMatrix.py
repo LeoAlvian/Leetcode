@@ -80,11 +80,37 @@ def searchMatrix(matrix, target):
 
 
 
+
+# Using one pass binary search with time: O(log(m * n)) and space: O(1) but faster on leetcode
+
+def searchMatrixII(matrix, target):
+    ROWS, COLS = len(matrix), len(matrix[0])
+
+    l, r = 0, ROWS * COLS - 1
+
+    while l <= r:
+        m = (l + r) // 2
+
+        row = m // COLS
+        col = m % COLS
+
+        if target < matrix[row][col]:
+            r = m - 1
+        elif target > matrix[row][col]:
+            l = m + 1
+        else:
+            return True
+
+    return False
+
+
 matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]]
 target = 3
 output = True
 
 res = searchMatrix(matrix, target)
+res2 = searchMatrixII(matrix, target)
 
 print(res)
+print(res2)
 print(output)
