@@ -70,11 +70,33 @@ def minEatingSpeed(piles, h):
     
 
 
+# Using Math that is way faster on leetcode
+
+def minEatingSpeedII(piles, h):
+    left = sum(piles)
+    right = -(-(left - len(piles) + 1) // (h - len(piles) + 1))
+    left = -(-left // h) - 1
+
+    while left + 1 < right:
+        mid = (left + right) // 2
+        totalTime = 0
+        for p in piles:
+            totalTime += (p + mid - 1) // mid
+        if totalTime <= h:
+            right = mid
+        else:
+            left = mid
+    
+    return right
+
+
 piles = [30,11,23,4,20]
 h = 6
 output = 23
 
 res = minEatingSpeed(piles, h)
+res2 = minEatingSpeedII(piles, h)
 
 print(res)
+print(res2)
 print(output)
