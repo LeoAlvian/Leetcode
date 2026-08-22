@@ -53,6 +53,8 @@ Constraints:
 """
 
 
+# Use Binary search with time: O(n * logn) and space: O(1)
+
 def shipPackages(weights, days):
     l, r = max(weights), sum(weights)
     res = r
@@ -77,9 +79,38 @@ def shipPackages(weights, days):
     return res
 
 
+import math
+
+# Using Math with time: O(logn) and space: O(1)
+
+def shipPackagesII(weights, days):
+    r = -(-len(weights) // days) * max(weights)
+    l = max(max(weights), math.floor(sum(weights) / days))
+
+    while l < r:
+        mid = (l + r) >> 1
+        curr = 1
+        ships = 0
+        for w in weights:
+            ships += w
+            if ships > mid:
+                ships = w
+                curr += 1
+        if curr > days:
+            l = mid + 1
+        else:
+            r = mid
+    return l
+
+
+
 weights = [1,2,3,4,5,6,7,8,9,10]
 days = 2
 output = 28
+
 sp = shipPackages(weights, days)
+sp2 = shipPackagesII(weights, days)
+
 print(sp)
+print(sp2)
 print(output)
