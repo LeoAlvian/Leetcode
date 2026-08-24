@@ -59,6 +59,8 @@ nums is sorted and rotated between 1 and n times.
 def findMin(nums):
     l, r = 0, len(nums) - 1
 
+    
+
     if nums[0] <= nums[-1]:
         return nums[0]
 
