@@ -75,12 +75,21 @@ def search(nums, target):
 
 
 
+# Using Hash Set
+
+def searchII(nums, target):
+    return True if target in set(nums) else False
+
+
+
 
 nums = [2,5,6,0,0,1,2]
 target = 5
 output = True
 
 res = search(nums, target)
+res2 = searchII(nums, target)
 
 print(res)
+print(res2)
 print(output)
