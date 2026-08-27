@@ -78,6 +78,33 @@ class TimeMap:
 
 
 
+# Using lenear search but from the end of the array, this is a little bit faster on leetcode, if the timestamp in get(key, timestamp) is big or near the end of the array everytime then this is faster but if the array in each key is big the the binary search will be faster
+
+class TimeMapII:
+
+    def __init__(self):
+        self.store = {} # key: list of [val, time]
+
+    def set(self, key, value, timestamp):
+        if key not in self.store:
+            self.store[key] = []
+        self.store[key].append([value, timestamp])
+        
+
+    def get(self, key, timestamp):
+        if key not in self.store:
+            return ''
+        values = self.store[key]
+
+        for i in range(len(values) - 1, -1, -1):
+            val, time = values[i]
+            if time <= timestamp:
+                return val
+
+        return ''
+
+
+
 
 
 ops = ["set", "get", "get", "set", "get", "get"]
@@ -85,10 +112,16 @@ args = [["foo", "bar", 1], ["foo", 1], ["foo", 3], ["foo", "bar2", 4], ["foo", 4
 output = [None, "bar", "bar", None, "bar2", "bar2"]
 
 tm = TimeMap()
+tm2 = TimeMapII()
 res = []
+res2 = []
 
 for i in range(len(ops)):
     res.append(getattr(tm, ops[i])(*args[i]))
 
+for i in range(len(ops)):
+    res2.append(getattr(tm2, ops[i])(*args[i]))
+
 print(res)
+print(res2)
 print(output)
