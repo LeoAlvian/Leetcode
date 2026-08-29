@@ -48,20 +48,6 @@ class ListNode:
 # Using Iterative solution with two pointers
 
 class ReverseLL:
-    # def __init__(self):
-    #     self.head = None
-
-    # def addNode(self, val):
-    #     if not self.head:
-    #         self.head.next = ListNode(val)
-    #         return
-
-    #     cur = self.head
-    #     while cur.next:
-    #         cur = cur.next
-    #     cur.next = ListNode(val)
-        
-
 
     def reverseList(self, head):
         prev, curr = None, head
@@ -75,23 +61,50 @@ class ReverseLL:
         return prev
 
 
+    def reverseListII(self, head):
+        def dfs(head):
+            if not head or not head.next:
+                return head
+
+            new_head = dfs(head.next)
+
+            head.next.next = head
+            head.next = None
+
+            return new_head
+
+        return dfs(head)
+
+
 ls = [1,2,3,4,5]
 output = [5,4,3,2,1]
 
 head = ListNode()
+head2 = ListNode()
 cur = head
+cur2 = head2
 for h in ls:
     cur.next = ListNode(h)
+    cur2.next = ListNode(h)
     cur = cur.next
+    cur2 = cur2.next
 
 rll = ReverseLL()
+
 newHead = rll.reverseList(head)
+newHead2 = rll.reverseListII(head2)
 
 res = []
+res2 = []
 
 while newHead.next:
     res.append(newHead.val)
     newHead = newHead.next
 
+while newHead2.next:
+    res2.append(newHead2.val)
+    newHead2 = newHead2.next
+
 print(res)
+print(res2)
 print(output)
