@@ -69,6 +69,21 @@ def hasCycle(head):
     return False
 
 
+# Using Hash Set to find a loop
+
+def hasCycleII(head):
+    linkedListSet = set()
+    cur = head
+
+    while cur:
+        if cur in linkedListSet:
+            return True
+        linkedListSet.add(cur)
+        cur = cur.next
+
+    return False
+
+
 
 li = [3,2,0,-4]
 pos = 1
@@ -89,6 +104,8 @@ while pos:
 tail.next = cur
 
 res = hasCycle(head.next)
+res2 = hasCycleII(head.next)
 
 print(res)
+print(res2)
 print(output)
