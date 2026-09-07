@@ -31,7 +31,7 @@ class LinkedList():
 
 
 class Solution:
-    def reverseLinkedList(self, head, l, r):
+    def reverseLinkedList(self, head, left, right):
         # Create dummy node that point at the head to make it easier to code
         dummyNode = LinkedList(0, head)
 
@@ -45,9 +45,9 @@ class Solution:
         # node = [1] -> [2] -> [3] -> [4] -> [5]
         # dummy->head
         #        prefL  cur
-        prevLeft, cur = dummyNode, head
-        for i in range(l - 1):
-            prevLeft, cur = cur, cur.next
+        prevLeft, l = dummyNode, head
+        for i in range(left - 1):
+            prevLeft, l = l, l.next
         
         # Then we reverse the r - l + 1 part of the linked list by using prev that is 
         # none and point cur to prev and change prev to cur and cur to cur.next so the 
@@ -91,14 +91,15 @@ class Solution:
 
         # node = [1] -> [4] -> [3] -> [2] -> [5]
         # The return the head which is dummy.next
-        prev = None
-        for i in range(r - l + 1):
+        cur = l
+        r = None
+        for i in range(right - left + 1):
             temp = cur.next
-            cur.next = prev
-            prev, cur = cur, temp
+            cur.next = r
+            r, cur = cur, temp
         
-        prevLeft.next.next = cur
-        prevLeft.next = prev
+        prevLeft.next = r
+        l.next = cur
     
         return dummyNode.next
 
