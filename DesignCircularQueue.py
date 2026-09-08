@@ -149,14 +149,77 @@ class Solution:
         return self.count == 0
 
 
+
+
+# Using doubly linked list with time: 
+# O(n) for initialization
+# O(1) for edQueue(), deQueue(), Front(), Rear(), isEmpty(), isFull()
+# Space: O(n)
+
+class ListNode:
+    def __init__(self, val, nxt=None, prev=None):
+        self.val = val
+        self.next = nxt
+        self.prev = prev
+
+
+class MyCircularQueue:
+    def __init__(self, k: int):
+        self.size = k
+        self.left = ListNode(0)
+        self.right = ListNode(0, None, self.left)
+        self.left.next = self.right
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        node = ListNode(value, self.right, self.right.prev)
+        self.right.prev.next = node
+        self.right.prev = node
+        self.size -= 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        self.left.next = self.left.next.next
+        self.left.next.prev = self.left
+        self.size += 1
+        return True
+
+    def Front(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.left.next.val
+
+    def Rear(self) -> int:
+        if self.isEmpty():
+            return -1
+        return self.right.prev.val
+
+    def isEmpty(self) -> bool:
+        return self.left.next == self.right
+
+    def isFull(self) -> bool:
+        return self.size == 0
+
+
+
+
 operations = ["enQueue", "enQueue", "enQueue", "enQueue", "Rear", "isFull", "deQueue", "enQueue", "Rear"]
 args = [[1], [2], [3], [4], [], [], [], [4], []]
 k = 3
 output = [True, True, True, False, 3, True, True, True, 4]
 
 res = []
+res2 = []
 s = Solution(k)
+mcq = MyCircularQueue(k)
+
 for i in range(len(operations)):
     res.append(getattr(s, operations[i])(*args[i]))
+    res2.append(getattr(mcq, operations[i])(*args[i]))
+
 print(res)
+print(res2)
 print(output)
