@@ -38,6 +38,11 @@ class Node:
 class Solution:
     # This using recursive function which is trivial, but we are requested if
     # we can do it iteratively 
+    # Time complexity: O(n)
+    # Space Complexity:
+    #   - O(n) for recursion stack
+    #   - O(n) space for output array
+
     def inorderTraversal(self, root):
         res = []
 
@@ -54,6 +59,10 @@ class Solution:
     
     # Iterative solution
     # Using stack to store the node that we currently in
+    # Time complexity: O(n)
+        # Space Complexity:
+        #   - O(n) for recursion stack
+        #   - O(n) space for output array 
 
     def inorderTravIterative(self, root):
         res = []
