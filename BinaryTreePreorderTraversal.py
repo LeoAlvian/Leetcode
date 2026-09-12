@@ -138,7 +138,7 @@ class Solution:
 #       [2]       [3]
 #     /     \   /     \
 #   [4]    [5] [6]    [7]
-list = [1,2,3,4,5,6,7]
+arr1 = [1,2,3,4,5,6,7]
 output = [1,2,4,5,3,6,7]
 
 root = Node(1)
@@ -149,7 +149,34 @@ root.left.right = Node(5)
 root.right.left = Node(6)
 root.right.right = Node(7)
 
+
+
+#            [1]
+#         /       \
+#       [2]       [3]
+#     /     \        \
+#   [4]    [5]       [8]
+#         /   \      /
+#       [6]   [7]   [9] 
+
+arr2 = [1,2,3,4,5,None,8,None,None,6,7,9]
+output = [1,2,4,5,6,7,3,8,9]
+
+root2 = Node(1)
+root2.left = Node(2)
+root2.right = Node(3)
+root2.left.left = Node(4)
+root2.left.right = Node(5)
+root2.right.right = Node(8)
+root2.left.right.left = Node(6)
+root2.left.right.right = Node(7)
+root2.right.right.left = Node(9)
+
+
 s = Solution()
 res = s.preorderTraversalIterative(root)
+res2 = s.preorderTraversalIterative(root2)
+
 print(res)
+print(res2)
 print(output)
