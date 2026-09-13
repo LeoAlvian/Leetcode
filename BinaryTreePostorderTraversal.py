@@ -41,6 +41,20 @@ class Node:
         self.right = None
 
 class Solution:
+    def PostorderTraversalRecursive(self, root):
+        res = []
+
+        def postorder(node):
+            if not node:
+                return
+
+            postorder(node.left)
+            postorder(node.right)
+            res.append(node.val)
+
+        postorder(root)
+        return res
+
     def PostorderTraversal(self, root):
         stack = [root]
         visited = [False]
@@ -79,6 +93,8 @@ root.right.left = Node(6)
 root.right.right = Node(7)
 
 res = s.PostorderTraversal(root)
+res2 = s.PostorderTraversalRecursive(root)
 
 print(res)
+print(res2)
 print(output)
