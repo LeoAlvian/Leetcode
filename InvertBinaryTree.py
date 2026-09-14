@@ -69,8 +69,24 @@ class Solution:
 
         return root
 
-    
+    # Using Iterative solution
+    def invertTreeIterative(self, root):
+        if not root:
+            return None
 
+        stack = [root]
+
+        while stack:
+            node = stack.pop()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+
+        return root
+
+    # Printing the node Using BFS
     def print(self, root):
         if not root:
             return []
@@ -79,20 +95,25 @@ class Solution:
         queue = deque([root])
 
         while queue:
+            # getting the size of one level
             level_size = len(queue)
             cur_level = []
 
+            # loop through all node in one level
             for i in range(level_size):
+                # pop the node from the left
                 node = queue.popleft()
                 cur_level.append(node.val)
-
+                # if there is node in the left, append it to the queue
                 if node.left:
                     queue.append(node.left)
-
+                # if there is node in the right, append it to the queue
                 if node.right:
                     queue.append(node.right)
-
+            # add the current level array to the res array
             res += cur_level
+            # if you want to add array per level and not join all the array in the res you can use this code below instead
+            # res.append(cur_level)
 
         return res
 
