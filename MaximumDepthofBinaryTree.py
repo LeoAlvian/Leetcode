@@ -46,6 +46,7 @@ class TreeNode:
         self.right = None
 
 
+from collections import deque
 
 class Solution:
 
@@ -67,7 +68,26 @@ class Solution:
         return res
    
 
+    # Solve using BFS with time: O(n) and space: O(n)
+    # This algorithm is faster on leetcode with 0ms
     
+    def maxDepthBFS(self, root):
+        if not root:
+            return 0
+
+        res = 0
+        q = deque([root])
+
+        while q:
+            for i in range(len(q)):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res += 1
+
+        return res
 
 
 
@@ -90,6 +110,8 @@ root.right.right = TreeNode(7)
 s = Solution()
 
 res = s.maxDepth(root)
+res2 = s.maxDepthBFS(root)
 
 print(res)
+print(res2)
 print(output)
