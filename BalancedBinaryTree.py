@@ -63,24 +63,30 @@ class Tree:
 class Solution:
     def isBalanced(self, root):
 
-        def check_height(cur):
-            if not cur:
+        # Helper function to return height, or -1 if unbalanced
+        def check_height(node):
+            if not node: # so if there is no more node then the height is 0 duh 
                 return 0
-
-            left = check_height(cur.left)
-            if left == -1:
+            
+            # Check left subtree
+            left_height = check_height(node.left)
+            if left_height == -1:
+                return -1 # Left subtree is unbalanced, bubble up the failure
+            
+            # Check right subtree
+            right_height = check_height(node.right)
+            if right_height == -1:
+                return -1 # Right subtree is unbalanced, bubble up the failure
+            
+            # Check if current node is unbalanced
+            if abs(left_height - right_height) > 1:
                 return -1
-
-            right = check_height(cur.right)
-            if right == -1:
-                return -1
-
-            if abs(left - right) > 1:
-                return -1
-
-            return 1 + max(left, right)
-
-        return check_height(root) != -1
+            
+            # Return actual height if balanced
+            return 1 + max(left_height, right_height)
+        
+        # If check_height returns anything other than -1, it's balanced
+        return check_height(root) != -1 # because all the rest was not balanced
 
 
 
