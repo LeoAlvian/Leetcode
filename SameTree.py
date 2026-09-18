@@ -74,8 +74,12 @@ class Tree:
         self.left = None
         self.right = None
 
+from collections import deque
 
 class Solution:
+
+    # Using DFS
+
     def isSameTree(self, p, q):
         if not p and not q:
             return True
@@ -85,6 +89,30 @@ class Solution:
             return False
 
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+
+    # Using BFS
+
+    def isSameTreeII(self, p, q):
+        qp = deque([p])
+        qq = deque([q])
+
+        while qp and qq:
+            for i in range(len(qp)):
+                nodeP = qp.popleft()
+                nodeQ = qq.popleft()
+
+                if not nodeP and not nodeQ:
+                    continue
+                if not nodeP or not nodeQ or nodeP.val != nodeQ.val:
+                    return False
+
+                qp.append(nodeP.left)
+                qp.append(nodeP.right)
+                qq.append(nodeQ.left)
+                qq.append(nodeQ.right)
+
+        return True
 
 
 
@@ -116,6 +144,8 @@ q.right.right = Tree(7)
 s = Solution()
 
 res = s.isSameTree(p, q)
+res2 = s.isSameTreeII(p, q)
 
 print(res)
+print(res2)
 print(output)
