@@ -77,8 +77,41 @@ class Solution:
         if not root and not sub:
             return True
         if root and sub and root.val == sub.val:
-            return True
+            return self.isSame(root.left, sub.left) and self.isSame(root.right, sub.right)
         return False
+
+
+    def isSubtreeStr(self, root, subRoot):
+
+        def traverse(node, arr):
+            if not node:
+                # Wrap None in unique delimiters, e.g., #None#
+                arr.append('#None#')
+                return
+            # Wrap values in unique delimiters, e.g., #12#
+            arr.append(f'#{node.val}#')
+            traverse(node.left, arr)
+            traverse(node.right, arr)
+
+        rootArr = []
+        subRootArr = []
+
+        # fill the rootArr and subRootArr with value inside node
+        traverse(root, rootArr)
+        traverse(subRoot, subRootArr)
+
+        # rootArr = ['#3#', '#4#', '#1#', '#None#', '#None#', '#2#', '#None#', '#None#', '#5#', '#None#', '#None#']
+        # subRootArr = ['#4#', '#1#', '#None#', '#None#', '#2#', '#None#', '#None#']
+
+        # Join them into strings
+        rootStr = ','.join(rootArr)
+        subRootStr = ','.join(subRootArr)
+
+        # rootStr = #3#,#4#,#1#,#None#,#None#,#2#,#None#,#None#,#5#,#None#,#None#
+        # subRootStr = #4#,#1#,#None#,#None#,#2#,#None#,#None#
+
+        # Now "#2#,#None#,#None#" will NOT match inside "#12#,#None#,#None#"
+        return subRootStr in rootStr
 
 
 
@@ -105,9 +138,12 @@ subTree = Tree(4)
 subTree.left = Tree(1)
 subTree.right = Tree(2)
 
+
 s = Solution()
 
 res = s.isSubtree(root,subTree)
+res2 = s.isSubtreeStr(root,subTree)
 
 print(res)
+print(res2)
 print(output)
