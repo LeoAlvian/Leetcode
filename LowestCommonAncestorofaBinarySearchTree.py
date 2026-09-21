@@ -80,6 +80,18 @@ class Solution:
                 return cur
 
 
+    # This function is faster on leetcode
+    
+    def lowestCommonAncestorRecursive(self, root, p, q):
+        if root is None:
+            return None
+        
+        # navigate 
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestorRecursive(root.left, p, q)
+        if p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestorRecursive(root.right, p, q)
+        return root
 
 
 
@@ -113,6 +125,8 @@ q = Tree(4)
 s = Solution()
 
 res = s.lowestCommonAncestor(root, p, q)
+res2 = s.lowestCommonAncestorRecursive(root, p, q)
 
 print(res.val)
+print(res2.val)
 print(output)
