@@ -43,6 +43,17 @@ If the value of isLeaf or val is True we represent it as 1 in the list [isLeaf, 
 
 Example 1:
 
+    [0,1]                        [isLeaf : 0]
+    [1,0]                        [val : 1   ] 
+                                      |
+            -----------------------------------------------------
+            |                |                 |                |
+         topLeft          topRight         bottomLeft      bottomRight
+            |                |                 |                |
+            v                v                 v                v
+        [isLeaf : 1]     [isLeaf : 1]      [isLeaf : 1]    [isLeaf : 1]
+        [val    : 0]     [val    : 1]      [val    : 1]    [val    : 0]
+
 Input: grid = [[0,1],[1,0]]
 Output: [[0,1],[1,0],[1,1],[1,1],[1,0]]
 Explanation: The explanation of this example is shown below:
@@ -51,6 +62,25 @@ Notice that 0 represents False and 1 represents True in the photo representing t
 
 
 Example 2:
+
+    [1,1,1,1,|0,0,|0,0]                             [isLeaf : 0]
+    [1,1,1,1,|0,0,|0,0]                             [val : 1   ] 
+    [        |--------]                                   |
+    [1,1,1,1,|1,1,|1,1]      -----------------------------------------------------   
+    [1,1,1,1,|1,1,|1,1]      |                |                 |                |
+    [-----------------]   topLeft          topRight         bottomLeft      bottomRight
+    [1,1,1,1,|0,0,0,0 ]      |                |                 |                |
+    [1,1,1,1,|0,0,0,0 ]      v                v                 v                v
+    [1,1,1,1,|0,0,0,0 ]  [isLeaf : 1]     [isLeaf : 0]      [isLeaf : 1]    [isLeaf : 1]
+    [1,1,1,1,|0,0,0,0 ]  [val    : 1]     [val    : 1]      [val    : 1]    [val    : 0]
+                                                |
+                      ----------------------------------------------------- 
+                      |                |                 |                |
+                   topLeft          topRight         bottomLeft      bottomRight
+                      |                |                 |                |
+                      v                v                 v                v
+                [isLeaf : 1]     [isLeaf : 1]      [isLeaf : 1]    [isLeaf : 1]
+                [val    : 0]     [val    : 0]      [val    : 1]    [val    : 1]
 
 Input: grid = [[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0]]
 Output: [[0,1],[1,1],[0,1],[1,1],[1,0],null,null,null,null,[1,0],[1,0],[1,1],[1,1]]
@@ -79,6 +109,7 @@ class Node:
 
 
 class Solution:
+    # Solving it using DFS with time: O(n2 logn) and space: O(n)
     def ConstructQuadTree(self,grid):
         def dfs(n, row, col):
             allSame = True
@@ -99,7 +130,22 @@ class Solution:
             return Node(0, 0, topleft, topright, bottomleft, bottomright)
 
         return dfs(len(grid), 0, 0)
-    
+
+    # Another way of solving it with the same time complexity
+
+    def ConstructQuadTreeII(self, grid):
+        def dfs(n, r, c):
+            val = grid[r][c]
+            if all(grid[r + i][c + j] == val for i in range(n) for j in range(n)):
+                return Node(grid[r][c], 1)
+            h = n // 2
+            return Node(0, 0, dfs(h, r, c), dfs(h, r, c + h),
+                                    dfs(h, r + h, c), dfs(h, r + h, c + h))
+        return dfs(len(grid), 0, 0)
+
+
+    # Printing the tree to an array
+
     def printTree(self,root):
         res = []
         def dfs(root):
@@ -129,7 +175,10 @@ grid = [
 output = [[0,1],[1,1],[0,1],[1,1],[1,0],None,None,None,None,[1,0],[1,0],[1,1],[1,1]]
 s = Solution()
 root = s.ConstructQuadTree(grid)
+root2 = s.ConstructQuadTreeII(grid)
 print(root)
 _, res = s.printTree(root)
+_, res2 = s.printTree(root2)
 print(res)
+print(res2)
 print(output)
