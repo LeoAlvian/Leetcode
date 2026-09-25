@@ -84,6 +84,7 @@ class Tree:
         self.right = None
 
 
+from collections import deque
 
 class Solution:
     # Solving it using DFS preorder traversal with time: O(n) and space: O(n) for call stack
@@ -115,6 +116,27 @@ class Solution:
         return helper(root, root.val)
 
 
+    # Using BFS with time: O(n) and space: O(n)
+
+    def goodNodesBFS(self, root):
+        res = 0
+        q = deque()
+
+        q.append((root, float('-inf')))
+
+        while q:
+            node, maxVal = q.popleft()
+            if node.val >= maxVal:
+                res += 1
+
+            if node.left:
+                q.append((node.left, max(maxVal, node.val)))
+
+            if node.right:
+                q.append((node.right, max(maxVal, node.val)))
+
+        return res
+
 
         #         +[3]
         #        /     \
@@ -136,7 +158,9 @@ s = Solution()
 
 res = s.goodNodes(root)
 res2 = s.goodNodesII(root)
+res3 = s.goodNodesBFS(root)
 
 print(res)
 print(res2)
+print(res3)
 print(output)
