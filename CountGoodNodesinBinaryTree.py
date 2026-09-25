@@ -102,6 +102,19 @@ class Solution:
         return dfs(root, root.val)
 
 
+    def goodNodesII(self, root):
+        def helper(root, maxVal):
+            if root is None:
+                return 0
+
+            if root.val < maxVal:
+                return helper(root.left, maxVal) + helper(root.right, maxVal)
+            else:
+                # case: root.val >= upper_bound
+                return 1 + helper(root.left, root.val) + helper(root.right, root.val)
+        return helper(root, root.val)
+
+
 
         #         +[3]
         #        /     \
@@ -122,6 +135,8 @@ root.right.right = Tree(5)
 s = Solution()
 
 res = s.goodNodes(root)
+res2 = s.goodNodesII(root)
 
 print(res)
+print(res2)
 print(output)
