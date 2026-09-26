@@ -56,6 +56,8 @@ class Tree:
         self.right = None
 
 
+from collections import deque
+
 class Solution:
     def isValidBST(self, root):
 
@@ -71,6 +73,23 @@ class Solution:
             return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
 
         return valid(root, float('-inf'), float('inf'))
+
+    def isValidBSTBFS(self, root):
+        if not root: 
+            return True
+
+        q = deque([(root, float('-inf'), float('inf'))])
+
+        while q:
+            node, left, right = q.popleft()
+            if not (left < node.val < right):
+                return False
+            if node.left:
+                q.append((node.left, left, node.val))
+            if node.right:
+                q.append((node.right, node.val, right))
+
+        return True
 
 
     #       [5]
@@ -91,6 +110,8 @@ root.right.right = Tree(8)
 s = Solution()
 
 res = s.isValidBST(root)
+res2 = s.isValidBSTBFS(root)
 
 print(res)
+print(res2)
 print(output)
