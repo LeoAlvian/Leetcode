@@ -61,7 +61,7 @@ class Tree:
 
 class Solution:
     # Solve Using Inorder DFS Recursive, time: O(n) and space: O(n) for calling stack function
-    def kthSmallest(self, root):
+    def kthSmallest(self, root, k):
         arr = []
         def dfs(node):
             if not node:
@@ -73,6 +73,23 @@ class Solution:
 
         dfs(root)
         return arr[k - 1]
+
+
+    # Solving it iteratively using Stack
+    def kthSmallestIter(self, root, k):
+        stack = []
+        cur = root
+
+        while cur or stack:
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+
+            cur = stack.pop()
+            k -= 1
+            if k == 0:
+                return cur.val
+            cur = cur.right
 
 
 
@@ -97,7 +114,9 @@ root.left.left.left = Tree(1)
 
 s = Solution()
 
-res = s.kthSmallest(root)
+res = s.kthSmallest(root, k)
+res2 = s.kthSmallestIter(root, k)
 
 print(res)
+print(res2)
 print(output)
