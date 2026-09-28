@@ -67,6 +67,27 @@ class Solution:
 
 
 
+    # Hash Map + Depth First Search with time: O(n) and space: O(n)
+    
+    def buildTreeHash(self, preorder, inorder):
+        idx_map = { val: i for i, val in enumerate(inorder)}
+        self.index = 0
+
+        def dfs(l, r):
+            if l > r:
+                return None
+            root_val = preorder[self.index]
+            self.index += 1
+            root = Tree(root_val)
+
+            mid = idx_map[root_val]
+            root.left = dfs(l, mid - 1)
+            root.right = dfs(mid + 1, r)
+            return root
+
+        return dfs(0, len(inorder) - 1)
+
+
     # Print the tree in level order or BFS
     def printTree(self, root):
         q = deque([root] if root else None)
@@ -96,10 +117,11 @@ output = [3,9,20,None,None,15,7]
 s = Solution()
 
 root = s.buildTree(preorder, inorder)
-
+root2 = s.buildTreeHash(preorder, inorder)
 
 res = s.printTree(root)
-
+res2 = s.printTree(root2)
 
 print(res, 'O(n2) Time')
+print(res2, 'O(n) Time')
 print(output)
