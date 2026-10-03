@@ -42,12 +42,20 @@ def findKthLargest(nums, k):
     return heapq.nlargest(k, nums)[-1]
 
 
+# Using numpy partition with time O(n) and space: O(n)
+from numpy import partition
+def findKthLargestII(nums, k):
+    return int(partition(nums, -k)[-k])
+
+
 
 nums = [3,2,3,1,2,4,5,5,6]
 k = 4
 output = 4
 
 res = findKthLargest(nums, k)
+res2 = findKthLargestII(nums, k)
 
 print(res)
+print(res2)
 print(output)
