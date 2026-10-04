@@ -91,11 +91,50 @@ def leastInterval(tasks, n):
     return time
 
 
+# Soving it using math
+def leastIntervalII(tasks, n):
+    count = Counter(tasks)
+    # Counter({'A': 3, 'B': 3})
+
+
+    max_freq = max(count.values())
+    # max_freq = 3; from 'A': 3 or 'B': 3
+
+
+    max_count = 0
+    for value in count.values():
+        if value == max_freq:
+            max_count += 1
+    # max_count = 2; from 'A': 3, 'B': 3
+
+
+    partition_count = max_freq - 1
+    # partition_count = 2
+    partition_length = n - (max_count - 1)
+    # partition_length = 2
+
+    empty_slots = partition_count * partition_length
+    # empty_slots = 2 * 2 = 4
+
+    remaining_tasks = len(tasks) - (max_freq * max_count)
+    # remaining_tasks = 6 - (3 * 2) = 0
+
+    idle = max(0, empty_slots - remaining_tasks)
+    # idle = max(0, 4 - 0) = max(0, 4) = 4
+
+    return len(tasks) + idle
+    # return 6 + 4
+
+
 tasks = ["A","C","A","B","D","B"]
 n = 1
+tasks = ["A","A","A", "B","B","B"]
+n = 3
 output = 6
 
 res = leastInterval(tasks, n)
+res2 = leastIntervalII(tasks, n)
 
 print(res)
+print(res2)
 print(output)
