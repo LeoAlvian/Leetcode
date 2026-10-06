@@ -101,10 +101,37 @@ def singleThreadedCPU(tasks):
             time += procTime
     
     return res
+
+
+
+# This algorithm is faster on leetcode
+
+def singleThreadedCPUII(tasks):
+    minHeap = []
+    time = 0
+    res = []
+
+    tasks = sorted((task, i) for i, task in enumerate(tasks))
+    # tasks = [([1, 1], 1), ([1, 2], 0), ([2, 4], 2), ([3, 2], 3), ([4, 1], 4)]
+
+    for (enqueue, process), i in tasks:
+        while minHeap and time < enqueue:
+            processT, j, enqueueT = heapq.heappop(minHeap)
+            time = max(time, enqueueT) + processT
+            res.append(j)
+
+        heapq.heappush(minHeap, [process, i, enqueue])
+
+    print(minHeap)
+    return res + [i for pro, i, enq in sorted(minHeap)]
         
 
 tasks = [[1,2],[1,1],[2,4],[3,2],[4,1]]
+tasks2 = [[1,2],[1,1],[2,4],[3,2],[4,1]]
 output = [1, 0, 2, 3, 4]
 stc = singleThreadedCPU(tasks)
+res = singleThreadedCPUII(tasks2)
+
 print(stc)
+print(res)
 print(output)
