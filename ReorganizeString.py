@@ -86,10 +86,10 @@ import heapq
 
 def reorganizeStr(s):
     count = Counter(s)
-    print(count)
+    # Counter({'b': 2, 'c': 2, 'd': 2, 'a': 1})
     maxHeap = [ [-cnt, char] for char, cnt in count.items() ]
     heapq.heapify(maxHeap)
-    print(maxHeap)
+    # maxHeap = [[-2, 'b'], [-2, 'd'], [-2, 'c'], [-1, 'a']]
 
     res = ''
     onHoldChar = None
@@ -106,8 +106,37 @@ def reorganizeStr(s):
     
     return res if not onHoldChar else ''
 
+
+def reorganizeStrII(s):
+    count = Counter(s)
+    # Counter({'b': 2, 'c': 2, 'd': 2, 'a': 1})
+
+    sorted_char = sorted(count.keys(), key = lambda x : count[x], reverse=True)
+    # sorted_char = ['b', 'c', 'd', 'a']
+
+    if count[sorted_char[0]] > (len(s) + 1) // 2:
+        return ''
+
+    res = [None] * len(s)
+    i = 0
+
+    for char in sorted_char:
+        for _ in range(count[char]):
+            if i >= len(s):
+                i = 1
+            res[i] = char
+            i += 2
+
+    return ''.join(res)
+
+
+
 s = "abbccdd"
 output = "abcdbcd"
+
 rs = reorganizeStr(s)
+rs2 = reorganizeStrII(s)
+
 print(rs)
+print(rs2)
 print(output)
