@@ -48,8 +48,7 @@ def carPooling(trips, cap):
     minHeap = [] # Store [end, numPas]
     curCap = 0
 
-    for trip in trips:
-        numPas, start, end = trip
+    for numPas, start, end in trips:
         while minHeap and minHeap[0][0] <= start:
             curCap -= minHeap[0][1]
             heapq.heappop(minHeap)
@@ -82,8 +81,10 @@ def carPoolingBruteForce(trips, cap):
 trips = trips = [[2,1,5],[3,3,7]]
 capacity = 5
 output = True
+
 cp = carPooling(trips, capacity)
 cpbf = carPoolingBruteForce(trips, capacity)
+
 print('Min Heap :', cp)
 print('Brute Force :', cpbf)
 print('Expected Output :', output)
