@@ -74,8 +74,27 @@ def sumAllSubsetXORTotals(nums):
 
     return dfs(0, 0)
 
+
+
+# Solving it using math with time: O(n) and space: O(1)
+
+def sumAllSubsetXORTotalsMath(nums):
+    res = 0
+
+    for num in nums:
+        res |= num
+
+    return res * 2**(len(nums) - 1)
+
+
+
+
 nums = [5,1,6]
 output = 28
+
 sa = sumAllSubsetXORTotals(nums)
+sam = sumAllSubsetXORTotalsMath(nums)
+
 print(sa)
+print(sam)
 print(output)
