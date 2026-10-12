@@ -57,10 +57,28 @@ def subsets(nums):
     return res 
 
 
+# Solving it iteratively with time: O(n * 2^n) and space: O(n) for the extra space and O(2^n) for the output
+
+def subsetsIteration(nums):
+    res = [[]]
+
+    for num in nums:
+        temp = []
+        for subset in res:
+            subset = subset + [num]
+            temp.append(subset)
+        res += temp
+
+    return res
+
+
+
 nums = [1,2,3]
 output = [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 
 res = subsets(nums)
+res2 = subsetsIteration(nums)
 
 print(res)
+print(res2)
 print(output)
