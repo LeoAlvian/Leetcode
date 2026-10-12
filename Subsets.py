@@ -72,13 +72,24 @@ def subsetsIteration(nums):
     return res
 
 
+def subsetsItertationShort(nums):
+    res = [[]]
+
+    for num in nums:
+        res += [subset + [num] for subset in res]
+
+    return res
+
+
 
 nums = [1,2,3]
 output = [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 
 res = subsets(nums)
 res2 = subsetsIteration(nums)
+res3 = subsetsItertationShort(nums)
 
 print(res)
 print(res2)
+print(res3)
 print(output)
