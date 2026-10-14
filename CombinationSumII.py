@@ -45,6 +45,7 @@ Constraints:
 """
 
 
+# Using DFS with time: O(n * 2^n) and space: O(n)
 
 def combinationSum2(cand, t):
     res = []
@@ -72,6 +73,35 @@ def combinationSum2(cand, t):
     return res
 
 
+
+
+# Using Optimal DFS with time: O(n * 2^n) and space: O(n), a bit faster on leetcode
+
+
+def combinationSum2Optimal(cand, t):
+    res = []
+    cand.sort()
+
+    def dfs(start, cur, remain):
+        if remain == 0:
+            res.append(cur.copy())
+            return
+
+        for i in range(start, len(cand)):
+            if i > start and cand[i] == cand[i - 1]:
+                continue
+            if cand[i] > remain:
+                break
+
+            cur.append(cand[i])
+            dfs(i + 1, cur, remain - cand[i])
+            cur.pop()
+
+
+    dfs(0, [], t)
+    return res
+
+
 candidates = [10,1,2,7,6,1,5]
 target = 8
 output = [
@@ -82,6 +112,8 @@ output = [
 ]
 
 res = combinationSum2(candidates, target)
+res2 = combinationSum2Optimal(candidates, target)
 
 print(res)
+print(res2)
 print(output)
