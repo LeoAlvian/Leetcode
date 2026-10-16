@@ -55,9 +55,21 @@ def combination(n, k):
     backtrack(1, [])
     return res
 
+
+
+from itertools import combinations
+
+def combinationII(n, k):
+    nums = [i for i in range(1, n + 1)]
+    return list(combinations(nums, k))
+
 n = 4
 k = 2
 output = [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+
 c = combination(n, k)
+c2 = combinationII(n, k)
+
 print(c)
+print(c2)
 print(output)
