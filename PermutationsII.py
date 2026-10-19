@@ -60,9 +60,30 @@ def permutationII(nums):
     return res
 
 
+
+def permutationIIIteration(nums):
+    perms = [[]]
+
+    for n in nums:
+        new_perms = []
+        for p in perms:
+            for i in range(len(p) + 1):
+                new_p = p.copy()
+                new_p.insert(i, n)
+                new_perms.append(new_p)
+                if i < len(p) and p[i] == n:
+                    break
+        perms = new_perms
+
+    return perms
+
+
 nums = [1,2,3]
 output = [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
 
 p = permutationII(nums)
+p2 = permutationIIIteration(nums)
+
 print(p)
+print(p2)
 print(output)
