@@ -128,6 +128,64 @@ def existII(board, word):
         return False                                              # [8] this DFS branch failed
             
     return any(dfs(i,j,0) for i,j in product(range(m),range(n)))
+
+
+
+
+
+def existIII( board, word):
+    """
+    :type board: List[List[str]]
+    :type word: str
+    :rtype: bool
+    """
+    m = len(board)
+    n = len(board[0])
+    if len(word) > m * n:
+        return False
+
+    board_counts = {}
+    for row in board:
+        for char in row:
+            board_counts[char] = board_counts.get(char, 0) + 1
+
+    word_counts = {}
+    for char in word:
+        word_counts[char] = word_counts.get(char, 0) + 1
+    for char, count in word_counts.items():
+        if board_counts.get(char, 0) < count:
+            return False
+
+    if board_counts[word[0]] > board_counts[word[-1]]:
+        word = word[::-1]
+
+    length = len(word)
+
+    def search(r, c, index):
+        if board[r][c] != word[index]:
+            return False
+        if index == length - 1:
+            return True
+
+        char = board[r][c]
+        board[r][c] = '#'
+        found = False
+        if r > 0 and board[r - 1][c] != '#':
+            found = search(r - 1, c, index + 1)
+        if not found and r + 1 < m and board[r + 1][c] != '#':
+            found = search(r + 1, c, index + 1)
+        if not found and c > 0 and board[r][c - 1] != '#':
+            found = search(r, c - 1, index + 1)
+        if not found and c + 1 < n and board[r][c + 1] != '#':
+            found = search(r, c + 1, index + 1)
+        board[r][c] = char
+        return found
+
+    for r in range(m):
+        for c in range(n):
+            if board[r][c] == word[0] and search(r, c, 0):
+                return True
+    return False
         
 
 
@@ -137,7 +195,9 @@ output = True
 
 res = exist(board, word)
 # res2 = existII(board, word)
+res3 = existIII(board, word)
 
 print(res)
 # print(res2)
+print(res3)
 print(output)
