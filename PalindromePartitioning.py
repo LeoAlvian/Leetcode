@@ -60,10 +60,42 @@ def partition(s):
 
 
 
+def partitionII(s):
+    memo = {}
+
+    def isPalin(word):
+        return word == word[::-1]
+
+    def dfs(start):
+        if start in memo:
+            return memo[start]
+
+        if start == len(s):
+            return [[]]
+
+        res = []
+        for end in range(start + 1, len(s) + 1):
+            word = s[start:end]
+            if isPalin(word):
+                for rest in dfs(end):
+                    if rest:
+                        res.append([word] + rest)
+                    else:
+                        res.append([word])
+
+        memo[start] = res
+        return res
+
+    return dfs(0)
+
+
+
 s = "aab"
 output = [["a","a","b"],["aa","b"]]
 
 res = partition(s)
+res2 = partitionII(s)
 
 print(res)
+print(res2)
 print(output)
