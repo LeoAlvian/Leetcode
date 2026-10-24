@@ -62,10 +62,32 @@ def letterCombinations(digits):
         dfs(0, '')
     return res
 
+
+
+
+def letterCombinationsII(digits):
+    keypad = {
+        '2': "abc",
+        '3': "def",
+        '4': "ghi",
+        '5': "jkl",
+        '6': "mno",
+        '7': "pqrs",
+        '8': "tuv",
+        '9': "wxyz"
+    }
+
+    combinations = [""]
+    for digit in digits:
+        combinations = [prefix + letter for prefix in combinations for letter in keypad[digit]]
+    return combinations if digits else []
+
 digits = "23"
 output = ["ad","ae","af","bd","be","bf","cd","ce","cf"]
 
 res = letterCombinations(digits)
+res2 = letterCombinationsII(digits)
 
 print(res)
+print(res2)
 print(output)
