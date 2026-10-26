@@ -92,12 +92,40 @@ def getHappyString(n, k):
 
 
 
+
+# Using backtrack
+
+def getHappyStringII(n, k):
+    res = []
+
+    def backtrack(path):
+        if len(res) == k:
+            return
+        if len(path) == n:
+            res.append(''.join(path))
+            return
+
+        for c in ('a','b','c'):
+            if not path or path[-1] != c:
+                path.append(c)
+                backtrack(path)
+                path.pop()
+
+    backtrack([])
+    if len(res) < k:
+        return ''
+    return res[-1]
+
+
+
 n = 3
 k = 6
 output = "bac"
 # happy_string = ['aba', 'abc', 'aca', 'acb', 'bab', 'bac', 'bca', 'bcb', 'cab', 'cac', 'cba', 'cbc']
 
 res = getHappyString(n, k)
+res2 = getHappyStringII(n, k)
 
 print(res)
+print(res2)
 print(output)
