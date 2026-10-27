@@ -63,8 +63,51 @@ def matchToSquare(ms):
     return backtrack(ms, sides, 0)
 
 
+
+def makesquareII(matchsticks):
+    total = sum(matchsticks)
+    if total % 4 != 0:
+        return False
+
+    target = total // 4
+    matchsticks.sort(reverse=True)
+    used = [False] * len(matchsticks)
+
+    if matchsticks[0] > target:
+        return False
+
+    return make(matchsticks, used, 4, 0, target, 0)
+
+def make(matchsticks, used, sides, cur_sum, target, idx):
+    if sides == 1:
+        return True
+    
+    if cur_sum == target:
+        return make(matchsticks, used, sides - 1, 0, target, 0)
+
+    for i in range(idx, len(matchsticks)):
+        if used[i] or cur_sum + matchsticks[i] > target:
+            continue
+        if i > idx and matchsticks[i] == matchsticks[i - 1] and not used[i - 1]:
+            continue
+
+        used[i] = True
+        if make(matchsticks, used, sides, cur_sum + matchsticks[i], target, i + 1) is True:
+            return True
+        used[i] = False
+
+        if cur_sum == 0:
+            break
+
+    return False
+
+
 matchsticks = [1,1,2,2,2]
 output = True
+
 mts = matchToSquare(matchsticks)
+res = makesquareII(matchsticks)
+
 print(mts)
+print(res)
 print(output)
