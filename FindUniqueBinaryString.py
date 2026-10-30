@@ -47,7 +47,7 @@ def findDifferentBinaryString(nums):
     strSet = {s for s in nums}
 
     def backtrack(i, cur):
-        if i == len(nums):
+        if i == len(nums[0]):
             res = ''.join(cur)
             return None if res in strSet else res
 
@@ -59,7 +59,7 @@ def findDifferentBinaryString(nums):
         if res: return res
 
 
-    return backtrack(0, ['0' for s in nums])
+    return backtrack(0, ['0' for s in nums[0]])
 
 
 
@@ -83,6 +83,12 @@ def findDifferentBinaryStringII(nums):
     return ''.join(res)
 
 
+
+def findDifferentBinaryStringIII(nums):
+    # Flip the i-th character of the i-th string
+    return "".join('1' if nums[i][i] == '0' else '0' for i in range(len(nums)))
+
+
 nums = ["111","000","001"]
 output = "101"
 
@@ -93,4 +99,5 @@ output = "101"
 print(findDifferentBinaryString(nums))
 # but the algorithm below will raise an index out of range error
 print(findDifferentBinaryStringII(nums))
+print(findDifferentBinaryStringIII(nums))
 print(output)
