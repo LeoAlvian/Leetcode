@@ -84,10 +84,43 @@ def maxLength(arr):
     return backtrack(0)
 
 
+
+
+# Solving it using BitMask with time: O(n * m) and space: O(n) 
+# Where n is the number of string and m is the max len of string 
+# way faster time on leetcode
+
+def maxLengthBitMask(arr):
+    masks = []
+    for w in arr:
+        m = 0
+        ok = True
+        for ch in w:
+            b = 1 << (ord(ch) - 97)
+            if m & b:
+                ok = False
+                break
+            m |= b
+        if ok:
+            masks.append(m)
+    dp = [0]
+    for m in masks:
+        for x in dp[:]:
+            if not x & m:
+                dp.append(x | m)
+    return max(bin(x).count('1') for x in dp)
+
+
+
+
+
+
 arr = ["cha","r","act","ers"]
 output = 6
 
 res = maxLength(arr)
+res2 = maxLengthBitMask(arr)
 
 print(res)
+print(res2)
 print(output)
