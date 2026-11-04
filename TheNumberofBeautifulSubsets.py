@@ -42,6 +42,18 @@ Constraints:
 1 <= nums[i], k <= 1000
 """
 
+# Intuition
+# Numbers can only conflict if their difference is exactly k. This means numbers that differ by k form chains where adjacent elements cannot both appear in a beautiful subset. By grouping numbers into these chains, we transform the problem into independent subproblems.
+
+# For each chain, we solve a variation of the house robber problem: at each position, we either skip the current number or include some combination of its duplicates (if the number appears multiple times). If we include any copies of a number, we must skip the next number in the chain.
+
+# Algorithm
+#   1. Count the frequency of each number using a hash map.
+#   2. Build groups where each group contains numbers that form a chain differing by k (e.g., [1, 3, 5] for k=2).
+#   3. For each group, use memoized recursion starting from the smallest number.
+#   4. At each number n in a group, either skip it (recurse to n + k) or include some of its copies and skip the next (recurse to n + 2k).
+#   5. When including a number with count c, there are 2^c - 1 ways to choose which copies to include.
+#   6. Multiply the results from all independent groups and subtract 1 for the empty subset.
 
 from collections import Counter
 
@@ -56,7 +68,9 @@ def beautifulSubsets(nums, k):
             return 1
         if n in cache:
             return cache[n]
+        # skip the current number
         skip = helper(n + k, g)
+        # include the current number
         include = (2**g[n] - 1) * helper(n + 2 * k, g)
         cache[n] = skip + include
         return cache[n]
