@@ -74,10 +74,37 @@ def diffWaysToCompute(expression):
 
 
 
+# Using cache and change a little bit of recursive function
+from functools import lru_cache
+
+def diffWaysToComputeCache(expression):
+    operations = {
+        '+' : lambda x, y: x + y,
+        '-' : lambda x, y: x - y,
+        '*' : lambda x, y: x * y
+    }
+
+    @lru_cache(maxsize=None)
+    def backtrack(text):
+        res = []
+        for i, op in enumerate(text):
+            if op in operations:
+                for a in backtrack(text[:i]):
+                    for b in backtrack(text[i + 1:]):
+                        res.append(operations[op](a, b))
+        if not res:
+            res.append(int(text))
+        return res
+
+    return backtrack(expression)
+
+
 expression = "2*3-4*5"
 output = [-34,-14,-10,-10,10]
 
 res = diffWaysToCompute(expression)
+res2 = diffWaysToComputeCache(expression)
 
 print(res)
+print(res2)
 print(output)
