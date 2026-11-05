@@ -62,6 +62,27 @@ def islandParimeterDFS(grid):
     
     return 0
 
+
+# Recursion Version II
+
+def islandPerimeterII(grid):
+    ROWS, COLS = len(grid), len(grid[0])
+    res = 0
+
+    for r in range(ROWS):
+        for c in range(COLS):
+            if grid[r][c]:
+                res += (r + 1 >= ROWS or grid[r + 1][c] == 0)
+                res += (c + 1 >= COLS or grid[r][c + 1] == 0)
+                res += (r - 1 < 0 or grid[r - 1][c] == 0)
+                res += (c - 1 < 0 or grid[r][c - 1] == 0)
+    
+    return res
+
+
+
+
+
 # Using Math and iterative solution which is 5x faster than dfs algorithm
 def islandParimeterMath(grid):
     ROWS, COLS = len(grid), len(grid[0])
@@ -89,7 +110,9 @@ grid = [
 output = 16
 
 res = islandParimeterDFS(grid)
-res2 = islandParimeterMath(grid)
+res2 = islandPerimeterII(grid)
+res3 = islandParimeterMath(grid)
 print(res)
 print(res2)
+print(res3)
 print(output)
