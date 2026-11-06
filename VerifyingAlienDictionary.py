@@ -63,9 +63,40 @@ def verifyAlienDictionay(words, order):
     return True
 
 
+
+
+
+def isAlienSorted(words, order):
+    order_map = {char: i for i, char in enumerate(order)}
+    
+    for i in range(len(words) - 1):
+        word1 = words[i]
+        word2 = words[i + 1]
+        
+        for j in range(len(word1)):
+            # If we run out of letters in the second word, and the first is longer, it's invalid
+            if j == len(word2):
+                return False
+            
+            if word1[j] != word2[j]:
+                if order_map[word1[j]] > order_map[word2[j]]:
+                    return False
+                break
+        else:
+            # If we finished the loop without breaking, word1 is a prefix of word2 (e.g., "apple" and "app")
+            if len(word1) > len(word2):
+                return False
+                
+    return True
+
+
 words = ["hello","leetcode"]
 order = "hlabcdefgijkmnopqrstuvwxyz"
 output = True
+
 res = verifyAlienDictionay(words, order)
+res2 = isAlienSorted(words, order)
+
 print(res)
+print(res2)
 print(output)
