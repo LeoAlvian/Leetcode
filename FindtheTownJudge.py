@@ -47,6 +47,8 @@ ai != bi
 """
 
 
+# Using Array
+
 def townJudge(n, trust):
     trusts = [0] * (n + 1)
     trusted = [0] * (n + 1)
@@ -62,9 +64,32 @@ def townJudge(n, trust):
     return -1
 
 
+# Using Hash Map
+from collections import defaultdict
+
+def townJudgeHashMap(n, trust):
+    incoming = defaultdict(int)
+    outgoing = defaultdict(int)
+
+    for src, dst in trust:
+        incoming[dst] += 1
+        outgoing[src] += 1
+
+    for i in range(1, n + 1):
+        if incoming[i] == n - 1 and outgoing[i] == 0:
+            return i
+
+    return -1
+
+
+
 n = 5
 trust = [[1,3],[2,3],[5,3],[4,3]]
 output = 3
+
 tj = townJudge(n, trust)
+res = townJudgeHashMap(n, trust)
+
 print(tj)
+print(res)
 print(output)
