@@ -64,6 +64,26 @@ def townJudge(n, trust):
     return -1
 
 
+
+
+# Using Array Optimal
+
+def townJudgeOptimal(n, trust):
+    trusts = [0] * (n + 1)
+
+    for src, dst in trust:
+        trusts[src] -= 1
+        trusts[dst] += 1
+    
+    for i in range(1, n + 1):
+        if trusts[i] == n - 1:
+            return i
+    
+    return -1
+
+
+
+
 # Using Hash Map
 from collections import defaultdict
 
@@ -89,7 +109,9 @@ output = 3
 
 tj = townJudge(n, trust)
 res = townJudgeHashMap(n, trust)
+res2 = townJudgeOptimal(n, trust)
 
 print(tj)
 print(res)
+print(res2)
 print(output)
