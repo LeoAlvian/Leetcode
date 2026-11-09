@@ -67,7 +67,7 @@ grid[i][j] is either 0 or 1.
 
 # Use DFS to solve this problem with time: O(m * n) and space: O(m * n)
 
-def maxAreaOfIsland(grid):
+def maxAreaOfIslandDFS(grid):
     if not grid:
         return 0
 
@@ -89,12 +89,59 @@ def maxAreaOfIsland(grid):
 
     return maxArea
 
+
+
+
+# Solving using BFS with fastest time on leetcode but time complexity is O(m * n) and space: O(m * n) which is the same with DFS
+
+from collections import deque
+
+def maxAreaOfIslandBFS(grid):
+    n = len(grid)
+    m = len(grid[0])
+    queue = deque([])
+    # directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+    def bfs(i: int, j: int) -> int:
+        area = 0
+        queue.append((i, j))
+        grid[i][j] = 0
+        while queue:
+            i, j = queue.popleft()
+            area += 1
+
+            if i > 0 and grid[i - 1][j]:
+                grid[i - 1][j] = 0
+                queue.append((i - 1, j))
+
+            if i + 1 < n and grid[i + 1][j]:
+                grid[i + 1][j] = 0
+                queue.append((i + 1, j))
+
+            if j > 0 and grid[i][j - 1]:
+                grid[i][j - 1] = 0
+                queue.append((i, j - 1))
+
+            if j + 1 < m and grid[i][j + 1]:
+                grid[i][j + 1] = 0
+                queue.append((i, j + 1))
+        return area
+    
+    res = 0
+    for i in range(n):
+        for j in range(m):
+            if grid[i][j] == 1:
+                res = max(res, bfs(i, j))
+    return res
+
     
 
 grid = [[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]
 output = 6
 
-res = maxAreaOfIsland(grid)
+res = maxAreaOfIslandDFS(grid)
+res2 = maxAreaOfIslandBFS(grid)
 
 print(res)
+print(res2)
 print(output)
