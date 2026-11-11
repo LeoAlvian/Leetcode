@@ -152,11 +152,17 @@ output = [[2,4],[1,3],[2,4],[1,3]]
 # node = createGraph(graph, 1)
 # print(node)
 
-# 1. Create the independent Node objects
+# 1. Create the independent Node objects manually
 node1 = Node(1)
 node2 = Node(2)
 node3 = Node(3)
 node4 = Node(4)
+# 1.1 Create the independent Node objects automatically
+listNode = []
+for i, nei in enumerate(adjList):
+    listNode.append(Node(i + 1))
+
+# print('listNode', listNode)
 
 # 2. Wire up their neighbors list manually
 node1.neighbors = [node2, node4]
@@ -164,7 +170,16 @@ node2.neighbors = [node1, node3]
 node3.neighbors = [node2, node4]
 node4.neighbors = [node1, node3]
 
-res = cloneGraph(node1)
+# 2.1 Wire up their neighbors list automatically
+for i, nei in enumerate(adjList):
+    newNei = []
+    for val in nei:
+        newNei.append(listNode[val - 1])
+    listNode[i].neighbors = newNei
+
+# print('listVertices 1', listNode[0].val)
+
+res = cloneGraph(listNode[0])
 
 print(print_graph_adjacency_list(res))
 print(output)
