@@ -101,6 +101,31 @@ def islandsAndTreasure(rooms):
 
 
 
+# BFS Iteratively with a little bit faster on neetcode.io
+
+def islandsAndTreasureII(rooms):
+    ROWS, COLS = len(rooms), len(rooms[0])
+    q = deque()
+    for r in range(ROWS):
+        for c in range(COLS):
+            if rooms[r][c] == 0:
+                q.append([r, c])
+
+    while q:
+        r, c = q.popleft()
+        if r > 0 and rooms[r - 1][c] == 2147483647:
+            rooms[r - 1][c] = 1 + rooms[r][c]
+            q.append([r - 1, c])
+        if r < ROWS - 1 and rooms[r + 1][c] == 2147483647:
+            rooms[r + 1][c] = 1 + rooms[r][c]
+            q.append([r + 1, c])
+        if c > 0 and rooms[r][c - 1] == 2147483647:
+            rooms[r][c - 1] = 1 + rooms[r][c]
+            q.append([r, c - 1])
+        if c < COLS - 1 and rooms[r][c + 1] == 2147483647:
+            rooms[r][c + 1] = 1 + rooms[r][c]
+            q.append([r, c + 1])
+
 #   [1,-1,0, 1]
 #   [1, 1,1,-1]
 #   [1,-1,1,-1]
@@ -108,6 +133,13 @@ def islandsAndTreasure(rooms):
 
 
 rooms = [
+  [2147483647,-1,0,2147483647],
+  [2147483647,2147483647,2147483647,-1],
+  [2147483647,-1,2147483647,-1],
+  [0,-1,2147483647,2147483647]
+]
+
+rooms2 = [
   [2147483647,-1,0,2147483647],
   [2147483647,2147483647,2147483647,-1],
   [2147483647,-1,2147483647,-1],
@@ -122,6 +154,8 @@ output = [
 ]
 
 islandsAndTreasure(rooms)
+islandsAndTreasureII(rooms2)
 
 print(rooms)
+print(rooms2)
 print(output)
