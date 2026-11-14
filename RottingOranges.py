@@ -55,7 +55,7 @@ grid[i][j] is 0, 1, or 2.
 """
 
 
-# Solve using BFS Recursively with time: O(m + n) and space: O(m + n)
+# Solve using BFS Recursively with time: O(m * n) and space: O(m * n)
 
 from collections import deque
 
@@ -93,10 +93,48 @@ def orangesRotting(grid):
     return time if not fresh else -1
 
 
+
+
+# Solve using BFS Recursively with time: O(m * n) and space: O(1) extra space because we modify the grid in place
+
+def orangesRottingII(grid):
+    ROWS, COLS = len(grid), len(grid[0])
+    q = deque()
+    time, fresh = 0, 0
+    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+    for r in range(ROWS):
+        for c in range(COLS):
+            if grid[r][c] == 1:
+                fresh += 1
+            elif grid[r][c] == 2:
+                q.append([r, c])
+
+    if not fresh:
+        return 0
+
+    while q and fresh:
+        for i in range(len(q)):
+            r, c = q.popleft()
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < ROWS and 0 <= nc < COLS and grid[nr][nc] == 1:
+                    q.append([nr, nc])
+                    fresh -= 1
+                    grid[nr][nc] = 2
+        time += 1
+
+    return time if not fresh else -1
+
+
+
+
 grid = [[2,1,1],[1,1,0],[0,1,1]]
 output = 4 
 
 res = orangesRotting(grid)
+res2 = orangesRottingII(grid)
 
 print(res)
+print(res2)
 print(output)
