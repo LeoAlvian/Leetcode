@@ -119,13 +119,65 @@ def countSubIslandsII(grid1, grid2):
 
 
 
+# Use Disjoint Set Union with time: O(m * n) and space: O(m * n) but faster and can pass on neetcode.io with a lot of input that the top two function above did not pass
+
+class DSU:
+    def __init__(self, n):
+        self.Parent = list(range(n + 1))
+        self.Size = [1] * (n + 1)
+
+    def find(self, node):
+        if self.Parent[node] != node:
+            self.Parent[node] = self.find(self.Parent[node])
+        return self.Parent[node]
+
+    def union(self, u, v):
+        pu = self.find(u)
+        pv = self.find(v)
+        if pu == pv:
+            return False
+        if self.Size[pu] < self.Size[pv]:
+            pu, pv = pv, pu
+        self.Size[pu] += self.Size[pv]
+        self.Parent[pv] = pu
+        return True
+
+class Solution:
+    def countSubIslandsDisjoinSetUnion(self, grid1, grid2):
+        ROWS, COLS = len(grid1), len(grid1[0])
+        N = ROWS * COLS
+        dsu = DSU(N)
+
+        def getId(r, c):
+            return r * COLS + c
+
+        land = unions = 0
+        for r in range(ROWS):
+            for c in range(COLS):
+                if not grid2[r][c]:
+                    continue
+                land += 1
+                if r + 1 < ROWS and grid2[r + 1][c]:
+                    unions += dsu.union(getId(r, c), getId(r + 1, c))
+                if c + 1 < COLS and grid2[r][c + 1]:
+                    unions += dsu.union(getId(r, c), getId(r, c + 1))
+                if not grid1[r][c]:
+                    unions += dsu.union(getId(r, c), N)
+
+        return land - unions
+
+
 grid1 = [[1,1,1,0,0],[0,1,1,1,1],[0,0,0,0,0],[1,0,0,0,0],[1,1,0,1,1]]
 grid2 = [[1,1,1,0,0],[0,0,1,1,1],[0,1,0,0,0],[1,0,1,1,0],[0,1,0,1,0]]
 output = 3
 
+s = Solution()
+
 res = countSubIslands(grid1, grid2)
-res2 = countSubIslandsII(grid1, grid2)
+res2 = s.countSubIslandsDisjoinSetUnion(grid1, grid2)
+res3 = countSubIslandsII(grid1, grid2)
 
 print(res)
 print(res2)
+print(res3)
 print(output)
