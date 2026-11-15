@@ -78,11 +78,54 @@ def countSubIslands(grid1, grid2):
 
     return count
 
+
+
+
+def countSubIslandsII(grid1, grid2):
+    # find island in grid2 
+    # check if the same island exists in grid1 
+    ROWS, COLS = len(grid2), len(grid2[0])
+
+    def dfs(r, c): 
+        if grid1[r][c] != 1: 
+            # this island is not be considered in count 
+            # skip the dfs 
+            return False 
+
+        grid2[r][c] = -1 
+        grid1[r][c] = -1 
+
+        temp1 = temp2 = temp3 = temp4 = True 
+
+        if r > 0 and grid2[r - 1][c] == 1: 
+            temp1 = dfs(r - 1, c)
+        if c > 0 and grid2[r][c - 1] == 1: 
+            temp2 = dfs(r, c - 1)
+        if r + 1 < ROWS and grid2[r + 1][c] == 1:
+            temp3 = dfs(r + 1, c)
+        if c + 1 < COLS and grid2[r][c + 1] == 1: 
+            temp4 = dfs(r,c + 1)
+
+        return temp1 and temp2 and temp3 and temp4 
+    
+    count = 0 
+
+    for r in range(ROWS):
+        for c in range(COLS):
+            if grid2[r][c] == 1 and dfs(r, c):  
+                    count += 1 
+
+    return count 
+
+
+
 grid1 = [[1,1,1,0,0],[0,1,1,1,1],[0,0,0,0,0],[1,0,0,0,0],[1,1,0,1,1]]
 grid2 = [[1,1,1,0,0],[0,0,1,1,1],[0,1,0,0,0],[1,0,1,1,0],[0,1,0,1,0]]
 output = 3
 
 res = countSubIslands(grid1, grid2)
+res2 = countSubIslandsII(grid1, grid2)
 
 print(res)
+print(res2)
 print(output)
