@@ -99,21 +99,73 @@ def pacificAtlantic(heights):
 
     return res
 
+
+
+
+# Second function using dynamic programming which is faster on leetcode
+
+def pacificAtlanticDP(heights):
+    ROWS, COLS = len(heights), len(heights[0])
+    dp = [[0] * COLS for _ in range(ROWS)]
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    res = []
+
+    def dfs(r, c, val):
+        if dp[r][c] == val:
+            return
+        if dp[r][c] == -val:
+            res.append([r, c])
+        dp[r][c] = val
+        stack = [(r, c)]
+        while stack:
+            sr, sc = stack.pop()
+            for dr, dc in dirs:
+                r, c = sr + dr, sc + dc
+                if (0 <= r < ROWS and 0 <= c < COLS
+                        and dp[r][c] != val
+                        and heights[sr][sc] <= heights[r][c]):
+                    if dp[r][c] == -val:
+                        res.append([r, c])
+                    dp[r][c] = val
+                    stack.append((r, c))
+
+    # Pacific: top row + left column — must fully finish first
+    for c in range(COLS):
+        dfs(0, c, 1)
+    for r in range(ROWS):
+        dfs(r, 0, 1)
+
+    # Atlantic: bottom row + right column
+    for c in range(COLS):
+        dfs(ROWS - 1, c, -1)
+    for r in range(ROWS):
+        dfs(r, COLS - 1, -1)
+
+    return res
+
+
+
+
 heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
 output = [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
 
 res = pacificAtlantic(heights)
+res2 = pacificAtlanticDP(heights)
 
-# print(res)
-# print(output)
+print(res)
+print(res2)
+print(output)
 
-for r in range(len(heights)):
-    print(heights[r])
 
-print('----------------------------------')
+# Printing the grid with the coordinate
 
-for r, c in res:
-    heights[r][c] = 0
+# for r in range(len(heights)):
+#     print(heights[r])
 
-for r in range(len(heights)):
-    print(heights[r])
+# print('----------------------------------')
+
+# for r, c in res:
+#     heights[r][c] = 0
+
+# for r in range(len(heights)):
+#     print(heights[r])
