@@ -76,6 +76,53 @@ def  surroundedRegions(board):
 
 
 
+# Using BFS with faster time complexity on leetcode but time still O(m * n) and space: O(m * n)
+from collections import deque
+
+def surroundedRegionsBFS(board):
+    ROWS, COLS = len(board), len(board[0])
+    q = deque()
+    # visit = set()
+    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+    # collect every border 'O' as a starting point
+    for r in range(ROWS):
+        for c in [0, COLS - 1]:
+            if board[r][c] == 'O':
+                board[r][c] = 'T'
+                q.append((r, c))
+                # visit.add((r, c))
+
+    for c in range(COLS):
+        for r in [0, ROWS - 1]:
+            if board[r][c] == 'O':
+                board[r][c] = 'T'
+                q.append((r, c))
+                # visit.add((r, c))
+
+    # mark everything connected to the border
+    while q:
+        qr, qc = q.popleft()
+        for dr, dc in directions:
+            r, c = qr + dr, qc + dc
+            if 0 <= r < ROWS and 0 <= c < COLS and board[r][c] == 'O':
+                # visit.add((r, c))
+                board[r][c] = 'T'
+                q.append((r, c))
+
+    # surrounded → 'X', border-connected → back to 'O'
+    for r in range(ROWS):
+        for c in range(COLS):
+            if board[r][c] == 'O':
+                board[r][c] = 'X'
+            elif board[r][c] == 'T':
+                board[r][c] = 'O'
+
+
+    
+
+
+
     # ["X","X","X","X"]       ["X","X","X","X"]
     # ["X","O","O","X"]       ["X","X","X","X"] 
     # ["X","X","O","X"]       ["X","X","X","X"] 
@@ -83,9 +130,13 @@ def  surroundedRegions(board):
 
 
 board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+board2 = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
 output = [["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
 
 surroundedRegions(board)
+surroundedRegionsBFS(board2)
+
 
 print(board)
+print(board2)
 print(output)
