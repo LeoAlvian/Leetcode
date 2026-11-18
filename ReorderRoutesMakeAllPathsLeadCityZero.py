@@ -102,6 +102,32 @@ def minReorder(n, connections):
 
 
 
+def minReorderII(n, connections):
+    # connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]
+    seen = [False] * n
+    # seen = [False, False, False, False, False, False]
+    ans = 0
+    seen[0] = True
+    #           T      T     T      T      T      T
+    # seen = [True, False, False, False, False, False]
+    # q = connections
+    while connections:
+        newq = []
+        for src, dst in connections:
+            if seen[src]:
+                seen[dst] = True
+                ans += 1
+            elif seen[dst]:
+                seen[src] = True
+            else:
+                newq.append((src, dst))
+        # Reverse the order of unprocessed connections for the next iteration
+        connections = newq[::-1]
+        print('connections', connections)
+    return ans
+
+
+
     #    ---------> (1) --------> (3) <-------- (2)
     #   /
     # (0) <------ (4) --------> (5)
@@ -119,6 +145,8 @@ connections = [[0,1],[1,3],[2,3],[4,0],[4,5]]
 output = 3
 
 res = minReorder(n, connections)
+res2 = minReorderII(n, connections)
 
 print(res)
+print(res2)
 print(output)
