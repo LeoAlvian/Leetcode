@@ -94,6 +94,43 @@ def snakesAndLadders(board):
 
     return -1
 
+
+
+# Second BFS with faster time complexity
+
+def snakesAndLaddersII(board):
+    # board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]
+    flat = []
+
+    for i, row in enumerate(board[::-1]):
+        flat.extend(row if i % 2 == 0 else row[::-1])
+    # flat makes the board to be one dimension and every row are alternating
+    # flat = [-1, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 35, -1, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+    target = len(flat)
+    q = deque()
+    q.append([1, 0]) # [square, moves]
+    visit = set()
+
+    while q:
+        square, moves = q.popleft()
+        for i in range(1, 7):
+            nxtSquare = square + i
+            if nxtSquare in visit:
+                continue
+            visit.add(nxtSquare)
+            dst = nxtSquare if flat[nxtSquare - 1] == -1 else flat[nxtSquare - 1]
+            if dst == target:
+                return moves + 1
+            q.append([dst, moves + 1])
+
+    return -1
+
+
+
+
+ 
+
     # [-1,-1,-1,-1,-1,-1]
     # [-1,-1,-1,-1,-1,-1]
     # [-1,-1,-1,-1,-1,-1]
@@ -102,9 +139,12 @@ def snakesAndLadders(board):
     # [-1,15,-1,-1,-1,-1]
 
 board = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]
+board2 = [[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,35,-1,-1,13,-1],[-1,-1,-1,-1,-1,-1],[-1,15,-1,-1,-1,-1]]
 output = 4
 
 res = snakesAndLadders(board)
+res2 = snakesAndLaddersII(board2)
 
 print(res)
+print(res2)
 print(output)
