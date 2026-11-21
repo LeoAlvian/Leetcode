@@ -81,9 +81,67 @@ def openLock(deadends, target):
     
     return -1
 
+
+
+
+
+def openLockII(deadends, target):
+    vis = set(deadends)
+    source = '0000'
+    if source in vis:
+        return -1
+    if source == target:
+        return 0
+
+    vis.add(source)
+    vis.add(target)
+    nxt_c = {
+        '0': '19',
+        '1': '20',
+        '2': '31',
+        '3': '42',
+        '4': '53',
+        '5': '64',
+        '6': '75',
+        '7': '86',
+        '8': '97',
+        '9': '08',
+    }
+    front = {'0000'}
+    back = {target}
+    move = 0
+    while front and back:
+        if len(front) > len(back):
+            front, back = back, front
+        move += 1
+        nxt_front = set()
+        for cur in front:
+            cur_list = list(cur)
+            for i, ch in enumerate(cur_list):
+                for c in nxt_c[ch]:
+                    cur_list[i] = c
+                    nxt = ''.join(cur_list)
+                    if nxt in back:
+                        return move
+                    if nxt not in vis:
+                        vis.add(nxt)
+                        nxt_front.add(nxt)
+                    cur_list[i] = ch
+        front = nxt_front
+    
+    return -1
+
+
+
+
+
 deadends = ["0201","0101","0102","1212","2002"]
 target = "0202"
 output = 6
+
 ol = openLock(deadends, target)
+ol2 = openLockII(deadends, target)
+
 print(ol)
+print(ol2)
 print(output)
