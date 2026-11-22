@@ -57,7 +57,7 @@ The number of edges in the graph will be in the range [1, 4 * 104].
 
 
 
-# Solving it using DFS with time: O(e + v) and space: O(e + v)
+# Solving it using DFS with time: O(v + e) and space: O(v + e)
 
 def eventualSafeNodes(graph):
     n = len(graph)
@@ -80,10 +80,45 @@ def eventualSafeNodes(graph):
     return res
 
 
+
+# Using Topological Ordering with time: O(v + e) and space: O(v + e)
+from collections import deque
+
+def eventualSafeNodesII(graph):
+    n = len(graph)
+    outdegree = [0] * n
+    parents = [[] for _ in range(n)]
+    queue = deque()
+
+    for node in range(n):
+        outdegree[node] = len(graph[node])
+        if outdegree[node] == 0:
+            queue.append(node)
+        for nei in graph[node]:
+            parents[nei].append(node)
+
+    while queue:
+        node = queue.popleft()
+        for parent in parents[node]:
+            outdegree[parent] -= 1
+            if outdegree[parent] == 0:
+                queue.append(parent)
+
+    res = []
+    for node in range(n):
+        if outdegree[node] <= 0:
+            res.append(node)
+    return res
+
+
+
+
 graph = [[1,2],[2,3],[5],[0],[5],[],[]]
 output = [2,4,5,6]
 
 res = eventualSafeNodes(graph)
+res2 = eventualSafeNodesII(graph)
 
 print(res)
+print(res2)
 print(output)
