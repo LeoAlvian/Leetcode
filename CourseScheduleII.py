@@ -60,7 +60,7 @@ Example 4:
     |  4    |  []      |    |  4   |   2   |       |  4   | []      |
 
 Input: numCourses = 5, prerequisites = [[0,1], [0,2], [1,3], [1,4], [3,4]]
-Output: [4,3,1,2,0]
+Output: [4,3,1,2,0] or [2,4,3,1,0], both is valid answer
  
 
 Constraints:
@@ -106,13 +106,50 @@ def findOrder(n, pre):
     return courses
 
 
+
+# Solving it using Topological Ordering (Khan Algorithm) with time: O(e + v) and space: O(e + v)
+from collections import deque
+
+def findOrderTopological(n, prerequisites):
+    indegree = [0] * n
+    adj = [ [] for i in range(n) ]
+    courses = []
+
+    for crs, pre in prerequisites:
+        indegree[crs] += 1
+        adj[pre].append(crs)
+
+    q = deque()
+    for i in range(n):
+        if indegree[i] == 0:
+            q.append(i)
+            courses.append(i)
+
+    visit = 0
+    while q:
+        crs = q.popleft()
+        visit += 1
+        for pre in adj[crs]:
+            indegree[pre] -= 1
+            if indegree[pre] == 0:
+                q.append(pre)
+                courses.append(pre)
+
+    return courses if visit == n else []
+
+
+
 numCourses = 4
 prerequisites = [[1,0],[2,0],[3,1],[3,2]]
-numCourses = 5
-prerequisites = [[0,1], [0,2], [1,3], [1,4], [3,4]]
 output = [0,2,1,3]
 
+# numCourses = 5
+# prerequisites = [[0,1], [0,2], [1,3], [1,4], [3,4]]
+# output = [4,3,1,2,0] or [2,4,3,1,0]
+
 res = findOrder(numCourses, prerequisites)
+res2 = findOrderTopological(numCourses, prerequisites)
 
 print(res)
+print(res2)
 print(output)
