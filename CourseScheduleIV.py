@@ -87,7 +87,7 @@ def courseScheduleIV(numCourses, prerequisites, queries):
             for pre in adj[crs]:
                 preMap[crs] |= dfs(pre)
             preMap[crs].add(crs)
-        print(preMap)
+        # print(preMap)
         return preMap[crs]
     
     preMap = {}
@@ -101,10 +101,43 @@ def courseScheduleIV(numCourses, prerequisites, queries):
     return res
 
 
+
+# Second function which is faster on leetcode with time: O(v + e) and space: O(v + e)
+
+def checkIfPrerequisite(numCourses, prerequisites, queries):
+    def dfs(curr, goal):
+        if curr == goal: 
+            return True
+
+        for child in graph[curr]:
+            if dfs(child, goal):
+                return True
+
+        return False
+
+    #key: course number
+    #val: list of courses that have key as a prerequisite
+    graph = defaultdict(list)
+    res = []
+
+    for pre, post in prerequisites:
+        graph[pre].append(post)
+
+    for pre, post in queries:
+        res.append(dfs(pre, post))
+
+
+    return res
+
+
 numCourses = 4
 prerequisites = [[1,0],[2,1],[3,2]]
 queries = [[0,1],[3,1]]
 output = [False,True]
+
 cs4 = courseScheduleIV(numCourses, prerequisites, queries)
+res = checkIfPrerequisite(numCourses, prerequisites, queries)
+
 print(cs4)
+print(res)
 print(output)
