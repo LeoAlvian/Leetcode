@@ -42,6 +42,19 @@ Output: [true,true]
 Example 4:
 Input: numCourses = 4, prerequisites = [[1,0],[2,1],[3,2]], queries = [[0,1],[3,1]]
 Output: [false,true]
+
+
+
+Example 5:
+                |-------> [4]
+                |
+    [0] -----> [2] -----> [3]
+                ^
+       |--------|    
+      /
+    [1] -----> [5]
+Input: numCourses = 6, prerequisites = [[3,2],[4,2],[2,0],[2,1],[5,2]], queries = [[3,1],[0,4]]
+Output: [true,false]
  
 
 Constraints:
@@ -134,6 +147,11 @@ numCourses = 4
 prerequisites = [[1,0],[2,1],[3,2]]
 queries = [[0,1],[3,1]]
 output = [False,True]
+
+numCourses = 6
+prerequisites = [[3,2],[4,2],[2,0],[2,1],[5,2]]
+queries = [[3,1],[0,4]]
+output = [True, False]
 
 cs4 = courseScheduleIV(numCourses, prerequisites, queries)
 res = checkIfPrerequisite(numCourses, prerequisites, queries)
